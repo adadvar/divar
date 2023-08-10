@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Advert;
 
+use App\Models\Advert;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class DeleteAdvertRequest extends FormRequest
+class AdvertUnlikeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,8 @@ class DeleteAdvertRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::forUser(auth('api')->user())
+            ->allows('unlike', $this->advert);
     }
 
     /**

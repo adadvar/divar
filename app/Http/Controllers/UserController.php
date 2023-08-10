@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\ChangeEmailRequest;
 use App\Http\Requests\User\ChangeEmailSubmitRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
-use App\Http\Requests\User\UnregisterUserRequest;
+use App\Http\Requests\User\UserUnregisterRequest;
 use App\Http\Requests\User\UserDeleteRequest;
 use App\Http\Requests\User\UserListRequest;
 use App\Http\Requests\User\UserMeRequest;
@@ -108,7 +108,7 @@ class UserController extends Controller
     return response(['message' => 'خروج ناموفق بود'], Response::HTTP_BAD_REQUEST);
   }
 
-  public function unregister(UnregisterUserRequest $request)
+  public function unregister(UserUnregisterRequest $request)
     {
         try {
             DB::beginTransaction();

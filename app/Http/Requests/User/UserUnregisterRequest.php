@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Advert;
+namespace App\Http\Requests\User;
 
-use App\Models\Advert;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class UnlikeAdvertRequest extends FormRequest
+class UserUnregisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,8 +15,7 @@ class UnlikeAdvertRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::forUser(auth('api')->user())
-            ->allows('unlike', $this->advert);
+        return true;
     }
 
     /**
@@ -27,7 +26,7 @@ class UnlikeAdvertRequest extends FormRequest
     public function rules()
     {
         return [
-         
+          
         ];
     }
 }

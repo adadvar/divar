@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Advert;
 
+use App\Models\Advert;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class ListAdvertRequest extends FormRequest
+class AdvertFavouriteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +15,8 @@ class ListAdvertRequest extends FormRequest
      */
     public function authorize()
     {
+        // return Gate::forUser(auth('api')->user())
+        //     ->allows('unlike', $this->advert);
         return true;
     }
 
@@ -24,6 +28,7 @@ class ListAdvertRequest extends FormRequest
     public function rules()
     {
         return [
+         
         ];
     }
 }

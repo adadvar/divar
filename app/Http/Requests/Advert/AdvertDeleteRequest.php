@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Advert;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class UnregisterUserRequest extends FormRequest
+class AdvertDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +14,7 @@ class UnregisterUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('delete', $this->user);
     }
 
     /**
@@ -26,7 +25,7 @@ class UnregisterUserRequest extends FormRequest
     public function rules()
     {
         return [
-          
+         
         ];
     }
 }

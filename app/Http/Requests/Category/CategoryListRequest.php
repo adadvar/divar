@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Advert;
+namespace App\Http\Requests\Category;
 
-use App\Models\Advert;
-use App\Rules\CanChangeAdvertState;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
-class ChangeStateAdvertRequest extends FormRequest
+class CategoryListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +13,7 @@ class ChangeStateAdvertRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('change-state', $this->advert);
+        return true;
     }
 
     /**
@@ -27,7 +24,6 @@ class ChangeStateAdvertRequest extends FormRequest
     public function rules()
     {
         return [
-            'state' => ['required', new CanChangeAdvertState($this->advert)]
         ];
     }
 }

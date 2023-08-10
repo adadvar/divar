@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Events\VisitAdvert;
-use App\Http\Requests\Advert\ChangeStateAdvertRequest;
-use App\Http\Requests\Advert\CreateAdvertRequest;
-use App\Http\Requests\Advert\DeleteAdvertRequest;
-use App\Http\Requests\Advert\FavouriteAdvertRequest;
-use App\Http\Requests\Advert\LikeAdvertRequest;
-use App\Http\Requests\Advert\ListAdvertRequest;
-use App\Http\Requests\Advert\ShowAdvertRequest;
-use App\Http\Requests\Advert\UnlikeAdvertRequest;
-use App\Http\Requests\Advert\UpdateAdvertRequest;
+use App\Http\Requests\Advert\AdvertChangeStateRequest;
+use App\Http\Requests\Advert\AdvertCreateRequest;
+use App\Http\Requests\Advert\AdvertDeleteRequest;
+use App\Http\Requests\Advert\AdvertFavouriteRequest;
+use App\Http\Requests\Advert\AdvertLikeRequest;
+use App\Http\Requests\Advert\AdvertListRequest;
+use App\Http\Requests\Advert\AdvertShowRequest;
+use App\Http\Requests\Advert\AdvertUnlikeRequest;
+use App\Http\Requests\Advert\AdvertUpdateRequest;
 use App\Http\Requests\Advert\UploadAdvertPhotoRequest;
 use App\Models\Advert;
 use App\Models\AdvertFavourite;
@@ -26,13 +26,13 @@ use Illuminate\Support\Facades\Storage;
 
 class AdvertController extends Controller
 {
-    public function list(ListAdvertRequest $r)
+    public function list(AdvertListRequest $r)
     {
         $adverts = Advert::with('user')->orderBy('id')->paginate($r->per_page ?? 10)->all();
         return $adverts;
     }
 
-    public function show(ShowAdvertRequest $r)
+    public function show(AdvertShowRequest $r)
     {
         event(new VisitAdvert($r->advert));
         $advert = $r->advert->load('user','category');
@@ -66,7 +66,7 @@ class AdvertController extends Controller
         }
     }
 
-    public function create(CreateAdvertRequest $r)
+    public function create(AdvertCreateRequest $r)
     {
         // dd($r->advert_id!=null?true:false);
         try {
@@ -96,7 +96,7 @@ class AdvertController extends Controller
         }
     }
 
-    public function update(UpdateAdvertRequest $r)
+    public function update(AdvertUpdateRequest $r)
     {
         try {
             DB::beginTransaction();
@@ -118,7 +118,7 @@ class AdvertController extends Controller
         }
     }
 
-    public static function changeState(ChangeStateAdvertRequest $r)
+    public static function changeState(AdvertChangeStateRequest $r)
     {
         $advert = $r->advert;
         $advert->state = $r->state;
@@ -127,7 +127,7 @@ class AdvertController extends Controller
         return response($advert);
     }
 
-    public function delete(DeleteAdvertRequest $r)
+    public function delete(AdvertDeleteRequest $r)
     {
         try {
             DB::beginTransaction();
@@ -141,7 +141,7 @@ class AdvertController extends Controller
         }
     }
 
-    public static function like(LikeAdvertRequest $r)
+    public static function like(AdvertLikeRequest $r)
     {
         //ابتدا باید وضعیت advert به accepted تغییر کند
         AdvertFavourite::create([
@@ -153,7 +153,7 @@ class AdvertController extends Controller
         return response(['message' => 'با موفقیت ثبت شد'], 200);
     }
 
-    public static function unlike(UnlikeAdvertRequest $r)
+    public static function unlike(AdvertUnlikeRequest $r)
     {
         $user = auth('api')->user();
         $conditions = [
@@ -169,12 +169,12 @@ class AdvertController extends Controller
         return response(['message' => 'با موفقیت ثبت شد'], 200);
     }
 
-    public static function favourites(FavouriteAdvertRequest $r){
+    public static function favourites(AdvertFavouriteRequest $r){
         $user = auth()->user();
         return response($user->favouriteAdverts);
     }
 
-    public static function recents(FavouriteAdvertRequest $r){
+    public static function recents(AdvertFavouriteRequest $r){
         $user = auth()->user();
         return response($user->recentAdverts);
     }

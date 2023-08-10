@@ -26,6 +26,10 @@ class AdvertPolicy
         return $user->isAdmin();
     }
 
+    public function delete(User $user, User $user2) {
+        return ($user->isAdmin() || ($user->id == $user2->id));
+    }
+
     public function like(User $user = null, Advert $advert = null)
     {
         if ($advert && $advert->isAccepted()) {

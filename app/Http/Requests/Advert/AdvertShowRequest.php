@@ -4,7 +4,7 @@ namespace App\Http\Requests\Advert;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAdvertRequest extends FormRequest
+class AdvertShowRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,6 @@ class UpdateAdvertRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id' => 'required|exists:categories,id',
-            'title' => 'required|string|max:100',
-            'info' => 'nullable|string',
-            'province' => 'nullable|string',
-            'city' => 'nullable|string',
-            'lat' => 'nullable|string',
-            'long' => 'nullable|string',
-            'price' => 'nullable|numeric|gt:0',
         ];
     }
 }

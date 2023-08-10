@@ -4,7 +4,7 @@ namespace App\Http\Requests\Advert;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShowAdvertRequest extends FormRequest
+class AdvertListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
