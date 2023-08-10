@@ -5,7 +5,7 @@ namespace App\Http\Requests\Advert;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class AdvertDeleteRequest extends FormRequest
+class AdvertDeleteRecentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class AdvertDeleteRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('delete', $this->advert);
+        return Gate::allows('delete-recent', $this->advert);
     }
 
     /**

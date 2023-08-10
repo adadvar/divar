@@ -162,9 +162,21 @@ Route::group(['prefix' => 'advert'], function ($router) {
             AdvertController::class, 'favourites'
         ])->name('advert.favourites');
 
+        $router->delete('/{advert}/delete-favourite', [
+            AdvertController::class, 'deleteFavourite'
+        ])->name('advert.deleteFavourite');
+
         $router->get('/recents', [
             AdvertController::class, 'recents'
         ])->name('advert.recents');
+
+        $router->delete('/{advert}/delete-recent', [
+            AdvertController::class, 'deleteRecent'
+        ])->name('advert.deleteRecent');
+
+        $router->get('/my', [
+            AdvertController::class, 'my'
+        ])->name('advert.my');
         
     });
 });

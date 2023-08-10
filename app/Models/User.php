@@ -78,7 +78,7 @@ class User extends Authenticatable
 
     public function adverts()
     {
-        return $this->hasMany(Advert::class);
+        return $this->hasMany(Advert::class)->withTrashed();
     }
 
     public function answers()

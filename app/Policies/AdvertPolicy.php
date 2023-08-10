@@ -26,8 +26,8 @@ class AdvertPolicy
         return $user->isAdmin();
     }
 
-    public function delete(User $user, User $user2) {
-        return ($user->isAdmin() || ($user->id == $user2->id));
+    public function delete(User $user, Advert $advert = null) {
+        return ($user->isAdmin() || ($user->id == $advert->user_id));
     }
 
     public function like(User $user = null, Advert $advert = null)
@@ -59,5 +59,13 @@ class AdvertPolicy
         }
 
         return AdvertFavourite::where($conditions)->count();
+    }
+
+    public function deleteFavourite(User $user = null, Advert $advert = null){
+        return $user->favouriteAdverts->find($advert->id);
+    }
+
+    public function deleteRecent(User $user = null, Advert $advert = null){
+        return $user->recentAdverts->find($advert->id);
     }
 }

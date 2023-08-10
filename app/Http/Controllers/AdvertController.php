@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\VisitAdvert;
 use App\Http\Requests\Advert\AdvertChangeStateRequest;
 use App\Http\Requests\Advert\AdvertCreateRequest;
+use App\Http\Requests\Advert\AdvertDeleteFavouriteRequest;
+use App\Http\Requests\Advert\AdvertDeleteRecentRequest;
 use App\Http\Requests\Advert\AdvertDeleteRequest;
 use App\Http\Requests\Advert\AdvertFavouriteRequest;
 use App\Http\Requests\Advert\AdvertLikeRequest;
@@ -174,8 +176,41 @@ class AdvertController extends Controller
         return response($user->favouriteAdverts);
     }
 
+    public static function deleteFavourite(AdvertDeleteFavouriteRequest $r){
+        try {
+            DB::beginTransaction();
+            $user = auth()->user();
+            AdvertFavourite::where(['user_id' => $user->id, 'advert_id' => $r->advert->id])->forceDelete();
+            DB::commit();
+            return response(['message' => 'با موفقیت حذف شد!'], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است !'], 500);
+        }
+    }
+
     public static function recents(AdvertFavouriteRequest $r){
         $user = auth()->user();
         return response($user->recentAdverts);
+    }
+
+    public static function deleteRecent(AdvertDeleteRecentRequest $r){
+        try {
+            DB::beginTransaction();
+            $user = auth()->user();
+            AdvertRecent::where(['user_id' => $user->id, 'advert_id' => $r->advert->id])->forceDelete();
+            DB::commit();
+            return response(['message' => 'با موفقیت حذف شد!'], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است !'], 500);
+        }
+    }
+
+    public static function my(AdvertFavouriteRequest $r){
+        $user = auth()->user();
+        return response($user->adverts);
     }
 }
