@@ -172,12 +172,10 @@ class AdvertController extends Controller
     public static function favourites(FavouriteAdvertRequest $r){
         $user = auth()->user();
         return response($user->favouriteAdverts);
-        
     }
 
     public static function recents(FavouriteAdvertRequest $r){
         $user = auth()->user();
         return response($user->recentAdverts);
-        
     }
 }
