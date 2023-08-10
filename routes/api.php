@@ -161,6 +161,10 @@ Route::group(['prefix' => 'advert'], function ($router) {
         $router->get('/favourites', [
             AdvertController::class, 'favourites'
         ])->name('advert.favourites');
+
+        $router->get('/recents', [
+            AdvertController::class, 'recents'
+        ])->name('advert.recents');
         
     });
 });
