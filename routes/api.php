@@ -100,6 +100,10 @@ Route::group(['prefix' => 'category'], function ($router) {
         CategoryController::class, 'show'
     ])->name('category.show');
 
+    $router->get('/menu', [
+        CategoryController::class, 'menu'
+    ])->name('category.menu');
+
 
     Route::group(['middleware' => ['auth:api']], function ($router) {
 

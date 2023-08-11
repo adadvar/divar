@@ -16,14 +16,20 @@ class CategoryController extends Controller
 {
     public function list(CategoryListRequest $r)
     {
-        $categories = Category::all();
+        $categories = Category::all()->load('child');
         return $categories;
     }
 
     public function show(CategoryShowRequest $r)
     {
-        $category = $r->category->load('adverts');
+        $category = $r->category->load('adverts','child','child.adverts');
         return $category;
+    }
+
+    public function menu(CategoryListRequest $r)
+    {
+        $categories = Category::where('parent_id',null)->with('child')->get();
+        return $categories;
     }
 
     public function create(CategoryCreateRequest $r)
