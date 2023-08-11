@@ -13,6 +13,7 @@ class AdvertCreateRequest extends FormRequest
      */
     public function authorize()
     {
+        //TODO محدودیت ایجاد که اگهی برای خود یوز یا ادمین باشد.
         return true;
     }
 

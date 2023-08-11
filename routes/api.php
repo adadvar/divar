@@ -96,7 +96,7 @@ Route::group(['prefix' => 'category'], function ($router) {
         CategoryController::class, 'list'
     ])->name('category.list');
 
-    $router->get('/show/{category}', [
+    $router->get('/show/{city}/{category}', [
         CategoryController::class, 'show'
     ])->name('category.show');
 
@@ -124,7 +124,7 @@ Route::group(['prefix' => 'category'], function ($router) {
 
 Route::group(['prefix' => 'advert'], function ($router) {
 
-    $router->get('/', [
+    $router->get('/{city?}', [
         AdvertController::class, 'list'
     ])->name('advert.list');
 

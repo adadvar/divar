@@ -9,8 +9,10 @@ use App\Http\Requests\Category\CategoryShowRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -22,8 +24,13 @@ class CategoryController extends Controller
 
     public function show(CategoryShowRequest $r)
     {
-        $category = $r->category->load('adverts','child','child.adverts');
-        return $category;
+        $city = $r->city;
+        $cookie = cookie('city',$city);
+        // session()->put('city', $city);
+        // $r->category->selectedCity="tehran";
+        // Category::$selectedCity=$city;
+        $category = $r->category->load(['adverts'=>fn($q)=> $q->where('city',$city),'child','child.adverts']);
+        return response(compact('category'))->cookie($cookie);
     }
 
     public function menu(CategoryListRequest $r)

@@ -14,6 +14,7 @@ use App\Http\Requests\Advert\AdvertListRequest;
 use App\Http\Requests\Advert\AdvertShowRequest;
 use App\Http\Requests\Advert\AdvertUnlikeRequest;
 use App\Http\Requests\Advert\AdvertUpdateRequest;
+use App\Http\Requests\Advert\AdvertUploadPhotoRequest;
 use App\Http\Requests\Advert\UploadAdvertPhotoRequest;
 use App\Models\Advert;
 use App\Models\AdvertFavourite;
@@ -24,13 +25,25 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class AdvertController extends Controller
 {
     public function list(AdvertListRequest $r)
     {
-        $adverts = Advert::with('user')->orderBy('id')->paginate($r->per_page ?? 10)->all();
+        $city = $r->cookie('city');
+        $cookie = null;
+        if(!$city || ($r->city && $city != $r->city)){
+            if($r->city){
+                $city = $r->city;
+                $cookie = cookie('city',$city);
+            }else
+            return response(['isCity'=> false], 200);
+        }
+        $adverts = Advert::where('city',$city)->with('user')->orderBy('id')->paginate($r->per_page ?? 10)->all();
+        if($cookie)
+            return response($adverts)->cookie($cookie);
         return $adverts;
     }
 
@@ -41,7 +54,7 @@ class AdvertController extends Controller
         return $advert;
     }
 
-    public static function uploadPhoto(UploadAdvertPhotoRequest $r)
+    public static function uploadPhoto(AdvertUploadPhotoRequest $r)
     {
         // dd($r->all());
         try {
@@ -53,7 +66,7 @@ class AdvertController extends Controller
                 Storage::disk('adverts')->put('/tmp/' . $imageName, $image->get());
                 $data[] = $imageName;
             }
-            if($r->advert_id!='null'){
+            if($r->advert_id!=null){
                 $advert = Advert::find($r->advert_id);
                 $arr = $advert->images?$advert->images:[];
                 $arr = array_merge($arr, $data);

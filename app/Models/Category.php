@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use HasFactory,SoftDeletes;
-
     protected $table = 'categories';
     protected $fillable = ['parent_id','user_id','title','slug','xml','json','html','icon','banner'];
+    // public static $selectedCity="";
 
     public function getRouteKeyName()
     {
@@ -30,7 +30,10 @@ class Category extends Model
 
     public function adverts()
     {
-        return $this->hasMany(Advert::class);
+        $advert=$this->hasMany(Advert::class);
+        // if(static::$selectedCity!=null)
+        //  $advert=$advert->where("city",static::$selectedCity);
+        return $advert;
     }
 
     public function parent()
