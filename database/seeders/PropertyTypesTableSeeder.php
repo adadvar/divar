@@ -36,7 +36,6 @@ class PropertyTypesTableSeeder extends Seeder
                 'type' => $type,
                 'has_answer' => $has_answer,
             ]);
-            $this->command->info('add ' . $type . ' type question');
         }
     }
 }

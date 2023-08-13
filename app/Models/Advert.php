@@ -17,7 +17,7 @@ class Advert extends Model
     const STATE = [self::STATE_PENDING, self::STATE_ACCEPTED, self::STATE_BLOCKED];
 
     protected $table = 'adverts';
-    protected $fillable = ['category_id', 'user_id', 'title', 'slug', 'slug_url', 'info', 'province', 'city', 'lat', 'long', 'price','images', 'publish_at', 'state'];
+    protected $fillable = ['category_id', 'user_id', 'title', 'slug', 'slug_url', 'info', 'province', 'city', 'lat', 'long', 'price','images', 'publish_at', 'state','city_id'];
     protected $appends = ['age'];
 
     protected $casts = [
@@ -49,6 +49,11 @@ class Advert extends Model
     public function photos()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function city()
+    {
+        return $this->hasOne(City::class);
     }
 
     public function isInState($state)

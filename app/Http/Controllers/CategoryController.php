@@ -26,10 +26,16 @@ class CategoryController extends Controller
     {
         $city = $r->city;
         $cookie = cookie('city',$city);
-        // session()->put('city', $city);
-        // $r->category->selectedCity="tehran";
-        // Category::$selectedCity=$city;
-        $category = $r->category->load(['adverts'=>fn($q)=> $q->where('city',$city),'child','child.adverts']);
+        $conditions = [];   
+        $conditions['city'] = $city;
+        if($r->price){
+            $prices = explode('-',$r->price);
+            if($prices[0])$conditions[]=['price','>=',$prices[0]];
+            if($prices[1])$conditions[]=['price','<=',$prices[1]];
+        }
+        $conditions['state'] = 'accepted';
+        
+        $category = $r->category->load(['adverts'=>fn($q)=> $q->where($conditions),'child','child.adverts'=>fn($q)=> $q->where($conditions)]);
         return response(compact('category'))->cookie($cookie);
     }
 

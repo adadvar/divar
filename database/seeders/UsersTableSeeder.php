@@ -50,6 +50,5 @@ class UsersTableSeeder extends Seeder
 
         $user->save();
 
-        $this->command->info('کاربر ' . $user->mobile . ' به سیستم اضافه شد');
     }
 }

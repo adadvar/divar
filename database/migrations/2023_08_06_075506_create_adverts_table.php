@@ -16,18 +16,19 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('slug', 10)->nullable();
             $table->string('slug_url', 100)->nullable();
             $table->string('title', 100)->nullable();
             $table->text('info')->nullable();
-            $table->string('province', 100)->nullable();
-            $table->string('city', 100)->nullable();
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
             $table->float('price')->nullable();
             $table->text('images')->nullable();
             $table->timestamp('publish_at')->nullable();
             $table->enum('state' , Advert::STATE)->default(Advert::STATE_PENDING);
+            // $table->foreignId('city_id')->nullable()->references('id')->on('cities')->cascadeOnUpdate()->cascadeOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
 
@@ -37,11 +38,18 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-                $table->foreign('user_id')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                
         });
     }
 

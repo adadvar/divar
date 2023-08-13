@@ -20,7 +20,9 @@ use App\Models\Advert;
 use App\Models\AdvertFavourite;
 use App\Models\AdvertRecent;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,16 +34,58 @@ class AdvertController extends Controller
 {
     public function list(AdvertListRequest $r)
     {
-        $city = $r->cookie('city');
+        $cityCookie = $r->cookie('city_id');
         $cookie = null;
-        if(!$city || ($r->city && $city != $r->city)){
-            if($r->city){
-                $city = $r->city;
-                $cookie = cookie('city',$city);
-            }else
-            return response(['isCity'=> false], 200);
+        $whereIns=[];
+        if(!$cityCookie || ($r->city && $cityCookie != $r->city)){
+            if($r->city&&
+                $city=City::where('name',$r->city)->with('child')->firstOrFail()){
+                $ids=(City::extractChildrenIds($city));
+                
+                $whereIns['city_id'] = $ids;
+                $cookie = cookie('city_id',$city->id);
+            }else {
+                $city=City::whereNull('parent_id')->firstOrFail();
+               
+            }
         }
-        $adverts = Advert::where('city',$city)->with('user')->orderBy('id')->paginate($r->per_page ?? 10)->all();
+        
+        $conditions = [];
+        if($r->price){
+            $prices = explode('-',$r->price);
+            if($prices[0])$conditions[]=['price','>=',$prices[0]];
+            if($prices[1])$conditions[]=['price','<=',$prices[1]];
+        }
+        // TODO:ایا یک api دیگر زده شود برای ادمین؟ جهت جلوگیری از نمایش pending
+        $conditions['state'] = 'accepted';
+        if(auth('api')->user()->isAdmin()){
+            if($r->state){
+                $conditions['state'] = $r->state;
+            }
+        }
+        if($r->category){
+
+        }
+        $query = Advert::query();
+
+        // Add other conditions to the query
+        $query->where($conditions);
+
+        // Add WHERE IN whereIns for col1 and col2
+        foreach ($whereIns as $column => $values) {
+            $query->whereIn($column, $values);
+        }
+
+        // Include the 'user' relationship
+        $query->with('user');
+
+        // Order by 'id'
+        $query->orderBy('id');
+
+        // Paginate the results
+        $perPage = $r->per_page ?? 10;
+        $adverts = $query->paginate($perPage);
+        
         if($cookie)
             return response($adverts)->cookie($cookie);
         return $adverts;
@@ -137,6 +181,7 @@ class AdvertController extends Controller
     {
         $advert = $r->advert;
         $advert->state = $r->state;
+        // $advert->publish_at = $r->state == 'accepted'? Carbon::now(): '';
         $advert->save();
 
         return response($advert);
