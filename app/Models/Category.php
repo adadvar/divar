@@ -54,4 +54,15 @@ class Category extends Model
             $category->children()->delete();
         });
     }
+
+    static function extractChildrenIds($category){
+        $categoryIds = [$category->id];
+
+        if ($category->child) {
+            foreach ($category->child as $child) {
+                $categoryIds = array_merge($categoryIds, self::extractChildrenIds($child));
+            }
+        }
+        return $categoryIds;
+    }
 }

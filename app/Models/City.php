@@ -23,12 +23,6 @@ class City extends Model
     }
 
     static function extractChildrenIds($city){
-            // $cities = json_decode($cities);
-            // foreach($cities as $city) {
-            //     echo [$city->id,self::extractChildrenIds($city->child)]; 
-            // }
-            // echo $cities;echo self::extractChildrenIds($cities->child);
-
         $cityIds = [$city->id];
 
         if ($city->child) {
@@ -36,7 +30,6 @@ class City extends Model
                 $cityIds = array_merge($cityIds, self::extractChildrenIds($child));
             }
         }
-
         return $cityIds;
-}
+    }
 }

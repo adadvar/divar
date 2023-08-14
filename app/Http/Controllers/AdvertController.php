@@ -37,6 +37,8 @@ class AdvertController extends Controller
         $cityCookie = $r->cookie('city_id');
         $cookie = null;
         $whereIns=[];
+        $conditions = [];
+
         if(!$cityCookie || ($r->city && $cityCookie != $r->city)){
             if($r->city&&
                 $city=City::where('name',$r->city)->with('child')->firstOrFail()){
@@ -50,12 +52,12 @@ class AdvertController extends Controller
             }
         }
         
-        $conditions = [];
         if($r->price){
             $prices = explode('-',$r->price);
             if($prices[0])$conditions[]=['price','>=',$prices[0]];
             if($prices[1])$conditions[]=['price','<=',$prices[1]];
         }
+        
         // TODO:ایا یک api دیگر زده شود برای ادمین؟ جهت جلوگیری از نمایش pending
         $conditions['state'] = 'accepted';
         if(auth('api')->user()->isAdmin()){
@@ -63,8 +65,10 @@ class AdvertController extends Controller
                 $conditions['state'] = $r->state;
             }
         }
-        if($r->category){
 
+        if($r->category){
+                $ids=(Category::extractChildrenIds($r->category));
+                $whereIns['category_id'] = $ids;
         }
         $query = Advert::query();
 
@@ -80,12 +84,14 @@ class AdvertController extends Controller
         $query->with('user');
 
         // Order by 'id'
-        $query->orderBy('id');
+        if($r->o == 'n' || $r->o == null)$query->orderBy('id', 'desc');
+        if($r->o == 'pa')$query->orderBy('price', 'asc');
+        if($r->o == 'pd')$query->orderBy('price', 'desc');
 
         // Paginate the results
         $perPage = $r->per_page ?? 10;
         $adverts = $query->paginate($perPage);
-        
+
         if($cookie)
             return response($adverts)->cookie($cookie);
         return $adverts;

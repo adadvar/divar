@@ -22,12 +22,12 @@ class AdvertsTableSeeder extends Seeder
         }
 
         $userIds = User::pluck('id')->toArray();
-        $cityIds = City::whereDoesntHave('child')->pluck('id')->toArray();
+        // $cityIds = City::whereDoesntHave('child')->pluck('id')->toArray();
         $categoryIds = Category::whereDoesntHave('child')->pluck('id')->toArray();
+        $cityIds = [33,34,35,36,37,53,54,55,56,57];
+        $count = 10;
 
-        
-
-        for ($i = 0; $i < 300; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             $categoryId = $categoryIds[array_rand($categoryIds)];
             $userId = $userIds[array_rand($userIds)];
             $cityId = $cityIds[array_rand($cityIds)];
