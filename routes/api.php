@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,12 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::group(['prefix'=>'/test'],function($r){
+    $r->get('/migrate',[TestController::class,'migrate']);
+    $r->get('/',[TestController::class,'index']);
+    $r->get('/get',[TestController::class,'getSession']);
+});
 
 Route::group([], function($router){ 
 

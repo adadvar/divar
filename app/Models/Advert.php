@@ -26,7 +26,7 @@ class Advert extends Model
 
     public function getRouteKeyName()
     {
-        return 'slug';
+        return 'slug_url';
     }
 
     public function user()

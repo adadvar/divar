@@ -22,13 +22,18 @@ return new class extends Migration
             $table->enum('type', User::TYPES)->default(User::TYPE_USER);
             $table->string('avatar', 100)->nullable();
             $table->string('website')->nullable();
-            $table->string('province', 100)->nullable();
-            $table->string('city', 100)->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('verify_code', 6)->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
 
             $table->softDeletes();
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

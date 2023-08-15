@@ -26,8 +26,7 @@ class UserFactory extends Factory
             'mobile' => '+989' . random_int(1111 , 9999) . random_int(11111 , 99999),
             'avatar' => null,
             'website' => fake()->url(),
-            'province' => null,
-            'city' => null,
+            'city_id' => null,
             'verify_code' => null,
             'verified_at' => now(),
         ];

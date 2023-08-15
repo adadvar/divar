@@ -50,28 +50,6 @@ class AdvertController extends Controller
             $categoryRequest = Category::whereSlug($r->param1)->first();
         }
 
-        dd($cityCookieId,$cityRequest, $categoryRequest);
-        /*if($cityCookieId){
-            if($r->city){
-                if($cityCookieId==$r->city){
-                   //set conditions if not iran
-                }else{
-                   //set cookie
-                   //set conditions if not iran
-                }
-            }else{
-                   //set conditions if not iran
-            }
-        }
-        if(!$cityCookieId) {
-            if($r->city){
-                //set cookie
-                //set conditions if not iran
-            }else{
-                //set conditions if not iran
-            }
-        }*/
-/////////////////////////////////////////////////////////////////////////////
         $iran = City::whereSlug('iran')->first();
         if ($cityCookieId) {
             $city = City::with('child')->find($cityCookieId);
