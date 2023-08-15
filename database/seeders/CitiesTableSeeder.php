@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\City;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CitiesTableSeeder extends Seeder
 {
@@ -87,12 +88,14 @@ class CitiesTableSeeder extends Seeder
         City::create([
             'name' => 'ایران',
             'parent_id' => null,
+            'slug' => 'iran',
         ]);
 
         foreach($cities as $city){
             City::create([
                 'name' => $city,
                 'parent_id' => 1,
+                'slug' => Str::slug($city),
             ]);
 
         }
@@ -101,6 +104,7 @@ class CitiesTableSeeder extends Seeder
                 City::create([
                     'name' => $subCity,
                     'parent_id' => $k+2,
+                    'slug' => Str::slug($subCity),
                 ]);
             }
         }

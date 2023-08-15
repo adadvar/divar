@@ -124,7 +124,7 @@ Route::group(['prefix' => 'category'], function ($router) {
 
 Route::group(['prefix' => 'advert'], function ($router) {
 
-    $router->get('/{city?}/ad/{category?}', [
+    $router->get('/list/{param1?}/{param2?}', [
         AdvertController::class, 'list'
     ])->name('advert.list');
 

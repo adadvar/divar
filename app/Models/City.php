@@ -11,6 +11,7 @@ class City extends Model
 
     protected $table = 'cities';
     protected $fillable = ['name','parent_id'];
+    protected $routeKeyName = 'slug';
 
     public function parent()
     {

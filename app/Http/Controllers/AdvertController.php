@@ -34,23 +34,66 @@ class AdvertController extends Controller
 {
     public function list(AdvertListRequest $r)
     {
-        $cityCookie = $r->cookie('city_id');
-        $cookie = null;
+        $cityCookieId = $r->cookie('city_id');
+        $newCookie = null;
         $whereIns=[];
         $conditions = [];
+        $cityRequest = null;
+        $categoryRequest = null;
 
-        if(!$cityCookie || ($r->city && $cityCookie != $r->city)){
-            if($r->city&&
-                $city=City::where('name',$r->city)->with('child')->firstOrFail()){
-                $ids=(City::extractChildrenIds($city));
-                
-                $whereIns['city_id'] = $ids;
-                $cookie = cookie('city_id',$city->id);
-            }else {
-                $city=City::whereNull('parent_id')->firstOrFail();
-               
+        if($r->param1 && $r->param2){
+            $cityRequest = City::whereSlug($r->param1)->first();
+            $categoryRequest = Category::whereSlug($r->param2)->first();
+        }
+        if($r->param1 && !$r->param2){
+            $cityRequest = City::whereSlug($r->param1)->first();
+            $categoryRequest = Category::whereSlug($r->param1)->first();
+        }
+
+        dd($cityCookieId,$cityRequest, $categoryRequest);
+        /*if($cityCookieId){
+            if($r->city){
+                if($cityCookieId==$r->city){
+                   //set conditions if not iran
+                }else{
+                   //set cookie
+                   //set conditions if not iran
+                }
+            }else{
+                   //set conditions if not iran
             }
         }
+        if(!$cityCookieId) {
+            if($r->city){
+                //set cookie
+                //set conditions if not iran
+            }else{
+                //set conditions if not iran
+            }
+        }*/
+/////////////////////////////////////////////////////////////////////////////
+        $iran = City::whereSlug('iran')->first();
+        if ($cityCookieId) {
+            $city = City::with('child')->find($cityCookieId);
+            if ($cityRequest && $cityCookieId != $cityRequest) {
+                // Set cookie
+                $newCookie = cookie('city_id', $cityRequest->id);
+                $city = City::with('child')->find($cityRequest->id);
+            }
+        } else{
+            if ($cityRequest) {
+                // Set cookie
+                $newCookie = cookie('city_id', $cityRequest->id);
+                $city = $cityRequest->load('child');
+            }else $city = $iran;
+        }
+
+        // Set conditions if not Iran
+        if($city->id != $iran->id){
+            $ids = City::extractChildrenIds($city);
+            $whereIns['city_id'] = $ids;
+        }
+
         
         if($r->price){
             $prices = explode('-',$r->price);
@@ -66,8 +109,8 @@ class AdvertController extends Controller
             }
         }
 
-        if($r->category){
-                $ids=(Category::extractChildrenIds($r->category));
+        if($categoryRequest){
+                $ids=(Category::extractChildrenIds($categoryRequest));
                 $whereIns['category_id'] = $ids;
         }
         $query = Advert::query();
@@ -92,9 +135,9 @@ class AdvertController extends Controller
         $perPage = $r->per_page ?? 10;
         $adverts = $query->paginate($perPage);
 
-        if($cookie)
-            return response($adverts)->cookie($cookie);
-        return $adverts;
+        if($newCookie)
+            return response($adverts)->cookie($newCookie);
+        return response($adverts);
     }
 
     public function show(AdvertShowRequest $r)

@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Schema;
 class TestController extends Controller
 {
     public function migrate(){
-        Schema::table('adverts', function (Blueprint $table) {
-
-            $table->foreignId('city_id')->nullable()->references('id')->on('cities')->cascadeOnUpdate()->cascadeOnDelete();
+        Schema::create('cities', function (Blueprint $table) {
+            $table->string('slug', 50)->nullable()->after('name');
         });
+
     }
 }

@@ -33,24 +33,17 @@ class AdvertsTableSeeder extends Seeder
             $cityId = $cityIds[array_rand($cityIds)];
             $price = rand(10, 1000) / 10; // Random price between 1 and 100
 
+            $title = fake()->name();
             $advertData = [
                 'category_id' => $categoryId,
                 'user_id' => $userId,
-                'title' => $this->generateFakeTitle(),
+                'title' => $title,
+                'slug_url' => Str::slug($title),
                 'city_id' => $cityId,
                 'price' => $price,
             ];
 
             Advert::create($advertData);
         }
-    }
-
-    private function generateFakeTitle()
-    {
-        $faker = \Faker\Factory::create();
-        $title = $faker->sentence;
-        $title = Str::limit($title, 50); // Limit the title to 50 characters
-
-        return $title;
     }
 }
