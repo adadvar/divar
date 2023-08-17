@@ -38,6 +38,7 @@ class AdvertsTableSeeder extends Seeder
                 'category_id' => $categoryId,
                 'user_id' => $userId,
                 'title' => $title,
+                'slug' => bin2hex(random_bytes(5)),
                 'slug_url' => Str::slug($title),
                 'city_id' => $cityId,
                 'price' => $price,

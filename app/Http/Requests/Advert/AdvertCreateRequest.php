@@ -26,15 +26,16 @@ class AdvertCreateRequest extends FormRequest
     {
         return [
             'category_id' => 'required|exists:categories,id',
+            'city_id' => 'nullable|exists:cities,id',
             'title' => 'required|string|max:100',
             'slug' => 'nullable|string|unique:adverts,slug|max:10',
             'slug_url' => 'nullable|string|unique:adverts,slug_url|max:100',
             'info' => 'nullable|string',
-            'province' => 'nullable|string',
-            'city' => 'nullable|string',
             'lat' => 'nullable|string',
             'long' => 'nullable|string',
             'price' => 'nullable|numeric|gt:0',
+            'images' => 'nullable|array|max:1024',
+            'publish_at' => 'nullable|date_format:Y-m-d H:i:s|after:now',
         ];
     }
 }

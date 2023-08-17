@@ -154,24 +154,29 @@ class AdvertController extends Controller
 
     public function create(AdvertCreateRequest $r)
     {
-        // dd($r->advert_id!=null?true:false);
+        // dd($r->all());
         try {
             DB::beginTransaction();
             $data = $r->validated();
             $user = auth()->user();
+            $imageArr = [];
+
+            foreach ($r->file('images') as $file) {
+                $image = $file;
+                $imageName = time() . bin2hex(random_bytes(5)) . '-image';
+                Storage::disk('adverts')->put('/'.$user->id.'/' . $imageName, $image->get());
+                $imageArr[] = $imageName;
+            }
+            $data['images'] = $imageArr;
+
             $cat_title = Category::find($r->category_id)->title;
             $city = isset($r->city) ? $r->city : '';
             $slug_url = str_replace(' ','-',env('APP_NAME').' '.$city.' '.$r->title.' '.$cat_title.' '.bin2hex(random_bytes(4)));
             $slug = bin2hex(random_bytes(5));
             $data['slug'] = $slug;
             $data['slug_url'] = $slug_url;
-            if($r->advert_id!=null){
-                $advert = Advert::find($r->advert_id);
-                $advert->update($data);
-            }else{
-                $advert = $user->adverts()->create($data);
-            }
-            $advert->advert_id = 'null';
+            
+            $advert = $user->adverts()->create($data);
 
             DB::commit();
             return response($advert, 200);

@@ -17,7 +17,7 @@ class Advert extends Model
     const STATE = [self::STATE_PENDING, self::STATE_ACCEPTED, self::STATE_BLOCKED];
 
     protected $table = 'adverts';
-    protected $fillable = ['category_id', 'user_id', 'title', 'slug', 'slug_url', 'info', 'province', 'city', 'lat', 'long', 'price','images', 'publish_at', 'state','city_id'];
+    protected $fillable = ['category_id', 'user_id', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price','images', 'publish_at', 'state'];
     protected $appends = ['age'];
 
     protected $casts = [
@@ -26,7 +26,7 @@ class Advert extends Model
 
     public function getRouteKeyName()
     {
-        return 'slug_url';
+        return 'slug';
     }
 
     public function user()
