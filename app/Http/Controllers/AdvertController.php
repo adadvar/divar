@@ -87,6 +87,7 @@ class AdvertController extends Controller
             }
         }
 
+
         if($categoryRequest){
                 $ids=(Category::extractChildrenIds($categoryRequest));
                 $whereIns['category_id'] = $ids;

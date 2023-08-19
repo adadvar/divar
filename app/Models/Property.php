@@ -22,4 +22,8 @@ class Property extends Model
     {
         return $this->belongsToMany(PropertyType::class, 'type_id');
     }
+
+    public function readyAnswers(){
+        return $this->hasMany(ReadyAnswer::class);
+    }
 }

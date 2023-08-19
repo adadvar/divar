@@ -30,10 +30,12 @@ class Category extends Model
 
     public function adverts()
     {
-        $advert=$this->hasMany(Advert::class);
-        // if(static::$selectedCity!=null)
-        //  $advert=$advert->where("city",static::$selectedCity);
-        return $advert;
+        return $this->hasMany(Advert::class);
+    }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
     }
 
     public function parent()
