@@ -39,7 +39,7 @@ shell:
 	# docker compose -f $(COMPOSE_FILES) exec --user=www-data app ash
 	docker exec -it divar-app bash
 
-shell-next:
+shell-n:
 	docker exec -it nextjs /bin/sh
 
 shell-as-root:
