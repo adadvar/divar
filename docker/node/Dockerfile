@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY ../../public/front/package.json ./
 
-# COPY ../../public/front/next.config.js ./next.config.js
+COPY ../../public/front/next.config.js ./next.config.js
+
 COPY . .
 
 RUN  npm install

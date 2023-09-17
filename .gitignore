@@ -1,6 +1,7 @@
 /.phpunit.cache
 /node_modules
 /public/front/node_modules
+/public/front/.next
 /public/build
 /public/hot
 /public/storage
