@@ -6,10 +6,34 @@
   --bg-color : #fff;
   --text-color : #0000008f;
   --text-size : 15px;
+  --foreground-rgb: 0, 0, 0;
+  background: var(--bg-color);
+
 }
 
-:root, [data-theme] {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-size: var(--text-size);
+@font-face {
+	font-family: "iran";
+	src: url("../public/fonts/IRANSans(FaNum)_Light.ttf") format("embedded-opentype"),
+		 url("../public/fonts/IRANSans(FaNum)_Light.ttf") format("truetype");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+  }
+}
+
+body {
+  font-family: iran !important;
+  color: rgb(var(--text-color));
+}
+
+.btn-hover, .btn-hover * {
+  @apply transition duration-300 ease-in-out
+}
+
+@layer utilities {
+  .collapse {
+  visibility: visible;
+  }
 }
