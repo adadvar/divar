@@ -1,22 +1,47 @@
-import { useDispatch } from "react-redux";
-import { closeSearch } from "../GlobalRedux/features/global/globalSlice";
+"use client";
+
+import { useDispatch, useSelector } from "react-redux";
+import { closeDialog } from "../GlobalRedux/features/global/globalSlice";
+import { DIALOG_TYPE_CITY, DIALOG_TYPE_SEARCH } from "@/public/utils";
+import { RootState } from "../GlobalRedux/store";
 
 interface Props {
-    top: number;
-    left: number;
-    isOpen: boolean;
+    typeOpenDialog: string;
 }
 
-const Overlay = ({ top, left, isOpen }: Props) => {
+const Overlay = () => {
+    const typeOpenDialog = useSelector(
+        (state: RootState) => state.global.typeOpenDialog
+    );
+
     const dispatch = useDispatch();
 
+    const handleHight = () => {
+        switch (typeOpenDialog) {
+            case DIALOG_TYPE_SEARCH:
+                return 66;
+
+            case DIALOG_TYPE_CITY:
+                return 0;
+
+            default:
+                return 0;
+        }
+    };
+
+    const hight = handleHight();
+
     return (
-        <div
-            className={`w-full h-[calc(100vh-66px)] absolute bottom-0 left-[${left}px] bg-black ${
-                isOpen ? "opacity-30" : "opacity-0"
-            } overflow-auto transition duration-300 ease-in-out`}
-            onClick={() => dispatch(closeSearch())}
-        ></div>
+        <>
+            {typeOpenDialog && (
+                <div
+                    className={`w-full h-[calc(100vh-${hight}px)] absolute bottom-0 left-[0px] bg-black ${
+                        typeOpenDialog ? "opacity-30" : "opacity-0"
+                    } overflow-auto transition duration-300 ease-in-out`}
+                    onClick={() => dispatch(closeDialog())}
+                ></div>
+            )}
+        </>
     );
 };
 

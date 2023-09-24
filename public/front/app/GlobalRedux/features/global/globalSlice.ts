@@ -1,36 +1,27 @@
 "use client";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface GlobalState {
-    isSearchOpen: boolean;
-    isCityOpen: boolean;
+    typeOpenDialog: string;
 }
 
 const initialState: GlobalState = {
-    isSearchOpen: false,
-    isCityOpen: false,
+    typeOpenDialog: ''
 };
 
 export const globalSlice = createSlice({
     name: "global",
     initialState,
     reducers: {
-        closeSearch: (state) => {
-            state.isSearchOpen = false;
+        openDialog: (state, action: PayloadAction<string>) => {
+            state.typeOpenDialog = action.payload
         },
-        openSearch: (state) => {
-            state.isSearchOpen = true;
-        },
-        closeCity: (state) => {
-            state.isCityOpen = false;
-        },
-        openCity: (state) => {
-            state.isSearchOpen = false;
-            state.isCityOpen = true;
-        },
+        closeDialog : (state) => {
+            state.typeOpenDialog = ''
+        }
     },
 });
 
-export const { closeSearch, openSearch, closeCity, openCity } = globalSlice.actions;
+export const { closeDialog, openDialog } = globalSlice.actions;
 export default globalSlice.reducer;

@@ -1,5 +1,8 @@
-import { openCity } from "@/app/GlobalRedux/features/global/globalSlice";
+"use client";
+
+import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import { RootState } from "@/app/GlobalRedux/store";
+import { DIALOG_TYPE_CITY } from "@/public/utils";
 import { BiMap as LocationIcon } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,15 +11,15 @@ interface Props {
 }
 
 const CityButton = ({ text }: Props) => {
-    const isCityOpen = useSelector(
-        (state: RootState) => state.global.isCityOpen
+    const typeOpenDialog = useSelector(
+        (state: RootState) => state.global.typeOpenDialog
     );
     const dispatch = useDispatch();
 
     return (
         <button
             className="btn btn-ghost btn-hover text-gray-500 hover:text-gray-800"
-            onClick={() => dispatch(openCity())}
+            onClick={() => dispatch(openDialog(DIALOG_TYPE_CITY))}
         >
             <div className="text-xl">
                 <LocationIcon />

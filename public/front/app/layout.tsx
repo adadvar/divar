@@ -1,9 +1,7 @@
 import { Providers } from "./GlobalRedux/provider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { useSelector } from "react-redux";
 import Navbar from "./components/Navbar/Index";
-import { RootState } from "./GlobalRedux/store";
 import Overlay from "./components/Overlay";
 
 export const metadata: Metadata = {
@@ -19,20 +17,11 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const isSearchOpen = useSelector(
-        (state: RootState) => state.global.isSearchOpen
-    );
-    const isCityOpen = useSelector(
-        (state: RootState) => state.global.isCityOpen
-    );
     return (
         <html lang="en" dir="rtl">
             <body>
                 <Providers>
-                    {isSearchOpen && (
-                        <Overlay top={66} left={0} isOpen={true} />
-                    )}
-                    {isCityOpen && <Overlay top={0} left={0} isOpen={true} />}
+                    <Overlay />
                     <Navbar />
                     {children}
                 </Providers>
