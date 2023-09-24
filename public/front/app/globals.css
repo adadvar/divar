@@ -23,6 +23,10 @@
   }
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family: iran !important;
   color: rgb(var(--text-color));
