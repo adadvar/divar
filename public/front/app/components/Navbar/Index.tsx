@@ -11,16 +11,16 @@ import SearchBoxNavbar from "./SearchBoxNavbar";
 
 const Navbar = () => {
     return (
-        <div className="shadow-sm w-full">
+        <div className="shadow-sm w-full fixed">
             <div className="navbar justify-between 2xl:container 2xl:px-16 mx-auto px-5">
-                <div className="flex text-center items-center gap-3">
+                <div className="hidden lg:flex text-center items-center gap-3">
                     <Logo />
                     <Divider direction="vertical" style="" />
                     <LocationButton text="تبریز" />
                     <CategoryButton />
                     <SearchBoxNavbar />
                 </div>
-                <div className="flex text-center items-center gap-3">
+                <div className="hidden lg:flex text-center items-center gap-3">
                     <ProfileButton />
                     <ChatButton />
                     <SupportButton />

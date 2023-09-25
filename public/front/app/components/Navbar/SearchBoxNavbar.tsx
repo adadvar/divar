@@ -15,14 +15,14 @@ const SearchBoxNavbar = () => {
 
     return (
         <form>
-            <div className="relative xl:w-[28rem] md:w-[20rem] w-[12rem]">
+            <div className="relative llg:w-[25rem] lg:w-[12rem]">
                 <div className="absolute inset-y-0 start-2 flex items-center pointer-events-none">
                     <SearchIcon />
                 </div>
                 <input
                     type="search"
                     id="category-search"
-                    className="block p-2 ps-8 text-sm text-gray-900 bg-gray-100 outline-none rounded-lg focus:rounded-none focus:rounded-t-lg focus:border-b focus:shadow-md focus:bg-white"
+                    className="block p-2 ps-8 text-sm w-full text-gray-900 bg-gray-100 outline-none rounded-lg focus:rounded-none focus:rounded-t-lg focus:border-b focus:shadow-md focus:bg-white"
                     placeholder="جستجو در همه آگهی ها"
                     onClick={() => dispatch(openDialog(DIALOG_TYPE_SEARCH))}
                 />
