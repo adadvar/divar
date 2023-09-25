@@ -19,6 +19,7 @@ const config: Config = {
   plugins: [
     require("daisyui"),
     require('tailwindcss-rtl'),
+    require('tailwind-scrollbar'),
   ],
   daisyui: {
     rtl: true,

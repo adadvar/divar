@@ -16,7 +16,7 @@ const Overlay = () => {
 
     const dispatch = useDispatch();
 
-    const handleHight = () => {
+    const handleHeight = () => {
         switch (typeOpenDialog) {
             case DIALOG_TYPE_SEARCH:
                 return 66;
@@ -29,13 +29,13 @@ const Overlay = () => {
         }
     };
 
-    const hight = handleHight();
+    const height = handleHeight();
 
     return (
         <>
             {typeOpenDialog && (
                 <div
-                    className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 left-0 bg-black ${
+                    className={`w-full h-[calc(100vh_-_0px)] absolute bottom-0 bg-black ${
                         typeOpenDialog ? "opacity-30" : "opacity-0"
                     } overflow-auto transition duration-300 ease-in-out`}
                     onClick={() => dispatch(closeDialog())}

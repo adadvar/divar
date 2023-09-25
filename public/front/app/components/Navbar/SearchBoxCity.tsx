@@ -22,12 +22,9 @@ const SearchBoxCity = () => {
                 <input
                     type="search"
                     id="category-search"
-                    className="block xl:w-[28rem] md:w-[20rem] w-[12rem] p-2 text-sm text-gray-900 bg-white border focus:outline-none focus:border-2 focus:border-red-700 rounded-lg"
-                    placeholder="جستجو در همه آگهی ها"
+                    className="block w-full p-2 text-sm text-gray-900 bg-white border focus:outline-none focus:border-2 focus:border-red-700 rounded-lg"
+                    placeholder="جستجو در شهرها"
                 />
-                {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_SEARCH && (
-                    <div className="absolute left-0 right-0"></div>
-                )}
             </div>
         </form>
     );

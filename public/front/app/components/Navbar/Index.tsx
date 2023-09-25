@@ -3,7 +3,6 @@ import Logo from "./Logo";
 import Divider from "./Divider";
 import LocationButton from "./CityButton";
 import CategoryButton from "./CategoryButton";
-import SearchInput from "./SearchInput";
 import ProfileButton from "./ProfileButton";
 import ChatButton from "./ChatButton";
 import SupportButton from "./SupportButton";
@@ -18,7 +17,7 @@ const Navbar = () => {
                     <Logo />
                     <Divider direction="vertical" style="" />
                     <LocationButton text="تبریز" />
-                    <CategoryButton text="دسته ها" />
+                    <CategoryButton />
                     <SearchBoxNavbar />
                 </div>
                 <div className="flex text-center items-center gap-3">
