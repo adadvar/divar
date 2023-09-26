@@ -1,13 +1,16 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import { closeDialog } from "../GlobalRedux/features/global/globalSlice";
+import { closeDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import {
     DIALOG_TYPE_CATEGORY,
     DIALOG_TYPE_CITY,
     DIALOG_TYPE_SEARCH,
+    DIALOG_TYPE_SEARCH_MOB,
 } from "@/public/utils";
-import { RootState } from "../GlobalRedux/store";
+import { RootState } from "@/app/GlobalRedux/store";
+import CitySelectOverlay from "./navbar/city/CitySelectOverlay";
+import SearchMobOverlay from "./navbar/advert/AdvertSearchMobOverlay";
 
 interface Props {
     typeOpenDialog: string;
@@ -38,7 +41,13 @@ const Overlay = () => {
 
     return (
         <>
-            {typeOpenDialog && (
+            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_SEARCH_MOB && (
+                <SearchMobOverlay />
+            )}
+            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_CITY && (
+                <CitySelectOverlay />
+            )}
+            {typeOpenDialog && typeOpenDialog != DIALOG_TYPE_SEARCH_MOB && (
                 <div
                     className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 bg-black ${
                         typeOpenDialog ? "opacity-30" : "opacity-0"

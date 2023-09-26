@@ -1,8 +1,8 @@
-import { Providers } from "./GlobalRedux/provider";
 import "./globals.css";
+import { Providers } from "@/app/GlobalRedux/provider";
 import type { Metadata } from "next";
-import Navbar from "./components/Navbar/Index";
-import Overlay from "./components/Overlay";
+import Navbar from "@/app/components/navbar/Index";
+import Overlay from "@/app/components/Overlay";
 
 export const metadata: Metadata = {
     title: "Create Next App",
