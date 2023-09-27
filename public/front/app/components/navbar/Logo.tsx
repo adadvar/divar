@@ -2,10 +2,14 @@ import logo from "@/public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 
-const Logo = () => {
+interface Props {
+    size: number;
+}
+
+const Logo = ({ size }: Props) => {
     return (
         <Link href="/">
-            <Image src={logo} width={50} height={50} alt=""></Image>
+            <Image src={logo} width={size} height={size} alt=""></Image>
         </Link>
     );
 };

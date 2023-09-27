@@ -15,7 +15,7 @@ const Index = () => {
         <div className="shadow-sm w-full fixed">
             <div className="navbar justify-between 2xl:container 2xl:px-16 mx-auto px-5">
                 <div className="hidden lg:flex items-center space-x-3">
-                    <Logo />
+                    <Logo size={50} />
                     <Divider direction="vertical" style="" />
                     <CityButton text="تبریز" />
                     <CategoryButton />

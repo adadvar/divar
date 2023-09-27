@@ -17,7 +17,6 @@ const SearchMobOverlay = () => {
             {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_SEARCH_MOB && (
                 <div
                     className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 bg-white overflow-auto z-50`}
-                    onClick={() => dispatch(closeDialog())}
                 ></div>
             )}
         </>

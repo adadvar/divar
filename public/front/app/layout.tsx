@@ -3,6 +3,7 @@ import { Providers } from "@/app/GlobalRedux/provider";
 import type { Metadata } from "next";
 import Navbar from "@/app/components/navbar/Index";
 import Overlay from "@/app/components/Overlay";
+import ButtomNavbar from "./components/navbar/ButtomIndex";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -24,6 +25,7 @@ export default function RootLayout({
                     <Overlay />
                     <Navbar />
                     {children}
+                    <ButtomNavbar />
                 </Providers>
             </body>
         </html>
