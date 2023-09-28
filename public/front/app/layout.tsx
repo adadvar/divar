@@ -3,7 +3,7 @@ import { Providers } from "@/app/GlobalRedux/provider";
 import type { Metadata } from "next";
 import Navbar from "@/app/components/navbar/Index";
 import Overlay from "@/app/components/Overlay";
-import ButtomNavbar from "./components/navbar/BottomIndex";
+import ButtomNavbar from "./components/navbar/IndexBottom";
 
 export const metadata: Metadata = {
     title: "Create Next App",

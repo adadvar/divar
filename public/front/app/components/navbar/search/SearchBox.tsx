@@ -4,7 +4,7 @@ import { BiSearch as SearchIcon } from "react-icons/bi";
 import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import SearchItems from "./AdvertSearchItems";
+import SearchItems from "./SearchItems";
 import { DIALOG_TYPE_SEARCH } from "@/public/utils";
 
 const SearchBox = () => {

@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import {
     DIALOG_TYPE_CATEGORY,
+    DIALOG_TYPE_CATEGORY_MOB,
     DIALOG_TYPE_CITY,
     DIALOG_TYPE_CITY_MOB,
     DIALOG_TYPE_SEARCH,
     DIALOG_TYPE_SEARCH_MOB,
 } from "@/public/utils";
 import { RootState } from "@/app/GlobalRedux/store";
-import CitySelectOverlay from "./navbar/city/CitySelectOverlay";
-import SearchMobOverlay from "./navbar/advert/AdvertSearchMobOverlay";
-import CitySelectMobOverlay from "./navbar/city/CitySelectMobOverlay";
+import CitySelectOverlay from "./navbar/city/SelectOverlay";
+import SearchMobOverlay from "./navbar/search/SearchMobOverlay";
+import CitySelectMobOverlay from "./navbar/city/SelectMobOverlay";
+import CateogrySelectMobOverlay from "./navbar/category/SelectMobOverlay";
 
 interface Props {
     typeOpenDialog: string;
@@ -43,19 +45,24 @@ const Overlay = () => {
 
     return (
         <>
-            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_SEARCH_MOB && (
-                <SearchMobOverlay />
-            )}
             {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_CITY && (
                 <CitySelectOverlay />
+            )}
+            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_SEARCH_MOB && (
+                <SearchMobOverlay />
             )}
             {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_CITY_MOB && (
                 <CitySelectMobOverlay />
             )}
+            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_CATEGORY_MOB && (
+                <CateogrySelectMobOverlay />
+            )}
             {typeOpenDialog &&
-                ![DIALOG_TYPE_SEARCH_MOB, DIALOG_TYPE_CITY_MOB].includes(
-                    typeOpenDialog
-                ) && (
+                ![
+                    DIALOG_TYPE_SEARCH_MOB,
+                    DIALOG_TYPE_CITY_MOB,
+                    DIALOG_TYPE_CATEGORY_MOB,
+                ].includes(typeOpenDialog) && (
                     <div
                         className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 bg-black ${
                             typeOpenDialog ? "opacity-30" : "opacity-0"

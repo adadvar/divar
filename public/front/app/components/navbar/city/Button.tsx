@@ -5,13 +5,13 @@ import { RootState } from "@/app/GlobalRedux/store";
 import { DIALOG_TYPE_CITY } from "@/public/utils";
 import { BiMap as LocationIcon } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import CitySelectOverlay from "./CitySelectOverlay";
+import CitySelectOverlay from "./SelectOverlay";
 
 interface Props {
     text: string;
 }
 
-const CityButton = ({ text }: Props) => {
+const Button = ({ text }: Props) => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
@@ -32,4 +32,4 @@ const CityButton = ({ text }: Props) => {
     );
 };
 
-export default CityButton;
+export default Button;

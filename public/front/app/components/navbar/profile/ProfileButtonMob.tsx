@@ -1,32 +1,32 @@
 "use client";
 
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import { RootState } from "@/app/GlobalRedux/store";
-import { DIALOG_TYPE_CHAT_MOB } from "@/public/utils";
-import React from "react";
-import { BsFillChatFill as ChatIcon } from "react-icons/bs";
+import { DIALOG_TYPE_CATEGORY, DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 import { useDispatch, useSelector } from "react-redux";
+import { BsPersonFill as PersonIcon } from "react-icons/bs";
+import { RootState } from "@/app/GlobalRedux/store";
 
-const ChatButtonMob = () => {
+const ProfileButtonMob = () => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
     const dispatch = useDispatch();
+
     return (
         <button
             className={`flex flex-col gap-1 px-2 m-0 ${
-                typeOpenDialog == DIALOG_TYPE_CHAT_MOB
+                typeOpenDialog == DIALOG_TYPE_PROFILE_MOB
                     ? "text-red-900"
                     : "text-gray-800"
             }`}
-            onClick={() => dispatch(openDialog(DIALOG_TYPE_CHAT_MOB))}
+            onClick={() => dispatch(openDialog(DIALOG_TYPE_PROFILE_MOB))}
         >
             <div className="text-xl">
-                <ChatIcon />
+                <PersonIcon />
             </div>
-            <p className="text-xs">دسته ها</p>
+            <p className="text-xs">دیوارمن</p>
         </button>
     );
 };
 
-export default ChatButtonMob;
+export default ProfileButtonMob;

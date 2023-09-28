@@ -4,7 +4,7 @@ import { BiSearch as SearchIcon } from "react-icons/bi";
 import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector, useDispatch } from "react-redux";
 
-const CitySearchBox = () => {
+const SearchBox = () => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
@@ -27,4 +27,4 @@ const CitySearchBox = () => {
     );
 };
 
-export default CitySearchBox;
+export default SearchBox;

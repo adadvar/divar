@@ -1,5 +1,5 @@
 import Divider from "@/app/components/Divider";
-import SearchItem from "./AdvertSearchItem";
+import SearchItem from "./SearchItem";
 
 const SearchItems = () => {
     return (

@@ -2,11 +2,11 @@
 
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import { RootState } from "@/app/GlobalRedux/store";
-import { DIALOG_TYPE_CATEGORY } from "@/public/utils";
+import { DIALOG_TYPE_CATEGORY_MOB } from "@/public/utils";
 import { BiListUl as ListIcon } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 
-const CategoryButtonMob = () => {
+const ButtonMob = () => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
@@ -14,8 +14,12 @@ const CategoryButtonMob = () => {
 
     return (
         <button
-            className="flex flex-col gap-1 text-gray-500 hover:text-gray-800 px-2 m-0"
-            onClick={() => dispatch(openDialog(DIALOG_TYPE_CATEGORY))}
+            className={`flex flex-col gap-1 px-2 m-0 ${
+                typeOpenDialog == DIALOG_TYPE_CATEGORY_MOB
+                    ? "text-red-900"
+                    : "text-gray-800"
+            }`}
+            onClick={() => dispatch(openDialog(DIALOG_TYPE_CATEGORY_MOB))}
         >
             <div className="text-xl">
                 <ListIcon />
@@ -25,4 +29,4 @@ const CategoryButtonMob = () => {
     );
 };
 
-export default CategoryButtonMob;
+export default ButtonMob;

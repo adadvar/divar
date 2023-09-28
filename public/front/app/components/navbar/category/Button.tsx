@@ -13,7 +13,7 @@ interface Props {
     text: string;
 }
 
-const CategoryButton = () => {
+const Button = () => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
@@ -36,4 +36,4 @@ const CategoryButton = () => {
     );
 };
 
-export default CategoryButton;
+export default Button;

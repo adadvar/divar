@@ -1,14 +1,14 @@
 import React from "react";
 import Logo from "./Logo";
 import Divider from "../Divider";
-import CityButton from "./city/CityButton";
-import CategoryButton from "./CategoryButton";
-import ProfileButton from "./ProfileButton";
+import CityButton from "./city/Button";
+import CategoryButton from "./category/Button";
+import ProfileButton from "./profile/ProfileButton";
 import ChatButton from "./ChatButton";
 import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
-import SearchBox from "./advert/AdvertSearchBox";
-import SearchBoxMob from "./advert/AdvertSearchBoxMob";
+import SearchBox from "./search/SearchBox";
+import SearchBoxMob from "./search/SearchBoxMob";
 
 const Index = () => {
     return (

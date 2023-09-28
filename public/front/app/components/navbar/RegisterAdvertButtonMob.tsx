@@ -1,17 +1,25 @@
 "use client";
 
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import { DIALOG_TYPE_CATEGORY } from "@/public/utils";
-import { useDispatch } from "react-redux";
+import { DIALOG_TYPE_CATEGORY, DIALOG_TYPE_REGISTER_MOB } from "@/public/utils";
+import { useDispatch, useSelector } from "react-redux";
 import { BiSolidPlusCircle as AddIcon } from "react-icons/bi";
+import { RootState } from "@/app/GlobalRedux/store";
 
 const RegisterAdvertButtonMob = () => {
+    const typeOpenDialog = useSelector(
+        (state: RootState) => state.global.typeOpenDialog
+    );
     const dispatch = useDispatch();
 
     return (
         <button
-            className="flex flex-col gap-1 text-gray-500 hover:text-gray-800 px-2 m-0"
-            onClick={() => dispatch(openDialog(DIALOG_TYPE_CATEGORY))}
+            className={`flex flex-col gap-1 px-2 m-0 ${
+                typeOpenDialog == DIALOG_TYPE_REGISTER_MOB
+                    ? "text-red-900"
+                    : "text-gray-800"
+            }`}
+            onClick={() => dispatch(openDialog(DIALOG_TYPE_REGISTER_MOB))}
         >
             <div className="text-xl">
                 <AddIcon />
