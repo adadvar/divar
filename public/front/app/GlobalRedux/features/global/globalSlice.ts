@@ -4,10 +4,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface GlobalState {
     typeOpenDialog: string;
+    cats: object;
 }
 
 const initialState: GlobalState = {
-    typeOpenDialog: ''
+    typeOpenDialog: '',
+    cats: {}
 };
 
 export const globalSlice = createSlice({
@@ -19,9 +21,12 @@ export const globalSlice = createSlice({
         },
         closeDialog : (state) => {
             state.typeOpenDialog = ''
-        }
+        },
+        setCats: (state, action: PayloadAction<object>) => {
+            state.cats = action.payload
+        },
     },
 });
 
-export const { closeDialog, openDialog } = globalSlice.actions;
+export const { closeDialog, openDialog,setCats } = globalSlice.actions;
 export default globalSlice.reducer;
