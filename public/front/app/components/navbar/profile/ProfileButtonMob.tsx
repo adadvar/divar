@@ -1,7 +1,7 @@
 "use client";
 
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import { DIALOG_TYPE_CATEGORY, DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
+import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { BsPersonFill as PersonIcon } from "react-icons/bs";
 import { RootState } from "@/app/GlobalRedux/store";

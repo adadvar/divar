@@ -1,7 +1,7 @@
 "use client";
 
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import { DIALOG_TYPE_CATEGORY, DIALOG_TYPE_REGISTER_MOB } from "@/public/utils";
+import { DIALOG_TYPE_REGISTER_MOB } from "@/public/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { BiSolidPlusCircle as AddIcon } from "react-icons/bi";
 import { RootState } from "@/app/GlobalRedux/store";
