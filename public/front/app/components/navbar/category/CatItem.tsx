@@ -24,7 +24,7 @@ const CatItem = ({ cat }: Props) => {
             </div>
             <p className="">{cat.title}</p>
             <div className="text-2xl text-gray-400">
-                <LeftIcon />
+                {cat.child.length > 0 && <LeftIcon />}
             </div>
         </button>
     );

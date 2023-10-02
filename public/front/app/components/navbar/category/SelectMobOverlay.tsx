@@ -41,7 +41,24 @@ const SelectMobOverlay = () => {
                         slug: "frosh-mskony",
                         parent_id: 1,
                         icon: null,
-                        child: [],
+                        child: [
+                            {
+                                id: 7,
+                                title: "فروش آپارتمان",
+                                slug: "frosh-aparteman",
+                                parent_id: 5,
+                                icon: null,
+                                child: [],
+                            },
+                            {
+                                id: 8,
+                                title: "فروش خانه و ویلا",
+                                slug: "frosh-khaneovila",
+                                parent_id: 5,
+                                icon: null,
+                                child: [],
+                            },
+                        ],
                     },
                     {
                         id: 6,
@@ -69,10 +86,15 @@ const SelectMobOverlay = () => {
         <div className="lg:hidden absolute top-0 left-0 right-0 bottom-[66px]  bg-white m-auto rounded-md w-full h-[calc(100vh-66px)] z-50">
             <div className="flex flex-col pt-4 overflow-hidden h-full">
                 <div className="flex justify-between px-4">
-                    <div className="flex">
-                        <button onClick={() => dispatch(setselectedCat(0))}>
-                            <BackIcon />
-                        </button>
+                    <div className="flex items-center">
+                        {selectedCat != 0 && (
+                            <button
+                                className="text-gray-600 rounded-full text-2xl pe-1"
+                                onClick={() => dispatch(setselectedCat(0))}
+                            >
+                                <BackIcon />
+                            </button>
+                        )}
                         <h1 className="text-gray-900 font-bold">{title}</h1>
                     </div>
                     <button

@@ -7,6 +7,7 @@ import {
     DIALOG_TYPE_CATEGORY_MOB,
     DIALOG_TYPE_CITY,
     DIALOG_TYPE_CITY_MOB,
+    DIALOG_TYPE_PROFILE_MOB,
     DIALOG_TYPE_SEARCH,
     DIALOG_TYPE_SEARCH_MOB,
 } from "@/public/utils";
@@ -15,6 +16,7 @@ import CitySelectOverlay from "./navbar/city/SelectOverlay";
 import SearchMobOverlay from "./navbar/search/SearchMobOverlay";
 import CitySelectMobOverlay from "./navbar/city/SelectMobOverlay";
 import CateogrySelectMobOverlay from "./navbar/category/SelectMobOverlay";
+import ProfileMobOverlay from "./navbar/profile/ProfileMobOverlay";
 
 interface Props {
     typeOpenDialog: string;
@@ -57,11 +59,15 @@ const Overlay = () => {
             {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_CATEGORY_MOB && (
                 <CateogrySelectMobOverlay />
             )}
+            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_PROFILE_MOB && (
+                <ProfileMobOverlay />
+            )}
             {typeOpenDialog &&
                 ![
                     DIALOG_TYPE_SEARCH_MOB,
                     DIALOG_TYPE_CITY_MOB,
                     DIALOG_TYPE_CATEGORY_MOB,
+                    DIALOG_TYPE_PROFILE_MOB,
                 ].includes(typeOpenDialog) && (
                     <div
                         className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 bg-black ${
