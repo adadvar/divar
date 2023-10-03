@@ -5,9 +5,6 @@ import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector, useDispatch } from "react-redux";
 
 const SearchBox = () => {
-    const typeOpenDialog = useSelector(
-        (state: RootState) => state.global.typeOpenDialog
-    );
     const dispatch = useDispatch();
 
     return (

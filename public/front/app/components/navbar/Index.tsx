@@ -7,8 +7,8 @@ import ProfileButton from "./profile/ProfileButton";
 import ChatButton from "./ChatButton";
 import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
-import SearchBox from "./search/SearchBox";
-import SearchBoxMob from "./search/SearchBoxMob";
+import SearchBox from "./search/InputBox";
+import SearchBoxMob from "./search/InputBoxMob";
 
 const Index = () => {
     return (

@@ -1,25 +1,26 @@
 "use client";
-
+import { useRef, useEffect } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalRedux/store";
 import { closeDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import { DIALOG_TYPE_SEARCH_MOB } from "@/public/utils";
+import { BiRightArrowAlt as RightIcon } from "react-icons/bi";
+import MobOverlayLayout from "../../MobOverlayLayout";
 
 const SearchMobOverlay = () => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
     const dispatch = useDispatch();
     return (
-        <>
-            {typeOpenDialog && typeOpenDialog == DIALOG_TYPE_SEARCH_MOB && (
-                <div
-                    className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 bg-white overflow-auto z-50`}
-                ></div>
-            )}
-        </>
+        <MobOverlayLayout haveBackButton haveInput>
+            <></>
+        </MobOverlayLayout>
     );
 };
 

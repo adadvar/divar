@@ -24,7 +24,7 @@ const ChatButtonMob = () => {
             <div className="text-xl">
                 <ChatIcon />
             </div>
-            <p className="text-xs">دسته ها</p>
+            <p className="text-xs">چت</p>
         </button>
     );
 };

@@ -36,7 +36,7 @@ const CityItems = () => {
     ];
     
     return (
-        <div className="relative h-full overflow-y-scroll overflow-x-hidden snap-y snap-mandatory z-20 scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20 -mt-5 px-10">
+        <div className="mt-32 px-10">
            {cities.map((c,index) =>
             <CityItem text={Object.values(c)[0]} key={index}/>
   )}

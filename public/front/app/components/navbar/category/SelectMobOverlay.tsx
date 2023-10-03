@@ -14,6 +14,7 @@ import {
 import { RootState } from "@/app/GlobalRedux/store";
 import { cat } from "@/public/interfaces";
 import { findCat } from "@/public/utils";
+import MobOverlayLayout from "../../MobOverlayLayout";
 
 const SelectMobOverlay = () => {
     const global = useSelector((state: RootState) => state.global);
@@ -83,31 +84,15 @@ const SelectMobOverlay = () => {
     }, []);
 
     return (
-        <div className="lg:hidden absolute top-0 left-0 right-0 bottom-[66px]  bg-white m-auto rounded-md w-full h-[calc(100vh-66px)] z-50">
-            <div className="flex flex-col pt-4 overflow-hidden h-full">
-                <div className="flex justify-between px-4">
-                    <div className="flex items-center">
-                        {selectedCat != 0 && (
-                            <button
-                                className="text-gray-600 rounded-full text-2xl pe-1"
-                                onClick={() => dispatch(setselectedCat(0))}
-                            >
-                                <BackIcon />
-                            </button>
-                        )}
-                        <h1 className="text-gray-900 font-bold">{title}</h1>
-                    </div>
-                    <button
-                        className="text-gray-600 bg-gray-200  rounded-full font-semibold hover:bg-gray-300 p-2"
-                        onClick={() => dispatch(closeDialog())}
-                    >
-                        <CloseIcon />
-                    </button>
-                </div>
-                <div className="h-1 left-0 right-0 shadow-sm"></div>
+        <MobOverlayLayout
+            title={title}
+            haveCloseButton
+            haveBackButton={selectedCat != 0}
+        >
+            <div className="mt-16">
                 <CatItems cats={child} />
             </div>
-        </div>
+        </MobOverlayLayout>
     );
 };
 

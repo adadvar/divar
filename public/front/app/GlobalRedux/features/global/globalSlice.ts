@@ -6,6 +6,7 @@ export interface GlobalState {
     typeOpenDialog: string;
     cats: cat[];
     selectedCat: number;
+    selectedCity: number[];
 }
 
 interface cat {
@@ -21,6 +22,7 @@ const initialState: GlobalState = {
     typeOpenDialog: "",
     cats: [],
     selectedCat: 0,
+    selectedCity: [],
 };
 
 export const globalSlice = createSlice({
@@ -29,6 +31,7 @@ export const globalSlice = createSlice({
     reducers: {
         openDialog: (state, action: PayloadAction<string>) => {
             state.typeOpenDialog = action.payload;
+            state.selectedCat = 0;
         },
         closeDialog: (state) => {
             state.typeOpenDialog = "";
@@ -40,10 +43,17 @@ export const globalSlice = createSlice({
         setselectedCat: (state, action: PayloadAction<number>) => {
             state.selectedCat = action.payload;
         },
+        setselectedCity: (state, action: PayloadAction<number[]>) => {
+            state.selectedCity = action.payload;
+        },
     },
 });
 
-export const { closeDialog, openDialog, setCats, setselectedCat } =
-    globalSlice.actions;
+export const { closeDialog, 
+    openDialog, 
+    setCats, 
+    setselectedCat,
+    setselectedCity
+ } = globalSlice.actions;
 
 export default globalSlice.reducer;

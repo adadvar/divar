@@ -7,7 +7,7 @@ import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import SearchItems from "./SearchItems";
 import { DIALOG_TYPE_SEARCH } from "@/public/utils";
 
-const SearchBox = () => {
+const InputBox = () => {
     const typeOpenDialog = useSelector(
         (state: RootState) => state.global.typeOpenDialog
     );
@@ -34,4 +34,4 @@ const SearchBox = () => {
     );
 };
 
-export default SearchBox;
+export default InputBox;

@@ -18,24 +18,25 @@ import {
 } from "react-icons/bi";
 
 import { RootState } from "@/app/GlobalRedux/store";
+import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
+import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
+import MobOverlayLayout from "../../MobOverlayLayout";
 
 const ProfileMobOverlay = () => {
-    const global = useSelector((state: RootState) => state.global);
-    const selectedCat = global.selectedCat;
     const dispatch = useDispatch();
 
     return (
-        <div className="lg:hidden flex flex-col absolute top-0 left-0 right-0 bottom-[66px]  bg-white m-auto rounded-md w-full h-[calc(100vh-66px)] z-50">
-            <div className="text-gray-800 text-sm font-bold shadow-sm">
-                <p className="px-3 py-4">دیوار من</p>
-            </div>
-            <p className="text-gray-800 text-sm px-3 py-4">
+        <MobOverlayLayout title="دیوار من" haveBottomNav>
+            <p className="text-gray-800 text-sm px-3 py-4 mt-16">
                 برای استفاده از تمام امکانات دیوار وارد حساب خود شوید.
             </p>
             <div className="px-6 text-gray-600 text-sm">
-                <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                <button
+                    className="flex items-center hover:bg-gray-200 w-full p-2 rounded"
+                    onClick={() => dispatch(openDialog(DIALOG_TYPE_LOGIN_MOB))}
+                >
                     <LoginIcon />
-                    <p className="ps-2">ورود به حساب کاربری</p>
+                    <p className="ps-2">ورود و ثبت نام</p>
                 </button>
                 <hr className="pb-2 mt-2" />
                 <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
@@ -75,17 +76,17 @@ const ProfileMobOverlay = () => {
                 </button>
             </div>
             <div className="flex flex-1 justify-center items-center text-gray-600">
-                <button className=" hover:bg-gray-200 p-2 rounded-full">
+                <button className="text-lg hover:bg-gray-200 p-2 rounded-full ms-2">
                     <TwitterIcon />
                 </button>
-                <button className=" hover:bg-gray-200 p-2 rounded-full">
+                <button className="text-lg hover:bg-gray-200 p-2 rounded-full ms-2">
                     <InstaIcon />
                 </button>
-                <button className=" hover:bg-gray-200 p-2 rounded-full">
+                <button className="text-lg hover:bg-gray-200 p-2 rounded-full ms-2">
                     <LinkedinIcon />
                 </button>
             </div>
-        </div>
+        </MobOverlayLayout>
     );
 };
 
