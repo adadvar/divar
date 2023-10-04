@@ -14,7 +14,7 @@ const InputBox = () => {
     const dispatch = useDispatch();
 
     return (
-        <form className="relative llg:w-[25rem] lg:w-[12rem]">
+        <form className="relative">
             <div className="absolute inset-y-0 start-2 flex items-center pointer-events-none">
                 <SearchIcon />
             </div>

@@ -12,14 +12,16 @@ import SearchBoxMob from "./search/InputBoxMob";
 
 const Index = () => {
     return (
-        <div className="shadow-sm w-full fixed">
-            <div className="navbar justify-between 2xl:container 2xl:px-16 mx-auto px-5">
+        <div className="shadow-sm fixed flex items-center h-16 top-0 left-0 right-0 bg-white">
+            <div className="flex justify-between w-full 2xl:container 2xl:px-16 px-5">
                 <div className="hidden lg:flex items-center space-x-3">
                     <Logo size={50} />
                     <Divider direction="vertical" style="" />
                     <CityButton text="تبریز" />
                     <CategoryButton />
-                    <SearchBox />
+                    <div className="llg:w-[25rem] lg:w-[12rem]">
+                        <SearchBox />
+                    </div>
                 </div>
                 <div className="hidden lg:flex items-center space-x-3">
                     <ProfileButton />
@@ -27,7 +29,7 @@ const Index = () => {
                     <SupportButton />
                     <RegisterAdvertButton />
                 </div>
-                <div className="lg:hidden w-full">
+                <div className="lg:hidden flex items-center w-full ">
                     <SearchBoxMob />
                 </div>
             </div>

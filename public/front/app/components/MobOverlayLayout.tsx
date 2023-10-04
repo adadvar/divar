@@ -2,6 +2,7 @@
 import React, { ReactNode, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
+    closeDialog,
     openDialog,
     setselectedCat,
 } from "../GlobalRedux/features/global/globalSlice";
@@ -47,16 +48,16 @@ const MobOverlayLayout = ({
     }, []);
     return (
         <div
-            className={`lg:hidden absolute overflow-y-auto top-0 left-0 right-0 bottom-[${
-                haveBottomNav ? "66px" : "0px"
-            }] bg-white  w-full h-[calc(100vh-${
+            className={`lg:hidden absolute overflow-y-auto top-0 left-0 right-0 ${
+                haveBottomNav ? "bottom-[66px]" : "bottom-0"
+            } bg-white w-full h-[calc(100vh-${
                 haveBottomNav ? "66px" : "0px"
             })] z-50`}
         >
-            <div className="fixed p-4 shadow-sm top-0 left-0 right-0 bg-white">
-                <div className="flex justify-between text-sm font-bold">
+            <div className="fixed flex items-center shadow-sm p-4 h-16 top-0 left-0 right-0 bg-white">
+                <div className="flex justify-between w-full  text-sm font-bold">
                     <div className="flex items-center">
-                        {haveBackButton && (
+                        {haveBackButton && haveCat && (
                             <button
                                 className="text-gray-600 rounded-full text-2xl pe-1"
                                 onClick={() =>
@@ -67,11 +68,20 @@ const MobOverlayLayout = ({
                             </button>
                         )}
 
+                        {haveBackButton && !haveCat && (
+                            <button
+                                className="text-gray-600 rounded-full text-2xl pe-1"
+                                onClick={() => dispatch(closeDialog())}
+                            >
+                                <BackIcon />
+                            </button>
+                        )}
+
                         {title && (
                             <p className="text-gray-900 font-bold">{title}</p>
                         )}
                         {haveInput && (
-                            <form className="flex">
+                            <form className="flex p-[5px]">
                                 <input
                                     ref={inputRef}
                                     type="text"
