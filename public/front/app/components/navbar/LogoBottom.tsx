@@ -25,7 +25,7 @@ const LogoBottom = () => {
     return (
         <Link
             href="/"
-            className="flex flex-col px-2"
+            className="flex flex-col items-center px-2"
             onClick={() => dispatch(closeDialog())}
         >
             <Image src={src} width={25} height={25} alt=""></Image>

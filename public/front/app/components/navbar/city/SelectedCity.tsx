@@ -8,7 +8,7 @@ const SelectedCity = () => {
         (state: RootState) => state.global.selectedCity
     );
     return (
-        <div className="py-2 text-xs text-gray-500">
+        <div className="w-full py-2 text-xs text-gray-500">
             {selectedCity && selectedCity.length ? (
                 selectedCity.map((city) => (
                     <div className="flex text-red-900 bg-red-200 border border-red-900">

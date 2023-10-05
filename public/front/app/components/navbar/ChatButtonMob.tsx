@@ -14,7 +14,7 @@ const ChatButtonMob = () => {
     const dispatch = useDispatch();
     return (
         <button
-            className={`flex flex-col gap-1 px-2 m-0 ${
+            className={`flex flex-col items-center gap-1 px-2 m-0 ${
                 typeOpenDialog == DIALOG_TYPE_CHAT_MOB
                     ? "text-red-900"
                     : "text-gray-800"
