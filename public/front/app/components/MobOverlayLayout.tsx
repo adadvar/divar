@@ -95,7 +95,7 @@ const MobOverlayLayout = ({
                         )}
                     </div>
                     {haveClearButton && (
-                        <button className="text-red-900 text-sm rounded-md px-2 py-1 hover:bg-red-50">
+                        <button className="text-red-700 text-sm rounded-md px-2 py-1 hover:bg-red-50">
                             حذف همه
                         </button>
                     )}

@@ -12,6 +12,7 @@ import {
 } from "../GlobalRedux/features/global/globalSlice";
 import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 import MobOverlayLayout from "./MobOverlayLayout";
+import Link from "next/link";
 const LoginMobOverlay = () => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -38,6 +39,22 @@ const LoginMobOverlay = () => {
                     placeholder="شماره موبایل یا ایمیل"
                 />
             </form>
+            <div className="flex flex-wrap p-4 text-sm text-gray-500">
+                <Link href={""} className="text-red-700">
+                    شرایط استفاده از خدمات
+                </Link>
+                <span>&nbsp;و&nbsp;</span>
+                <Link href={""} className="text-red-700">
+                    حریم خصوصی
+                </Link>
+                <span>&nbsp;دیوار را می پذیرم.</span>
+            </div>
+
+            <div className="fixed bottom-0 left-0 right-0 p-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
+                <button className="btn btn-ghost w-full bg-red-700 text-white">
+                    تایید
+                </button>
+            </div>
         </MobOverlayLayout>
     );
 };

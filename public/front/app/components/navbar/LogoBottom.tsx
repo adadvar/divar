@@ -31,7 +31,7 @@ const LogoBottom = () => {
             <Image src={src} width={25} height={25} alt=""></Image>
             <p
                 className={`text-xs ${
-                    typeOpenDialog == "" ? "text-red-900" : "text-gray-800"
+                    typeOpenDialog == "" ? "text-red-700" : "text-gray-800"
                 } `}
             >
                 آگهی ها

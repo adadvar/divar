@@ -16,7 +16,7 @@ const RegisterAdvertButtonMob = () => {
         <button
             className={`flex flex-col items-center gap-1 px-2 m-0 ${
                 typeOpenDialog == DIALOG_TYPE_REGISTER_MOB
-                    ? "text-red-900"
+                    ? "text-red-700"
                     : "text-gray-800"
             }`}
             onClick={() => dispatch(openDialog(DIALOG_TYPE_REGISTER_MOB))}
