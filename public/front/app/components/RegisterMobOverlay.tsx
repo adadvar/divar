@@ -10,10 +10,10 @@ import {
     closeDialog,
     openDialog,
 } from "../GlobalRedux/features/global/globalSlice";
-import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
+import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 import MobOverlayLayout from "./MobOverlayLayout";
 import Link from "next/link";
-const LoginMobOverlay = () => {
+const RegisterMobOverlay = () => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -22,7 +22,7 @@ const LoginMobOverlay = () => {
     }, []);
 
     return (
-        <MobOverlayLayout haveCloseButton title="ورود به حساب کاربری">
+        <MobOverlayLayout haveCloseButton title="ایجاد حساب کاربری">
             <p className="text-gray-900 font-bold mx-4 mt-24 mb-7">
                 شماره موبایل یا ایمیل خود را وارد کنید{" "}
             </p>
@@ -52,14 +52,7 @@ const LoginMobOverlay = () => {
 
             <div className="flex justify-center flex-wrap p-4 text-sm text-gray-500">
                 <span>اگر در دیوار حساب کاربری ندارید&nbsp;</span>
-                <button
-                    onClick={() =>
-                        dispatch(openDialog(DIALOG_TYPE_REGISTER_USER_MOB))
-                    }
-                    className="text-red-700"
-                >
-                    ثبت نام کنید
-                </button>
+                <button className="text-red-700">ثبت نام کنید</button>
             </div>
 
             <div className="fixed bottom-0 left-0 right-0 p-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
@@ -71,4 +64,4 @@ const LoginMobOverlay = () => {
     );
 };
 
-export default LoginMobOverlay;
+export default RegisterMobOverlay;
