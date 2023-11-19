@@ -1,7 +1,7 @@
 import CityItems from "./CityItems";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import MobOverlayLayout from "../../MobOverlayLayout";
+import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 import { RootState } from "@/app/GlobalRedux/store";
 const SelectMobOverlay = () => {
     const selectedCity = useSelector(

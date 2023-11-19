@@ -20,7 +20,7 @@ import {
 import { RootState } from "@/app/GlobalRedux/store";
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
-import MobOverlayLayout from "../../MobOverlayLayout";
+import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 
 const ProfileMobOverlay = () => {
     const dispatch = useDispatch();

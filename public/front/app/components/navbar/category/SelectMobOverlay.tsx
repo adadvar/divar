@@ -14,7 +14,7 @@ import {
 import { RootState } from "@/app/GlobalRedux/store";
 import { cat } from "@/public/interfaces";
 import { findCat } from "@/public/utils";
-import MobOverlayLayout from "../../MobOverlayLayout";
+import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 
 const SelectMobOverlay = () => {
     const global = useSelector((state: RootState) => state.global);

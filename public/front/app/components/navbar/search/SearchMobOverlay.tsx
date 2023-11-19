@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalRedux/store";
 import { closeDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import { BiRightArrowAlt as RightIcon } from "react-icons/bi";
-import MobOverlayLayout from "../../MobOverlayLayout";
+import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 
 const SearchMobOverlay = () => {
     const typeOpenDialog = useSelector(

@@ -5,13 +5,13 @@ import {
     closeDialog,
     openDialog,
     setselectedCat,
-} from "../GlobalRedux/features/global/globalSlice";
+} from "../../GlobalRedux/features/global/globalSlice";
 import {
     BsXLg as CloseIcon,
     BsArrowRightShort as BackIcon,
 } from "react-icons/bs";
-import CitySearchBox from "./navbar/city/SearchBox";
-import SelectedCity from "./navbar/city/SelectedCity";
+import CitySearchBox from "../navbar/city/SearchBox";
+import SelectedCity from "../navbar/city/SelectedCity";
 
 interface LayoutProps {
     children: ReactNode;
@@ -22,7 +22,7 @@ interface LayoutProps {
     haveSearchInput?: boolean;
     haveClearButton?: boolean;
     haveCat?: boolean;
-    whereBack?: number;
+    whereBack?: string;
     whereClose?: string;
     title?: string;
 }
@@ -36,7 +36,7 @@ const MobOverlayLayout = ({
     haveSearchInput,
     haveClearButton,
     haveCat,
-    whereBack = 0,
+    whereBack = "",
     whereClose = "",
     title,
 }: LayoutProps) => {
@@ -64,9 +64,7 @@ const MobOverlayLayout = ({
                         {haveBackButton && haveCat && (
                             <button
                                 className="text-gray-600 rounded-full text-2xl pe-1"
-                                onClick={() =>
-                                    dispatch(setselectedCat(whereBack))
-                                }
+                                onClick={() => dispatch(openDialog(whereBack))}
                             >
                                 <BackIcon />
                             </button>
@@ -75,7 +73,7 @@ const MobOverlayLayout = ({
                         {haveBackButton && !haveCat && (
                             <button
                                 className="text-gray-600 rounded-full text-2xl pe-1"
-                                onClick={() => dispatch(closeDialog())}
+                                onClick={() => dispatch(openDialog(whereBack))}
                             >
                                 <BackIcon />
                             </button>

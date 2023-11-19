@@ -19,8 +19,8 @@ import SearchMobOverlay from "./navbar/search/SearchMobOverlay";
 import CitySelectMobOverlay from "./navbar/city/SelectMobOverlay";
 import CateogrySelectMobOverlay from "./navbar/category/SelectMobOverlay";
 import ProfileMobOverlay from "./navbar/profile/ProfileMobOverlay";
-import LoginMobOverlay from "./LoginMobOverlay";
-import RegisterMobOverlay from "./RegisterMobOverlay";
+import LoginMobOverlay from "./login/LoginMobOverlay";
+import RegisterMobOverlay from "./login/RegisterMobOverlay";
 
 interface Props {
     typeOpenDialog: string;

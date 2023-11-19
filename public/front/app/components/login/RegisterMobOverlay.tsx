@@ -9,9 +9,9 @@ import { useDispatch } from "react-redux";
 import {
     closeDialog,
     openDialog,
-} from "../GlobalRedux/features/global/globalSlice";
-import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
-import MobOverlayLayout from "./MobOverlayLayout";
+} from "@/app/GlobalRedux/features/global/globalSlice";
+import { DIALOG_TYPE_LOGIN_MOB, DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
+import MobOverlayLayout from "../mobOverlayLayout/MobOverlayLayout";
 import Link from "next/link";
 const RegisterMobOverlay = () => {
     const dispatch = useDispatch();
@@ -22,7 +22,12 @@ const RegisterMobOverlay = () => {
     }, []);
 
     return (
-        <MobOverlayLayout haveCloseButton title="ایجاد حساب کاربری">
+        <MobOverlayLayout
+            haveBackButton
+            haveCloseButton
+            whereBack={DIALOG_TYPE_LOGIN_MOB}
+            title="ایجاد حساب کاربری"
+        >
             <p className="text-gray-900 font-bold mx-4 mt-24 mb-7">
                 شماره موبایل یا ایمیل خود را وارد کنید{" "}
             </p>
@@ -30,6 +35,7 @@ const RegisterMobOverlay = () => {
                 برای استفاده از امکانات دیوار لطفا شماره موبایل یا ایمیل خود را
                 وارد کنید کد تایید به این شماره یا ایمیل ارسال خواهد شد.
             </p>
+
             <form action="" className="p-4">
                 <input
                     ref={inputRef}
@@ -39,6 +45,7 @@ const RegisterMobOverlay = () => {
                     placeholder="شماره موبایل یا ایمیل"
                 />
             </form>
+
             <div className="flex justify-center flex-wrap p-4 text-sm text-gray-500">
                 <Link href={""} className="text-red-700">
                     شرایط استفاده از خدمات
@@ -50,14 +57,9 @@ const RegisterMobOverlay = () => {
                 <span>&nbsp;دیوار را می پذیرم.</span>
             </div>
 
-            <div className="flex justify-center flex-wrap p-4 text-sm text-gray-500">
-                <span>اگر در دیوار حساب کاربری ندارید&nbsp;</span>
-                <button className="text-red-700">ثبت نام کنید</button>
-            </div>
-
             <div className="fixed bottom-0 left-0 right-0 p-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
                 <button className="btn btn-ghost w-full bg-red-700 text-white">
-                    تایید
+                    ادامه
                 </button>
             </div>
         </MobOverlayLayout>
