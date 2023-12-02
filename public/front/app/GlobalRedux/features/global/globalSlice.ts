@@ -1,29 +1,46 @@
 "use client";
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { globalState, advert, cat } from "@/public/interfaces";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
+import globalService from './globalService'
 
-export interface GlobalState {
-    typeOpenDialog: string;
-    cats: cat[];
-    selectedCat: number;
-    selectedCity: number[];
-}
 
-interface cat {
-    id: number;
-    title: string;
-    slug: string;
-    parent_id: number | null;
-    icon: string | null;
-    child: cat[];
-}
 
-const initialState: GlobalState = {
+const initialState: globalState = {
+    isError: false,
+    isSuccess: false,
+    isRegisterSuccess: false,
+    isLoading: false,
+    message: {},
     typeOpenDialog: "",
+    adverts: [],
     cats: [],
     selectedCat: 0,
     selectedCity: [],
+    data: {},
 };
+
+const extractErrorMessage = (err: any) => {
+    return (
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString()
+    );
+};
+
+export const getHomeData = createAsyncThunk(
+    "global/get-home-data",
+    async (_, thunkAPI) => {
+        try {
+            return await globalService.getHomeData();
+        } catch (err: any) {
+            const message = extractErrorMessage(err);
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 
 export const globalSlice = createSlice({
     name: "global",
@@ -47,13 +64,29 @@ export const globalSlice = createSlice({
             state.selectedCity = action.payload;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getHomeData.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getHomeData.fulfilled, (state, { payload }) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.data = payload
+            })
+            .addCase(getHomeData.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = payload ? payload : {};
+            })
+    }
 });
 
-export const { closeDialog, 
-    openDialog, 
-    setCats, 
+export const { closeDialog,
+    openDialog,
+    setCats,
     setselectedCat,
     setselectedCity
- } = globalSlice.actions;
+} = globalSlice.actions;
 
 export default globalSlice.reducer;

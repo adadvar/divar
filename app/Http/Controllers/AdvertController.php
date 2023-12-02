@@ -36,16 +36,16 @@ class AdvertController extends Controller
     {
         $cityCookieId = $r->cookie('city_id');
         $newCookie = null;
-        $whereIns=[];
+        $whereIns = [];
         $conditions = [];
         $cityRequest = null;
         $categoryRequest = null;
 
-        if($r->param1 && $r->param2){
+        if ($r->param1 && $r->param2) {
             $cityRequest = City::whereSlug($r->param1)->first();
             $categoryRequest = Category::whereSlug($r->param2)->first();
         }
-        if($r->param1 && !$r->param2){
+        if ($r->param1 && !$r->param2) {
             $cityRequest = City::whereSlug($r->param1)->first();
             $categoryRequest = Category::whereSlug($r->param1)->first();
         }
@@ -58,39 +58,39 @@ class AdvertController extends Controller
                 $newCookie = cookie('city_id', $cityRequest->id);
                 $city = City::with('child')->find($cityRequest->id);
             }
-        } else{
+        } else {
             if ($cityRequest) {
                 // Set cookie
                 $newCookie = cookie('city_id', $cityRequest->id);
                 $city = $cityRequest->load('child');
-            }else $city = $iran;
+            } else $city = $iran;
         }
 
         // Set conditions if not Iran
-        if($city->id != $iran->id){
+        if ($city->id != $iran->id) {
             $ids = City::extractChildrenIds($city);
             $whereIns['city_id'] = $ids;
         }
 
-        
-        if($r->price){
-            $prices = explode('-',$r->price);
-            if($prices[0])$conditions[]=['price','>=',$prices[0]];
-            if($prices[1])$conditions[]=['price','<=',$prices[1]];
+
+        if ($r->price) {
+            $prices = explode('-', $r->price);
+            if ($prices[0]) $conditions[] = ['price', '>=', $prices[0]];
+            if ($prices[1]) $conditions[] = ['price', '<=', $prices[1]];
         }
-        
+
         // TODO:ایا یک api دیگر زده شود برای ادمین؟ جهت جلوگیری از نمایش pending
         $conditions['state'] = 'accepted';
-        if(auth('api')->user()->isAdmin()){
-            if($r->state){
+        if (auth('api')->user()->isAdmin()) {
+            if ($r->state) {
                 $conditions['state'] = $r->state;
             }
         }
 
 
-        if($categoryRequest){
-                $ids=(Category::extractChildrenIds($categoryRequest));
-                $whereIns['category_id'] = $ids;
+        if ($categoryRequest) {
+            $ids = (Category::extractChildrenIds($categoryRequest));
+            $whereIns['category_id'] = $ids;
         }
         $query = Advert::query();
 
@@ -106,23 +106,26 @@ class AdvertController extends Controller
         $query->with('user');
 
         // Order by 'id'
-        if($r->o == 'n' || $r->o == null)$query->orderBy('id', 'desc');
-        if($r->o == 'pa')$query->orderBy('price', 'asc');
-        if($r->o == 'pd')$query->orderBy('price', 'desc');
+        if ($r->o == 'n' || $r->o == null) $query->orderBy('id', 'desc');
+        if ($r->o == 'pa') $query->orderBy('price', 'asc');
+        if ($r->o == 'pd') $query->orderBy('price', 'desc');
 
         // Paginate the results
         $perPage = $r->per_page ?? 10;
         $adverts = $query->paginate($perPage);
 
-        if($newCookie)
+        if ($newCookie)
             return response($adverts)->cookie($newCookie);
         return response($adverts);
     }
 
     public function show(AdvertShowRequest $r)
     {
-        event(new VisitAdvert($r->advert));
-        $advert = $r->advert->load('user','category');
+        $advert = Advert::find($r->id_slug);
+        if (!$advert)
+            $advert = Advert::where('slug_url', $r->id_slug)->firstOrFail();
+        event(new VisitAdvert($advert));
+        $advert = $advert->load('user', 'category');
         return $advert;
     }
 
@@ -131,22 +134,22 @@ class AdvertController extends Controller
         // dd($r->all());
         try {
             $user = auth()->user();
-            $data =[];
+            $data = [];
             foreach ($r->file('images') as $file) {
                 $image = $file;
                 $imageName = time() . bin2hex(random_bytes(5)) . '-image';
                 Storage::disk('adverts')->put('/tmp/' . $imageName, $image->get());
                 $data[] = $imageName;
             }
-            if($r->advert_id!=null){
+            if ($r->advert_id != null) {
                 $advert = Advert::find($r->advert_id);
-                $arr = $advert->images?$advert->images:[];
+                $arr = $advert->images ? $advert->images : [];
                 $arr = array_merge($arr, $data);
                 $advert->update(['images' => $arr]);
-            }else{
+            } else {
                 $advert = $user->adverts()->create(['images' => $data]);
             }
-            return response(['advert_id'=> $advert->id], 200);
+            return response(['advert_id' => $advert->id], 200);
         } catch (Exception $e) {
             dd($e);
             return response(['message' => 'خطایی رخ داده است'], 500);
@@ -165,18 +168,18 @@ class AdvertController extends Controller
             foreach ($r->file('images') as $file) {
                 $image = $file;
                 $imageName = time() . bin2hex(random_bytes(5)) . '-image';
-                Storage::disk('adverts')->put('/'.$user->id.'/' . $imageName, $image->get());
+                Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
                 $imageArr[] = $imageName;
             }
             $data['images'] = $imageArr;
 
             $cat_title = Category::find($r->category_id)->title;
             $city = isset($r->city) ? $r->city : '';
-            $slug_url = str_replace(' ','-',env('APP_NAME').' '.$city.' '.$r->title.' '.$cat_title.' '.bin2hex(random_bytes(4)));
+            $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
             $slug = bin2hex(random_bytes(5));
             $data['slug'] = $slug;
             $data['slug_url'] = $slug_url;
-            
+
             $advert = $user->adverts()->create($data);
 
             DB::commit();
@@ -195,7 +198,7 @@ class AdvertController extends Controller
             $data = $r->validated();
             $cat_title = Category::find($r->category_id)->title;
             $city = isset($r->city) ? $r->city : '';
-            $slug_url = str_replace(' ','-',env('APP_NAME').' '.$city.' '.$r->title.' '.$cat_title.' '.bin2hex(random_bytes(4)));
+            $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
             $slug = bin2hex(random_bytes(5));
             $data['slug'] = $slug;
             $data['slug_url'] = $slug_url;
@@ -262,12 +265,14 @@ class AdvertController extends Controller
         return response(['message' => 'با موفقیت ثبت شد'], 200);
     }
 
-    public static function favourites(AdvertFavouriteRequest $r){
+    public static function favourites(AdvertFavouriteRequest $r)
+    {
         $user = auth()->user();
         return response($user->favouriteAdverts);
     }
 
-    public static function deleteFavourite(AdvertDeleteFavouriteRequest $r){
+    public static function deleteFavourite(AdvertDeleteFavouriteRequest $r)
+    {
         try {
             DB::beginTransaction();
             $user = auth()->user();
@@ -281,12 +286,14 @@ class AdvertController extends Controller
         }
     }
 
-    public static function recents(AdvertFavouriteRequest $r){
+    public static function recents(AdvertFavouriteRequest $r)
+    {
         $user = auth()->user();
         return response($user->recentAdverts);
     }
 
-    public static function deleteRecent(AdvertDeleteRecentRequest $r){
+    public static function deleteRecent(AdvertDeleteRecentRequest $r)
+    {
         try {
             DB::beginTransaction();
             $user = auth()->user();
@@ -300,7 +307,8 @@ class AdvertController extends Controller
         }
     }
 
-    public static function my(AdvertFavouriteRequest $r){
+    public static function my(AdvertFavouriteRequest $r)
+    {
         $user = auth()->user();
         return response($user->adverts);
     }

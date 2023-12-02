@@ -36,7 +36,7 @@ const CityItems = () => {
     ];
     
     return (
-        <div className="mt-32 mb-20 overflow-x-hidden overflow-y-auto px-10">
+        <div className="pt-32 pb-16 overflow-x-hidden overflow-y-auto px-10">
            {cities.map((c,index) =>
             <CityItem text={Object.values(c)[0]} key={index}/>
   )}

@@ -1,9 +1,11 @@
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+
 //Login user with google
 const loginWithGoogle = async (params: object) => {
     const config = {
         method: "GET",
     };
-    const response = await fetch(`/auth/google/callback${params}`, config);
+    const response = await fetch(`${BASE_URL}/auth/google/callback${params}`, config);
     const data = await response.json();
     // let userMe;
     if (data) {
@@ -17,17 +19,25 @@ const loginWithGoogle = async (params: object) => {
 const login = async (params: object) => {
     const config = {
         method: "POST",
-        body: JSON.stringify(params),
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify(
+            {...params, 
+            grant_type:'password',
+            client_id:2,
+            client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET}
+            ),
     };
 
-    const response = await fetch("/login", config);
+    const response = await fetch(`${BASE_URL}/login`, config);
     const data = await response.json();
     // let userMe;
     if (data) {
         // userMe = await me(data.access_token)
         localStorage.setItem("auth", JSON.stringify(data));
     }
-    return data;
+    return data.access_token;
 };
 
 //Logout user
@@ -42,7 +52,7 @@ const register = async (params: object) => {
         method: "POST",
         body: JSON.stringify(params),
     };
-    const response = await fetch("/register", config);
+    const response = await fetch(`${BASE_URL}/register`, config);
     const data = await response.json();
 
     return data;
@@ -54,7 +64,7 @@ const registerVerify = async (params: object) => {
         method: "POST",
         body: JSON.stringify(params),
     };
-    const response = await fetch("/register-verify", config);
+    const response = await fetch(`${BASE_URL}/register-verify`, config);
     const data = await response.json();
 
     return data;
@@ -66,7 +76,7 @@ const resendVerificationCode = async (params: object) => {
         method: "POST",
         body: JSON.stringify(params),
     };
-    const response = await fetch("/resend-verification-code", config);
+    const response = await fetch(`${BASE_URL}/resend-verification-code`, config);
     const data = await response.json();
 
     return data;
@@ -80,7 +90,7 @@ const changeEmail = async (params: object, token: string) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await fetch("/change-email", config);
+    const response = await fetch(`${BASE_URL}/change-email`, config);
     const data = await response.json();
 
     return data;
@@ -94,7 +104,7 @@ const changePassword = async (params: object, token: string) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await fetch("/change-password", config);
+    const response = await fetch(`${BASE_URL}/change-password`, config);
     const data = await response.json();
 
     return data;
@@ -108,7 +118,7 @@ const changeEmailSubmit = async (params: object, token: string) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await fetch("/change-email-submit", config);
+    const response = await fetch(`${BASE_URL}/change-email-submit`, config);
     const data = await response.json();
 
     if (data) {
@@ -127,7 +137,7 @@ const me = async (token: string) => {
             Authorization: `Bearer ${token}`,
         },
     };
-    const response = await fetch("/user/me", config);
+    const response = await fetch(`${BASE_URL}/user/me`, config);
     const data = await response.json();
 
     if (data) {

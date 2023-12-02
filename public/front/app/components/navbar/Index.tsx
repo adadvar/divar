@@ -4,7 +4,7 @@ import Divider from "../Divider";
 import CityButton from "./city/Button";
 import CategoryButton from "./category/Button";
 import ProfileButton from "./profile/ProfileButton";
-import ChatButton from "./ChatButton";
+import ChatButton from "./chat/ChatButton";
 import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
 import SearchBox from "./search/InputBox";

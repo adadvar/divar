@@ -1,5 +1,5 @@
 import RegisterAdvertButtonMob from "./RegisterAdvertButtonMob";
-import ChatButtonMob from "./ChatButtonMob";
+import ChatButtonMob from "./chat/ChatButtonMob";
 import CategoryButtonMob from "./category/ButtonMob";
 import LogoBottom from "./LogoBottom";
 import ProfileButtonMob from "./profile/ProfileButtonMob";

@@ -24,8 +24,8 @@ export default function RootLayout({
                 <Providers>
                     <Overlay />
                     <Navbar />
-                    <ButtomNavbar />
                     {children}
+                    <ButtomNavbar />
                 </Providers>
             </body>
         </html>

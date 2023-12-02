@@ -20,21 +20,21 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 |
 */
 
-Route::group(['prefix'=>'/test'],function($r){
-    $r->get('/migrate',[TestController::class,'migrate']);
-    $r->get('/',[TestController::class,'index']);
-    $r->get('/get',[TestController::class,'getSession']);
+Route::group(['prefix' => '/test'], function ($r) {
+    $r->get('/migrate', [TestController::class, 'migrate']);
+    $r->get('/', [TestController::class, 'index']);
+    $r->get('/get', [TestController::class, 'getSession']);
 });
 
-Route::group([], function($router){ 
+Route::group([], function ($router) {
 
-    Route::group(['namespace' => '\Laravel\Passport\Http\Controllers'], function($router){
+    Route::group(['namespace' => '\Laravel\Passport\Http\Controllers'], function ($router) {
         $router->post('login', [
             'middleware' => ['throttle'],
-            AccessTokenController::class,'issueToken',
+            AccessTokenController::class, 'issueToken',
         ])->name('auth.login');
     });
-    
+
     $router->post('register', [
         AuthController::class, 'register'
     ])->name('auth.register');
@@ -46,10 +46,14 @@ Route::group([], function($router){
     $router->post('resend-verification-code', [
         AuthController::class, 'resendVerificationCode'
     ])->name('auth.register.resend.verification.code');
+
+    $router->get('home-data', [
+        UserController::class, 'homeData'
+    ])->name('user.home.data');
 });
 
 Route::group(['middleware' => ['auth:api']], function ($router) {
-    
+
     $router->post('change-email', [
         UserController::class, 'changeEmail'
     ])->name('change.email');
@@ -116,17 +120,16 @@ Route::group(['prefix' => 'category'], function ($router) {
 
         $router->post('/', [
             CategoryController::class, 'create'
-            ])->name('category.create');
-            
+        ])->name('category.create');
+
         $router->put('/{id}', [
             CategoryController::class, 'update'
-            ])->name('category.update');
-                
+        ])->name('category.update');
+
         $router->delete('/{id}', [
             CategoryController::class, 'delete'
-            ])->name('category.delete');
+        ])->name('category.delete');
     });
-    
 });
 
 Route::group(['prefix' => 'advert'], function ($router) {
@@ -135,15 +138,15 @@ Route::group(['prefix' => 'advert'], function ($router) {
         AdvertController::class, 'list'
     ])->name('advert.list');
 
-    $router->get('/show/{advert}/{slug_url?}', [
+    $router->get('/show/{id_slug}', [
         AdvertController::class, 'show'
     ])->name('advert.show');
 
-    $router->match(['get', 'post'],'/{advert}/like', [
+    $router->match(['get', 'post'], '/{advert}/like', [
         AdvertController::class, 'like'
     ])->name('advert.like');
 
-    $router->match(['get', 'post'],'/{advert}/unlike', [
+    $router->match(['get', 'post'], '/{advert}/unlike', [
         AdvertController::class, 'unlike'
     ])->name('advert.unlike');
 
@@ -188,6 +191,5 @@ Route::group(['prefix' => 'advert'], function ($router) {
         $router->get('/my', [
             AdvertController::class, 'my'
         ])->name('advert.my');
-        
     });
 });

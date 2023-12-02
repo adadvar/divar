@@ -14,6 +14,8 @@ use App\Http\Requests\User\UserResetPasswordRequest;
 use App\Http\Requests\User\UserUpdateMeRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Mail\VerificationCodeMail;
+use App\Models\Advert;
+use App\Models\Category;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,6 +29,28 @@ use Illuminate\Support\Facades\Mail;
 class UserController extends Controller
 {
   const CHANGE_EMAIL_CACHE_KEY = 'change.email.for.user.';
+
+  public function homeData(Request $r)
+  {
+    try {
+
+      $pageData = [];
+      $pageData['title'] = 'صفحه اصلی';
+      $pageData['description'] = 'اینجا صفحه اصلی برنامه است.';
+      $pageData['adverts'] = Advert::all()->load('user');
+      $pageData['categories'] = Category::all()->load('child');
+
+      return response()->json(
+        $pageData,
+        200
+      );
+    } catch (Exception $e) {
+      Log::error($e);
+      return response([
+        'message' => 'خطایی رخ داده است.'
+      ], 500);
+    }
+  }
 
   public function changeEmail(ChangeEmailRequest $request)
   {
@@ -109,60 +133,60 @@ class UserController extends Controller
   }
 
   public function unregister(UserUnregisterRequest $request)
-    {
-        try {
-            DB::beginTransaction();
-            $request->user()->delete();
-            DB::commit();
-            return response(['message' => 'با موفقیت لغو ثبت نام شد!'], 200);
-        } catch (Exception $e) {
-            DB::rollBack();
-            Log::error($e);
-            return response(['message' => 'خطایی رخ داده است !'], 500);
-        }
+  {
+    try {
+      DB::beginTransaction();
+      $request->user()->delete();
+      DB::commit();
+      return response(['message' => 'با موفقیت لغو ثبت نام شد!'], 200);
+    } catch (Exception $e) {
+      DB::rollBack();
+      Log::error($e);
+      return response(['message' => 'خطایی رخ داده است !'], 500);
     }
+  }
 
-    public function delete(UserDeleteRequest $request)
-    {
-        try {
-            DB::beginTransaction();
-            $request->user->delete();
-            DB::table('oauth_access_tokens')
-                ->where('user_id', $request->user->id)
-                ->delete();
-            DB::commit();
-            return response(['message' => 'کاربر با موفقیت حذف شد!'], 200);
-        } catch (Exception $e) {
-            DB::rollBack();
-            Log::error($e);
-            return response(['message' => 'خطایی رخ داده است !'], 500);
-        }
+  public function delete(UserDeleteRequest $request)
+  {
+    try {
+      DB::beginTransaction();
+      $request->user->delete();
+      DB::table('oauth_access_tokens')
+        ->where('user_id', $request->user->id)
+        ->delete();
+      DB::commit();
+      return response(['message' => 'کاربر با موفقیت حذف شد!'], 200);
+    } catch (Exception $e) {
+      DB::rollBack();
+      Log::error($e);
+      return response(['message' => 'خطایی رخ داده است !'], 500);
     }
+  }
 
-    public function me(UserMeRequest $request)
-    {
-        $user = auth('api')->user();
+  public function me(UserMeRequest $request)
+  {
+    $user = auth('api')->user();
 
-        return $user;
-    }
+    return $user;
+  }
 
-    public function list(UserListRequest $request)
-    {
-        return User::paginate($request->per_page ?? 10);
-    }
+  public function list(UserListRequest $request)
+  {
+    return User::paginate($request->per_page ?? 10);
+  }
 
-    public function update(UserUpdateRequest $request)
-    {
-        $request->user->update($request->validated());
-        return $request->user;
-    }
+  public function update(UserUpdateRequest $request)
+  {
+    $request->user->update($request->validated());
+    return $request->user;
+  }
 
-    public function resetPassword(UserResetPasswordRequest $request)
-    {
-        $request->user->update(['password' => env('REQUEST_PASSWORD_DEFAULT', bcrypt('123456'))]);
-        // return response(null, Response::HTTP_ACCEPTED);
-        return response([
-          'message' => 'پسورد با موفقیت بازنشانی شد!'
-        ], 200);
-    }
+  public function resetPassword(UserResetPasswordRequest $request)
+  {
+    $request->user->update(['password' => env('REQUEST_PASSWORD_DEFAULT', bcrypt('123456'))]);
+    // return response(null, Response::HTTP_ACCEPTED);
+    return response([
+      'message' => 'پسورد با موفقیت بازنشانی شد!'
+    ], 200);
+  }
 }

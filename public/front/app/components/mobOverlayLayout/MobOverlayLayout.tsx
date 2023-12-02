@@ -1,46 +1,51 @@
+"use client";
 import React, { ReactNode, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import MobOverlayHeader from "./MobOverlayHeader";
-import MobOverlayClearButton from "./MobOverlayClearButton";
-import MobOverlayCloseButton from "./MobOverlayCloseButton";
+import {
+    closeDialog,
+    openDialog,
+    setselectedCat,
+} from "../../GlobalRedux/features/global/globalSlice";
+import {
+    BsXLg as CloseIcon,
+    BsArrowRightShort as BackIcon,
+} from "react-icons/bs";
 import CitySearchBox from "../navbar/city/SearchBox";
 import SelectedCity from "../navbar/city/SelectedCity";
-import MobOverlayInput from "./MobOverlayInput";
 
 interface LayoutProps {
     children: ReactNode;
+    haveCloseButton?: boolean;
     haveBackButton?: boolean;
     haveBottomNav?: boolean;
     haveInput?: boolean;
     haveSearchInput?: boolean;
     haveClearButton?: boolean;
-    haveCloseButton?: boolean;
     haveCat?: boolean;
     whereBack?: string;
     whereClose?: string;
     title?: string;
 }
 
-const MobOverlayLayout: React.FC<LayoutProps> = ({
+const MobOverlayLayout = ({
     children,
+    haveCloseButton,
     haveBackButton,
     haveBottomNav,
     haveInput,
     haveSearchInput,
     haveClearButton,
-    haveCloseButton,
     haveCat,
     whereBack = "",
     whereClose = "",
     title,
-}) => {
+}: LayoutProps) => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         inputRef.current?.focus();
     }, []);
-
     return (
         <div
             className={`lg:hidden absolute  top-0 left-0 right-0 ${
@@ -51,30 +56,60 @@ const MobOverlayLayout: React.FC<LayoutProps> = ({
         >
             <div
                 className={`fixed flex flex-col items-center shadow-sm p-4 ${
-                    haveSearchInput ? "h-20" : "h-16"
+                    haveSearchInput ? "h-32" : "h-16"
                 } top-0 left-0 right-0 bg-white`}
             >
-                <MobOverlayHeader
-                    title={title}
-                    haveBackButton={haveBackButton}
-                    haveCat={haveCat}
-                    dispatch={dispatch}
-                    whereBack={whereBack}
-                />
+                <div className="flex justify-between w-full text-sm font-bold">
+                    <div className="flex items-center">
+                        {haveBackButton && haveCat && (
+                            <button
+                                className="text-gray-600 rounded-full text-2xl pe-1"
+                                onClick={() => dispatch(openDialog(whereBack))}
+                            >
+                                <BackIcon />
+                            </button>
+                        )}
 
-                <MobOverlayClearButton haveClearButton={haveClearButton} />
+                        {haveBackButton && !haveCat && (
+                            <button
+                                className="text-gray-600 rounded-full text-2xl pe-1"
+                                onClick={() => dispatch(openDialog(whereBack))}
+                            >
+                                <BackIcon />
+                            </button>
+                        )}
 
-                <MobOverlayCloseButton
-                    haveCloseButton={haveCloseButton}
-                    dispatch={dispatch}
-                    whereClose={whereClose}
-                />
+                        {title && (
+                            <p className="text-gray-900 font-bold">{title}</p>
+                        )}
+                        {haveInput && (
+                            <form className="flex p-[5px]">
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    className="bg-transparent outline-none ms-5"
+                                />
+                            </form>
+                        )}
+                    </div>
+                    {haveClearButton && (
+                        <button className="text-red-700 text-sm rounded-md px-2 py-1 hover:bg-red-50">
+                            حذف همه
+                        </button>
+                    )}
+                    {haveCloseButton && (
+                        <button
+                            className="text-gray-600 bg-gray-200  rounded-full font-semibold hover:bg-gray-300 p-2"
+                            onClick={() => dispatch(openDialog(whereClose))}
+                        >
+                            <CloseIcon />
+                        </button>
+                    )}
+                </div>
 
-                <MobOverlayInput haveInput={haveInput} />
+                {haveSearchInput && <SelectedCity />}
+                {haveSearchInput && <CitySearchBox />}
             </div>
-
-            {haveSearchInput && <SelectedCity />}
-            {haveSearchInput && <CitySearchBox />}
             {children}
         </div>
     );

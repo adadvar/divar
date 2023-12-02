@@ -3,20 +3,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
 import { RootState } from "../../store";
+import { authStates } from "@/public/interfaces";
 
-export interface authStates {
-    token: string;
-    me: object;
-    isError: boolean;
-    isSuccess: boolean;
-    isRegisterSuccess: boolean;
-    isLoading: boolean;
-    message: object;
-}
+
 
 
 const localAuth = typeof window !== 'undefined' && localStorage.getItem("auth");
-const localMe =  typeof window !== 'undefined' && localStorage.getItem("me");
+const localMe = typeof window !== 'undefined' && localStorage.getItem("me");
 
 const initialState: authStates = {
     token: localAuth ? JSON.parse(localAuth).access_token : "",
