@@ -25,7 +25,6 @@ import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
 import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
 import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
-import { ReactNode } from "react";
 
 const ProfileMobOverlay = () => {
     const { token, me, isLoading, isSuccess } = useSelector(
@@ -70,46 +69,66 @@ const ProfileMobOverlay = () => {
                     )}
                     <hr className="pb-2 mt-2" />
                     {isLogged && (
-                        <CustomButton icon={<CheckIcon />} title="تایید هویت" />
+                        <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                            <CheckIcon />
+                            <p className="ps-2">تایید هویت</p>
+                        </button>
                     )}
                     <hr className="pb-2 mt-2" />
                     {isLogged && (
-                        <CustomButton icon={<MyadIcon />} title="آگهی های من" />
+                        <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                            <MyadIcon />
+                            <p className="ps-2">آگهی های من</p>
+                        </button>
                     )}
-
-                    <CustomButton icon={<PinIcon />} title="نشان ها" />
-
-                    <CustomButton icon={<NoteIcon />} title="یادداشت ها" />
-
-                    <CustomButton
-                        icon={<RecentIcon />}
-                        title="بازدیدهای اخیر"
-                    />
-
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <PinIcon />
+                        <p className="ps-2">نشان ها</p>
+                    </button>
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <NoteIcon />
+                        <p className="ps-2">یادداشت ها</p>
+                    </button>
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <RecentIcon />
+                        <p className="ps-2">بازدیدهای اخیر</p>
+                    </button>
                     {isLogged && (
-                        <CustomButton icon={<PersonIcon />} title="رزومه من" />
+                        <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                            <PersonIcon />
+                            <p className="ps-2">روزمه من</p>
+                        </button>
                     )}
                     <hr className="pb-2 mt-2" />
-
-                    <CustomButton
-                        icon={<ShopIcon />}
-                        title="دیوار برای کسب و کارها"
-                    />
-
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <ShopIcon />
+                        <p className="ps-2">دیوار برای کسب و کارها</p>
+                    </button>
                     <hr className="pb-2 mt-2" />
                     {isLogged && (
-                        <CustomButton icon={<LogoutIcon />} title="خروج" />
+                        <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                            <LogoutIcon />
+                            <p className="ps-2">خروج</p>
+                        </button>
                     )}
                     <hr className="pb-2 mt-2" />
-                    <CustomButton icon={<RuleIcon />} title="قوانین" />
-                    <CustomButton icon={<InfoIcon />} title="درباره دیوار" />
-
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <RuleIcon />
+                        <p className="ps-2">قوانین</p>
+                    </button>
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <InfoIcon />
+                        <p className="ps-2">درباره دیوار</p>
+                    </button>
                     <hr className="pb-2 mt-2" />
-                    <CustomButton
-                        icon={<DownloadIcon />}
-                        title="دریافت برنامه"
-                    />
-                    <CustomButton icon={<SupportIcon />} title="پشتیبانی" />
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <DownloadIcon />
+                        <p className="ps-2">دریافت برنامه</p>
+                    </button>
+                    <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
+                        <SupportIcon />
+                        <p className="ps-2">پشتیبانی</p>
+                    </button>
                 </div>
                 <div className="flex flex-1 justify-center items-center text-gray-600">
                     <button className="text-lg hover:bg-gray-200 p-2 rounded-full ms-2">
@@ -124,15 +143,6 @@ const ProfileMobOverlay = () => {
                 </div>
             </div>
         </MobOverlayLayout>
-    );
-};
-
-const CustomButton = ({ icon, title }: { icon: ReactNode; title: string }) => {
-    return (
-        <button className="flex items-center hover:bg-gray-200 w-full p-2 rounded">
-            {icon}
-            <p className="ps-2">{title}</p>
-        </button>
     );
 };
 
