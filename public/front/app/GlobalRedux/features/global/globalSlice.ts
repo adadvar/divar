@@ -67,15 +67,19 @@ export const globalSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getHomeData.pending, (state) => {
+                state.isLoading = false;
                 state.isLoading = true;
+                state.isError = false;
             })
             .addCase(getHomeData.fulfilled, (state, { payload }) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+                state.isError = false;
                 state.data = payload
             })
             .addCase(getHomeData.rejected, (state, { payload }) => {
                 state.isLoading = false;
+                state.isSuccess = false;
                 state.isError = true;
                 state.message = payload ? payload : {};
             })

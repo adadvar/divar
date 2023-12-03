@@ -12,7 +12,7 @@ export interface globalState {
   data: object;
 }
 
-export interface authStates {
+export interface authState {
   token: string;
   me: me;
   isError: boolean;
