@@ -9,7 +9,7 @@ export interface globalState {
   cats: cat[];
   selectedCat: number;
   selectedCity: number[];
-  data: object;
+  data: data;
 }
 
 export interface authState {
@@ -20,6 +20,13 @@ export interface authState {
   isRegisterSuccess: boolean;
   isLoading: boolean;
   message: object;
+}
+
+interface data {
+  title: string;
+  description: string;
+  adverts: advert[];
+  categories: cat[];
 }
 
 export interface cat {
