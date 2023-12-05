@@ -37,7 +37,7 @@ class UserController extends Controller
       $pageData = [];
       $pageData['title'] = 'صفحه اصلی';
       $pageData['description'] = 'اینجا صفحه اصلی برنامه است.';
-      $pageData['adverts'] = Advert::all()->load('user');
+      $pageData['adverts'] = Advert::all()->load('user', 'category');
       $pageData['categories'] = Category::all()->load('child');
 
       return response()->json(

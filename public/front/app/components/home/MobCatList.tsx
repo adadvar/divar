@@ -1,29 +1,27 @@
 "use client";
 
+import React from "react";
 import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector } from "react-redux";
+import MobCatItem from "./MobCatItem";
+import { cat } from "@/public/interfaces";
 
 const MobCatList = () => {
-    const cats = useSelector(
+    const cats: cat[] = useSelector(
         (state: RootState) => state.global.data.categories
     );
+
     return (
-        <>
+        <div className="lg:hidden flex justify-around items-center mx-auto flex-wrap">
             {cats &&
-                Object.keys(cats).map((catKey) => {
-                    const cat = cats[Number(catKey)];
+                cats.map((cat, index) => {
                     if (cat.parent_id === null) {
-                        return (
-                            <div className="p-10" key={cat.id}>
-                                <p>{cat.title}</p>
-                                {/* Further rendering logic for child categories if needed */}
-                            </div>
-                        );
+                        return <MobCatItem key={cat.id} cat={cat} />;
                     } else {
                         return null;
                     }
                 })}
-        </>
+        </div>
     );
 };
 

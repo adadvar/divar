@@ -67,6 +67,7 @@ export interface advert {
   deleted_at: string | null;
   age: string;
   user: user;
+  category: cat
 }
 
 export interface user {

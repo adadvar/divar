@@ -12,7 +12,7 @@ interface Props {
 const CatItem = ({ cat }: Props) => {
     const dispatch = useDispatch();
 
-    const IconComponent = cat.icon && Icons[cat.icon];
+    const IconComponent = cat.icon && Icons[cat.icon as keyof typeof Icons];
 
     return (
         <button
