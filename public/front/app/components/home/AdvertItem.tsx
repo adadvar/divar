@@ -6,7 +6,39 @@ import {
     BiCameraOff as ImageIcon,
 } from "react-icons/bi";
 
+const LoadingPlaceholder = () => {
+    return (
+        <div className="animate-pulse flex w-full h-44 md:w-1/2 llg:w-1/3 xl:w-1/3 p-2">
+            <div className="flex justify-between w-full border border-gray-200 rounded box-border py-4 px-3 h-full">
+                <div className="flex flex-col justify-between h-full space-y-4">
+                    {/* Placeholder for advert.title */}
+                    <div className="bg-gray-300 h-6 w-32 rounded-md"></div>
+                    <div className="space-y-2">
+                        {/* Placeholder for advert.category.title */}
+                        <div className="bg-gray-300 h-4 w-32 rounded-md"></div>
+                        {/* Placeholder for advert.age */}
+                        <div className="bg-gray-300 h-4 w-32 rounded-md"></div>
+                    </div>
+                </div>
+                <div className="flex">
+                    {/* Placeholder for chat icon */}
+                    <div className="flex h-full justify-center items-end w-6 text-gray-200 text-xl">
+                        <ChatIcon />
+                    </div>
+                    {/* Placeholder for advert image */}
+                    <div className="flex items-center justify-center h-full min-w-[126px] bg-gray-200 rounded text-4xl m-auto">
+                        <ImageIcon />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const AdvertItem = ({ advert }: { advert: advert }) => {
+    if (!advert) {
+        return <LoadingPlaceholder />;
+    }
     return (
         <div className="flex w-full h-44 md:w-1/2 llg:w-1/3 xl:w-1/3 p-2">
             <Link

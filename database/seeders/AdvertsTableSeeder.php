@@ -17,15 +17,15 @@ class AdvertsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        if(Advert::count()){
+        if (Advert::count()) {
             Advert::truncate();
         }
 
         $userIds = User::pluck('id')->toArray();
         // $cityIds = City::whereDoesntHave('child')->pluck('id')->toArray();
         $categoryIds = Category::whereDoesntHave('child')->pluck('id')->toArray();
-        $cityIds = [33,34,35,36,37,53,54,55,56,57];
-        $count = 10;
+        $cityIds = [33, 34, 35, 36, 37, 53, 54, 55, 56, 57];
+        $count = 100;
 
         for ($i = 0; $i < $count; $i++) {
             $categoryId = $categoryIds[array_rand($categoryIds)];

@@ -1,4 +1,4 @@
-interface ReqularListProps<T> {
+interface RegularListProps<T> {
     items: T[];
     resourceName: string;
     ItemComponent: React.ComponentType<
@@ -6,11 +6,11 @@ interface ReqularListProps<T> {
     >;
 }
 
-const ReqularList = <T,>({
+const RegularList = <T,>({
     items,
     resourceName,
     ItemComponent,
-}: ReqularListProps<T>) => {
+}: RegularListProps<T>) => {
     return (
         <>
             {items &&
@@ -26,4 +26,4 @@ const ReqularList = <T,>({
     );
 };
 
-export default ReqularList;
+export default RegularList;
