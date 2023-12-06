@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Providers } from "@/app/GlobalRedux/provider";
 import type { Metadata } from "next";
-import Content from "@/app/content";
+import LayoutContent from "@/app/LayoutContent";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -20,8 +20,10 @@ export default function RootLayout({
         <html lang="en" dir="rtl">
             <body>
                 <Providers>
-                    <Content />
-                    {children}
+                    <main className="max-w-screen-xl mx-auto py-20 px-2">
+                        <LayoutContent />
+                        {children}
+                    </main>
                 </Providers>
             </body>
         </html>

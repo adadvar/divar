@@ -18,16 +18,16 @@ const AdvertItem = ({ advert }: { advert: advert }) => {
                         {advert.title}
                     </div>
                     <div>
-                        <p className="text-gray-400 text-xs mb-2">
+                        <p className="text-gray-500 font-bold text-xs mb-2">
                             {advert.category.title}
                         </p>
-                        <p className="text-gray-400 text-xs">
+                        <p className="text-gray-500 font-bold text-xs">
                             {getAge(advert.age)}
                         </p>
                     </div>
                 </div>
                 <div className="flex">
-                    <div className="flex h-full justify-center items-end w-5">
+                    <div className="flex h-full justify-center items-end w-6 text-gray-500 text-xl">
                         <ChatIcon />
                     </div>
                     <div

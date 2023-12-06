@@ -13,13 +13,13 @@ export const DIALOG_TYPE_LOGIN_MOB = 'login_mob';
 export const DIALOG_TYPE_REGISTER_USER_MOB = 'register_user_mob';
 
 
-export const findCat = (arr: cat[], itemId: number): cat =>
-    arr.reduce((a, item) => {
+export const findCat = (arr: cat[], itemId: number): cat | null =>
+    arr.reduce((a: cat | null, item: cat) => {
         if (a) return a;
         if (item.id === itemId) return item;
         if (item.child) return findCat(item.child, itemId);
+        return null;
     }, null);
-
 
 
 export const getAge = (age: string): string => {

@@ -8,7 +8,7 @@ import ButtomNavbar from "@/app/components/navbar/IndexBottom";
 import Spinner from "@/app/components/Spinner";
 import { getHomeData } from "./GlobalRedux/features/global/globalSlice";
 
-const Content = () => {
+const LayoutContent = () => {
     const { isLoading: isAuthLoading } = useSelector(
         (state: RootState) => state.auth
     );
@@ -33,4 +33,4 @@ const Content = () => {
     );
 };
 
-export default Content;
+export default LayoutContent;

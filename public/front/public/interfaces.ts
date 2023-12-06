@@ -22,7 +22,7 @@ export interface authState {
   message: object;
 }
 
-interface data {
+export interface data {
   title: string;
   description: string;
   adverts: advert[];

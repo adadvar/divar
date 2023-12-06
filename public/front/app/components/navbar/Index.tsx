@@ -13,7 +13,7 @@ import SearchBoxMob from "./search/InputBoxMob";
 const Index = () => {
     return (
         <div className="shadow-sm fixed flex items-center h-16 top-0 left-0 right-0 bg-white">
-            <div className="flex justify-between w-full 2xl:container 2xl:px-16 px-5">
+            <div className="flex justify-between w-full 2xl:container 2xl:px-16 px-5 mx-auto">
                 <div className="hidden lg:flex items-center space-x-3">
                     <Logo size={50} />
                     <Divider direction="vertical" style="" />
