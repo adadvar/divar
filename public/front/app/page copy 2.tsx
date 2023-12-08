@@ -1,6 +1,7 @@
+// Home.tsx
 "use client";
 
-import { data } from "@/public/interfaces";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "./GlobalRedux/store";
 import RegularList from "./components/RegularList";
@@ -8,10 +9,62 @@ import AdvertItem from "./components/home/AdvertItem";
 import MobCatItem from "./components/home/MobCatItem";
 import SideCatItem from "./components/home/SideCatItem";
 import SidePriceFilter from "./components/home/SidePriceFilter";
+import { data } from "@/public/interfaces";
 
 export default function Home() {
     const data: data = useSelector((state: RootState) => state.global.data);
     const isDataLoaded = data && data.adverts && data.categories;
+
+    const [allAdverts, setAllAdverts] = useState(data.adverts && []);
+    const [displayedAdverts, setDisplayedAdverts] = useState([]);
+    // Number of adverts to be displayed with every "load more"
+    const advertsPerPage = 20;
+    const observer = useRef<IntersectionObserver | null>(null);
+
+    console.log(data);
+    // Function to load more adverts
+    const loadMoreAdverts = () => {
+        setDisplayedAdverts((prevAdverts) =>
+            allAdverts.slice(0, prevAdverts.length + advertsPerPage)
+        );
+    };
+
+    // IntersectionObserver callback
+    const intersectionCallback: IntersectionObserverCallback = (entries) => {
+        if (entries[0].isIntersecting) {
+            loadMoreAdverts();
+        }
+    };
+
+    useEffect(() => {
+        // Initialize observer on mount
+        const options: IntersectionObserverInit = {
+            root: null, // observing the element in relation to the viewport
+            rootMargin: "0px",
+            threshold: 1.0,
+        };
+
+        observer.current = new IntersectionObserver(
+            intersectionCallback,
+            options
+        );
+
+        // Start observing the placeholder element
+        const currentElement = document.querySelector(".loading-placeholder");
+        if (currentElement) {
+            observer.current.observe(currentElement);
+        }
+
+        // Load initial "page" of adverts
+        isDataLoaded && loadMoreAdverts();
+
+        // Cleanup observer on unmount
+        return () => {
+            if (observer.current) {
+                observer.current.disconnect();
+            }
+        };
+    }, []);
 
     return (
         <main className="">
@@ -45,7 +98,7 @@ export default function Home() {
                         <RegularList
                             items={
                                 isDataLoaded
-                                    ? data.adverts
+                                    ? data.adverts.data
                                     : Array(20).fill(null)
                             }
                             resourceName="advert"

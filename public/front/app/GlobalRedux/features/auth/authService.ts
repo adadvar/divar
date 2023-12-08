@@ -21,13 +21,15 @@ const login = async (params: object) => {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
-          },
+        },
         body: JSON.stringify(
-            {...params, 
-            grant_type:'password',
-            client_id:2,
-            client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET}
-            ),
+            {
+                ...params,
+                grant_type: 'password',
+                client_id: 2,
+                client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET
+            }
+        ),
     };
 
     const response = await fetch(`${BASE_URL}/login`, config);

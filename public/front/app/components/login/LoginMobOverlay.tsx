@@ -31,7 +31,7 @@ const LoginMobOverlay = () => {
 
         if (isSuccess) {
             dispatch(me());
-            dispatch(getHomeData());
+            dispatch(getHomeData({ page: 1 }));
             dispatch(closeDialog());
         }
     }, [isSuccess]);

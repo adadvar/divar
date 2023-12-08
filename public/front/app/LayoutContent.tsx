@@ -20,7 +20,7 @@ const LayoutContent = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getHomeData());
+        dispatch(getHomeData({ page: 1 }));
     }, []);
 
     return (

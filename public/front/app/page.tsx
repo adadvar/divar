@@ -1,7 +1,6 @@
-// Home.tsx
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { data } from "@/public/interfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "./GlobalRedux/store";
 import RegularList from "./components/RegularList";
@@ -9,61 +8,12 @@ import AdvertItem from "./components/home/AdvertItem";
 import MobCatItem from "./components/home/MobCatItem";
 import SideCatItem from "./components/home/SideCatItem";
 import SidePriceFilter from "./components/home/SidePriceFilter";
-import { data } from "@/public/interfaces";
+import LoadMoreAdvert from "./components/LoadMoreAdvert";
 
 export default function Home() {
     const data: data = useSelector((state: RootState) => state.global.data);
-    const isDataLoaded = data && data.adverts && data.categories;
-
-    const [allAdverts, setAllAdverts] = useState(data.adverts && []);
-    const [displayedAdverts, setDisplayedAdverts] = useState([]);
-    // Number of adverts to be displayed with every "load more"
-    const advertsPerPage = 20;
-    const observer = useRef<IntersectionObserver | null>(null);
-
-    // Function to load more adverts
-    const loadMoreAdverts = () => {
-        setDisplayedAdverts((prevAdverts) =>
-            allAdverts.slice(0, prevAdverts.length + advertsPerPage)
-        );
-    };
-
-    // IntersectionObserver callback
-    const intersectionCallback: IntersectionObserverCallback = (entries) => {
-        if (entries[0].isIntersecting) {
-            loadMoreAdverts();
-        }
-    };
-
-    useEffect(() => {
-        // Initialize observer on mount
-        const options: IntersectionObserverInit = {
-            root: null, // observing the element in relation to the viewport
-            rootMargin: "0px",
-            threshold: 1.0,
-        };
-
-        observer.current = new IntersectionObserver(
-            intersectionCallback,
-            options
-        );
-
-        // Start observing the placeholder element
-        const currentElement = document.querySelector(".loading-placeholder");
-        if (currentElement) {
-            observer.current.observe(currentElement);
-        }
-
-        // Load initial "page" of adverts
-        isDataLoaded && loadMoreAdverts();
-
-        // Cleanup observer on unmount
-        return () => {
-            if (observer.current) {
-                observer.current.disconnect();
-            }
-        };
-    }, []);
+    const isDataLoaded =
+        data && data.adverts.length && data.categories.length ? true : false;
 
     return (
         <main className="">
@@ -88,22 +38,22 @@ export default function Home() {
                     <SidePriceFilter />
                 </div>
                 <div className="lg:w-[75%] w-full">
+                    <p className="text-gray-700 w-full text-xs text-end pt-4 pb-3 px-2">
+                        دیوار قم - نیازمندی‌ های رایگان، آگهی‌های خرید، فروش نو
+                        و دست دوم و کارکرده، استخدام و خدمات
+                    </p>
                     <div className="flex flex-wrap">
-                        <p className="text-gray-700 w-full text-xs text-end pt-4 pb-3 px-2">
-                            دیوار قم - نیازمندی‌ های رایگان، آگهی‌های خرید، فروش
-                            نو و دست دوم و کارکرده، استخدام و خدمات
-                        </p>
-
                         <RegularList
                             items={
                                 isDataLoaded
                                     ? data.adverts
-                                    : Array(20).fill(null)
+                                    : Array(21).fill(null)
                             }
                             resourceName="advert"
                             ItemComponent={AdvertItem}
                         />
                     </div>
+                    <LoadMoreAdvert />
                 </div>
             </div>
         </main>

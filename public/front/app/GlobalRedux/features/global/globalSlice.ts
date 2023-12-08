@@ -18,7 +18,13 @@ const initialState: globalState = {
     cats: [],
     selectedCat: 0,
     selectedCity: [],
-    data: {},
+    data: {
+        title: '',
+        description: '',
+        adverts: [],
+        last_advert: 0,
+        categories: [],
+    },
 };
 
 const extractErrorMessage = (err: any) => {
@@ -31,9 +37,9 @@ const extractErrorMessage = (err: any) => {
 
 export const getHomeData = createAsyncThunk(
     "global/get-home-data",
-    async (_, thunkAPI) => {
+    async (params: any = {}, thunkAPI) => {
         try {
-            return await globalService.getHomeData();
+            return await globalService.getHomeData(params);
         } catch (err: any) {
             const message = extractErrorMessage(err);
             return thunkAPI.rejectWithValue(message);
@@ -75,7 +81,14 @@ export const globalSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.isError = false;
-                state.data = payload
+                state.data = {
+                    ...state.data,
+                    title: payload.title,
+                    description: payload.description,
+                    categories: payload.categories,
+                    adverts: [...state.data.adverts, ...payload.adverts.data],
+                    last_advert: payload.adverts.last_page
+                };
             })
             .addCase(getHomeData.rejected, (state, { payload }) => {
                 state.isLoading = false;

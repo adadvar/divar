@@ -1,7 +1,5 @@
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
-
-
 //Register user
 const me = async (params: object) => {
     const config = {
@@ -30,11 +28,12 @@ const changeEmail = async (params: object, token: string) => {
 
 
 //get user
-const getHomeData = async () => {
+
+const getHomeData = async (params: any) => {
     const config = {
         method: "GET",
     };
-    const response = await fetch(`${BASE_URL}/home-data`, config);
+    const response = await fetch(`${BASE_URL}/home-data?page=${params.page}`, config);
     const data = await response.json();
 
     return data;

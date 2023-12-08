@@ -1,24 +1,22 @@
-interface RegularListProps<T> {
-    items: T[];
+interface RegularListProps {
+    items: object[];
     resourceName: string;
-    ItemComponent: React.ComponentType<
-        { [resourceName: string]: T } & { key: React.Key }
-    >;
+    ItemComponent: React.ComponentType<any>;
 }
 
-const RegularList = <T,>({
+const RegularList = ({
     items,
     resourceName,
     ItemComponent,
-}: RegularListProps<T>) => {
+}: RegularListProps) => {
     return (
         <>
             {items &&
-                items.map((item, index) => {
+                items.map((item: object, key: number) => {
                     return (
                         <ItemComponent
-                            key={index}
-                            {...({ [resourceName]: item } as any)}
+                            key={key}
+                            {...{ [resourceName]: item }}
                         />
                     );
                 })}

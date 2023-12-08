@@ -33,12 +33,15 @@ class UserController extends Controller
   public function homeData(Request $r)
   {
     try {
-
       $pageData = [];
       $pageData['title'] = 'صفحه اصلی';
       $pageData['description'] = 'اینجا صفحه اصلی برنامه است.';
-      $pageData['adverts'] = Advert::all()->load('user', 'category');
-      $pageData['categories'] = Category::all()->load('child');
+
+      // Specify a pagination size, for example 10 items per page
+      $perPage = $r->per_page ?? 21;
+
+      $pageData['adverts'] = Advert::where('state', 'accepted')->with(['user', 'category'])->paginate($perPage);
+      $pageData['categories'] = Category::with('child')->get();
 
       return response()->json(
         $pageData,
@@ -51,7 +54,6 @@ class UserController extends Controller
       ], 500);
     }
   }
-
   public function changeEmail(ChangeEmailRequest $request)
   {
     try {
