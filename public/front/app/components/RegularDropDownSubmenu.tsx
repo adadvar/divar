@@ -23,7 +23,7 @@ const RegularDropDownSubmenu = ({
     return (
         <div className="">
             <div
-                className="flex items-center cursor-pointer select-none"
+                className="flex items-center cursor-pointer select-none mb-3"
                 onClick={toggleSubMenu}
             >
                 <div className="text-2xl">

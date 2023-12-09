@@ -22,11 +22,9 @@ const LoadMoreAdvert = () => {
     }, [inView]);
 
     return (
-        <>
-            <div ref={ref} className="">
-                {isCurrentPage && <SpinnerSvg />}
-            </div>
-        </>
+        <div ref={ref} className="text-center">
+            {isCurrentPage && <SpinnerSvg />}
+        </div>
     );
 };
 

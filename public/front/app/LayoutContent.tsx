@@ -25,7 +25,7 @@ const LayoutContent = () => {
 
     return (
         <>
-            {isLoading && <Spinner />}
+            {/* {isLoading && <Spinner />} */}
             <Overlay />
             <Navbar />
             <ButtomNavbar />
