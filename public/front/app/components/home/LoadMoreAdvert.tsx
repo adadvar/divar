@@ -1,10 +1,10 @@
 "use client";
 
 import { useInView } from "react-intersection-observer";
-import SpinnerSvg from "./SpinnerSvg";
+import SpinnerSvg from "../SpinnerSvg";
 import { useEffect } from "react";
-import { RootState, useAppDispatch } from "../GlobalRedux/store";
-import { getHomeData } from "../GlobalRedux/features/global/globalSlice";
+import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
+import { getHomeData } from "@/app/GlobalRedux/features/global/globalSlice";
 import { useSelector } from "react-redux";
 import { data } from "@/public/interfaces";
 

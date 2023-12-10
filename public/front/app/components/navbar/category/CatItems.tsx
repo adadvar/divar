@@ -1,16 +1,16 @@
 "use client";
-import { cat } from "@/public/interfaces";
+import { category } from "@/public/interfaces";
 import CatItem from "./CatItem";
 
 interface Props {
-    cats: cat[];
+    categories: category[];
 }
 
-const CatItems = ({ cats }: Props) => {
+const CatItems = ({ categories }: Props) => {
     return (
         <div className="relative h-full overflow-y-scroll overflow-x-hidden snap-y snap-mandatory z-20 scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20 px-10">
-            {cats.map((c) => (
-                <CatItem key={c.id} cat={c} />
+            {categories.map((c) => (
+                <CatItem key={c.id} category={c} />
             ))}
         </div>
     );

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import {
     closeDialog,
     openDialog,
-    setselectedCat,
+    setselectedCategory,
 } from "../../GlobalRedux/features/global/globalSlice";
 import {
     BsXLg as CloseIcon,
@@ -21,7 +21,7 @@ interface LayoutProps {
     haveInput?: boolean;
     haveSearchInput?: boolean;
     haveClearButton?: boolean;
-    haveCat?: boolean;
+    haveCategory?: boolean;
     whereBack?: string;
     whereClose?: string;
     title?: string;
@@ -35,7 +35,7 @@ const MobOverlayLayout = ({
     haveInput,
     haveSearchInput,
     haveClearButton,
-    haveCat,
+    haveCategory,
     whereBack = "",
     whereClose = "",
     title,
@@ -61,7 +61,7 @@ const MobOverlayLayout = ({
             >
                 <div className="flex justify-between w-full text-sm font-bold">
                     <div className="flex items-center">
-                        {haveBackButton && haveCat && (
+                        {haveBackButton && haveCategory && (
                             <button
                                 className="text-gray-600 rounded-full text-2xl pe-1"
                                 onClick={() => dispatch(openDialog(whereBack))}
@@ -70,7 +70,7 @@ const MobOverlayLayout = ({
                             </button>
                         )}
 
-                        {haveBackButton && !haveCat && (
+                        {haveBackButton && !haveCategory && (
                             <button
                                 className="text-gray-600 rounded-full text-2xl pe-1"
                                 onClick={() => dispatch(openDialog(whereBack))}

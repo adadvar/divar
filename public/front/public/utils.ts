@@ -1,4 +1,4 @@
-import { cat } from "./interfaces";
+import { category } from "./interfaces";
 
 export const DIALOG_TYPE_SEARCH = 'search';
 export const DIALOG_TYPE_SEARCH_MOB = 'search_mob';
@@ -13,14 +13,28 @@ export const DIALOG_TYPE_LOGIN_MOB = 'login_mob';
 export const DIALOG_TYPE_REGISTER_USER_MOB = 'register_user_mob';
 
 
-export const findCat = (arr: cat[], itemId: number): cat | null =>
-    arr.reduce((a: cat | null, item: cat) => {
+export const findCategory = (arr: category[], itemId: number): category | null =>
+    arr.reduce((a: category | null, item: category) => {
         if (a) return a;
         if (item.id === itemId) return item;
-        if (item.child) return findCat(item.child, itemId);
+        if (item.child) return findCategory(item.child, itemId);
         return null;
     }, null);
 
+export const findCategoryPath = (categories: category[], childId: number, path: category[] = []): category[] | null => {
+    for (const category of categories) {
+        if (category.id === childId) {
+            return [...path, category]; // Found the child, return the path
+        }
+        if (category.child.length > 0) {
+            const foundPath = findCategoryPath(category.child, childId, [...path, category]); // Recursive call
+            if (foundPath) {
+                return foundPath;
+            }
+        }
+    }
+    return null; // Child not found in the current branch
+};
 
 export const getAge = (age: string): string => {
     const isYr = age.includes('yr');

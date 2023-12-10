@@ -11,8 +11,8 @@ const ToggleButton = () => {
         <div>
             <button
                 onClick={handleToggle}
-                className={`w-8 h-5 px-[2px] bg-gray-300 rounded-full relative duration-200 ease-in-out ${
-                    isToggled ? "bg-blue-500" : "bg-gray-400"
+                className={`w-8 h-5 px-[2px] rounded-full relative duration-200 ease-in-out ${
+                    isToggled ? "bg-red-800" : "bg-gray-400"
                 }`}
             >
                 <span

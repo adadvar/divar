@@ -9,26 +9,26 @@ import {
 import {
     closeDialog,
     setCats,
-    setselectedCat,
+    setselectedCategory,
 } from "@/app/GlobalRedux/features/global/globalSlice";
 import { RootState } from "@/app/GlobalRedux/store";
-import { cat } from "@/public/interfaces";
-import { findCat } from "@/public/utils";
+import { category } from "@/public/interfaces";
+import { findCategory } from "@/public/utils";
 import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 
 const SelectMobOverlay = () => {
     const global = useSelector((state: RootState) => state.global);
-    const selectedCat = global.selectedCat;
+    const selectedCategory = global.selectedCategory;
     const dispatch = useDispatch();
 
-    const parent = findCat(global.cats, selectedCat);
-    const title = selectedCat ? parent.title : "انتخاب دسته بندی";
-    const child = selectedCat
-        ? findCat(global.cats, selectedCat)["child"]
-        : global.cats;
+    const parent = findCategory(global.categories, selectedCategory);
+    const title = selectedCategory ? parent.title : "انتخاب دسته بندی";
+    const child = selectedCategory
+        ? findCategory(global.categories, selectedCategory)["child"]
+        : global.categories;
 
     useEffect(() => {
-        const cats: cat[] = [
+        const cats: category[] = [
             {
                 id: 1,
                 title: "املاک",
@@ -87,10 +87,10 @@ const SelectMobOverlay = () => {
         <MobOverlayLayout
             title={title}
             haveCloseButton
-            haveBackButton={selectedCat != 0}
+            haveBackButton={selectedCategory != 0}
         >
             <div className="mt-16">
-                <CatItems cats={child} />
+                <CatItems categories={child} />
             </div>
         </MobOverlayLayout>
     );

@@ -16,7 +16,7 @@ interface LayoutProps {
     haveSearchInput?: boolean;
     haveClearButton?: boolean;
     haveCloseButton?: boolean;
-    haveCat?: boolean;
+    haveCategory?: boolean;
     whereBack?: string;
     whereClose?: string;
     title?: string;
@@ -30,7 +30,7 @@ const MobOverlayLayout: React.FC<LayoutProps> = ({
     haveSearchInput,
     haveClearButton,
     haveCloseButton,
-    haveCat,
+    haveCategory,
     whereBack = "",
     whereClose = "",
     title,
@@ -57,7 +57,7 @@ const MobOverlayLayout: React.FC<LayoutProps> = ({
                 <MobOverlayHeader
                     title={title}
                     haveBackButton={haveBackButton}
-                    haveCat={haveCat}
+                    haveCategory={haveCategory}
                     whereBack={whereBack}
                 />
 
@@ -81,14 +81,14 @@ const MobOverlayLayout: React.FC<LayoutProps> = ({
 const MobOverlayHeader = ({
     title = "",
     haveBackButton = false,
-    haveCat = false,
+    haveCategory = false,
     whereBack = "",
 }) => {
     const dispatch = useDispatch();
     return (
         <div className="flex justify-between w-full text-sm font-bold">
             <div className="flex items-center">
-                {haveBackButton && haveCat && (
+                {haveBackButton && haveCategory && (
                     <button
                         className="text-gray-600 rounded-full text-2xl pe-1"
                         onClick={() => dispatch(openDialog(whereBack))}
@@ -97,7 +97,7 @@ const MobOverlayHeader = ({
                     </button>
                 )}
 
-                {haveBackButton && !haveCat && (
+                {haveBackButton && !haveCategory && (
                     <button
                         className="text-gray-600 rounded-full text-2xl pe-1"
                         onClick={() => dispatch(openDialog(whereBack))}

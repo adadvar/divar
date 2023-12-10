@@ -6,8 +6,8 @@ export interface globalState {
   message: object;
   typeOpenDialog: string;
   adverts: advert[];
-  cats: cat[];
-  selectedCat: number;
+  categories: category[];
+  selectedCategory: number;
   selectedCity: number[];
   data: data;
 }
@@ -22,15 +22,24 @@ export interface authState {
   message: object;
 }
 
+export interface advertState {
+  advert: advert;
+  adverts: advert[];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: object;
+}
+
 export interface data {
   title: string;
   description: string;
   adverts: advert[];
   last_advert: number
-  categories: cat[];
+  categories: category[];
 }
 
-export interface cat {
+export interface category {
   id: number;
   parent_id: number | null;
   user_id: number | null;
@@ -44,17 +53,17 @@ export interface cat {
   // created_at: string;
   // updated_at: string;
   // deleted_at: string | null;
-  child: cat[];
+  child: category[];
 }
 
 
 export interface advert {
   id: number;
-  // category_id: number;
+  category_id: number;
   // user_id: number;
   // city_id: number;
   // slug: string | null;
-  // slug_url: string;
+  slug_url: string;
   title: string;
   // info: string | null;
   // lat: number | null;
@@ -68,7 +77,7 @@ export interface advert {
   // deleted_at: string | null;
   age: string;
   user: user;
-  category: cat
+  category: category
 }
 
 export interface user {

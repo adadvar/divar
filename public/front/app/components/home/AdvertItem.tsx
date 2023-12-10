@@ -42,7 +42,7 @@ const AdvertItem = ({ advert }: { advert: advert }) => {
     return (
         <div className="flex w-full h-44 md:w-1/2 llg:w-1/3 xl:w-1/3 p-2">
             <Link
-                href={"#"}
+                href={`/adverts/v/${advert.slug_url}`}
                 className="flex justify-between w-full border border-gray-200 rounded box-border py-4 px-3"
             >
                 <div className="flex flex-col justify-between h-full">

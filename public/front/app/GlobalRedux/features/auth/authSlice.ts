@@ -1,6 +1,6 @@
 'use client';
 
-import { createSlice, createAsyncThunk, PayloadAction, isPending, isFulfilled, isRejected } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, isPending, isFulfilled, isRejected } from "@reduxjs/toolkit";
 import authService from "./authService";
 import { RootState } from "../../store";
 import { authState } from "@/public/interfaces";

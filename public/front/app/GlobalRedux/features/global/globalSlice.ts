@@ -1,6 +1,6 @@
 "use client";
 
-import { globalState, advert, cat } from "@/public/interfaces";
+import { globalState, advert, category } from "@/public/interfaces";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import globalService from './globalService'
@@ -15,8 +15,8 @@ const initialState: globalState = {
     message: {},
     typeOpenDialog: "",
     adverts: [],
-    cats: [],
-    selectedCat: 0,
+    categories: [],
+    selectedCategory: 0,
     selectedCity: [],
     data: {
         title: '',
@@ -54,17 +54,17 @@ export const globalSlice = createSlice({
     reducers: {
         openDialog: (state, action: PayloadAction<string>) => {
             state.typeOpenDialog = action.payload;
-            state.selectedCat = 0;
+            state.selectedCategory = 0;
         },
         closeDialog: (state) => {
             state.typeOpenDialog = "";
-            state.selectedCat = 0;
+            state.selectedCategory = 0;
         },
-        setCats: (state, action: PayloadAction<cat[]>) => {
-            state.cats = action.payload;
+        setCats: (state, action: PayloadAction<category[]>) => {
+            state.categories = action.payload;
         },
-        setselectedCat: (state, action: PayloadAction<number>) => {
-            state.selectedCat = action.payload;
+        setselectedCategory: (state, action: PayloadAction<number>) => {
+            state.selectedCategory = action.payload;
         },
         setselectedCity: (state, action: PayloadAction<number[]>) => {
             state.selectedCity = action.payload;
@@ -102,7 +102,7 @@ export const globalSlice = createSlice({
 export const { closeDialog,
     openDialog,
     setCats,
-    setselectedCat,
+    setselectedCategory,
     setselectedCity
 } = globalSlice.actions;
 
