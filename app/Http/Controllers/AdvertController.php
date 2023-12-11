@@ -158,21 +158,21 @@ class AdvertController extends Controller
 
     public function create(AdvertCreateRequest $r)
     {
-        // dd($r->all());
         try {
             DB::beginTransaction();
             $data = $r->validated();
             $user = auth()->user();
             $imageArr = [];
-
-            foreach ($r->file('images') as $file) {
-                $image = $file;
-                $imageName = time() . bin2hex(random_bytes(5)) . '-image';
-                Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
-                $imageArr[] = $imageName;
+            if (!empty($r->file('images'))) {
+                foreach ($r->file('images') as $file) {
+                    $image = $file;
+                    $imageName = time() . bin2hex(random_bytes(5)) . '-image';
+                    Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
+                    $imageArr[] = $imageName;
+                }
             }
-            $data['images'] = $imageArr;
 
+            $data['images'] = ($imageArr);
             $cat_title = Category::find($r->category_id)->title;
             $city = isset($r->city) ? $r->city : '';
             $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));

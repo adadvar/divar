@@ -60,7 +60,7 @@ export interface category {
 export interface advert {
   id: number;
   category_id: number;
-  // user_id: number;
+  user_id: number;
   // city_id: number;
   // slug: string | null;
   slug_url: string;
@@ -69,7 +69,7 @@ export interface advert {
   // lat: number | null;
   // long: number | null;
   // price: number;
-  // images: string[] | null;
+  images: string[] | null;
   // publish_at: string | null;
   // state: 'pending' | 'accepted' | 'blocked';
   // created_at: string;

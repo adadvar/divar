@@ -9,13 +9,13 @@ import Spinner from "@/app/components/Spinner";
 import { getHomeData } from "./GlobalRedux/features/global/globalSlice";
 
 const LayoutContent = () => {
-    const { isLoading: isAuthLoading } = useSelector(
+    const { isSuccess: isAuthSuccess } = useSelector(
         (state: RootState) => state.auth
     );
-    const { isLoading: isGlobalLoading } = useSelector(
+    const { isSuccess: isGlobalSuccess } = useSelector(
         (state: RootState) => state.global
     );
-    const isLoading = isAuthLoading || isGlobalLoading;
+    const isSuccess = isAuthSuccess || isGlobalSuccess;
 
     const dispatch = useAppDispatch();
 
@@ -25,7 +25,7 @@ const LayoutContent = () => {
 
     return (
         <>
-            {/* {isLoading && <Spinner />} */}
+            {!isSuccess && <Spinner />}
             <Overlay />
             <Navbar />
             <ButtomNavbar />

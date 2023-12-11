@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { showAdvert } from "@/app/GlobalRedux/features/advert/advertSlice";
 import { findCategoryPath } from "@/public/utils";
 import CategoryPath from "./CategoryPath";
+import AdvertNavbar from "../navbar/AdvertNavbar";
+import Slider from "../Slider";
 
 const Advert = ({ slug_url }: { slug_url: string }) => {
     const { advert } = useSelector((state: RootState) => state.advert);
@@ -19,7 +21,13 @@ const Advert = ({ slug_url }: { slug_url: string }) => {
     const childId = advert && advert.category_id;
     const foundPath = findCategoryPath(categories, childId);
 
-    return <div>{foundPath && <CategoryPath path={foundPath} />}</div>;
+    return (
+        <>
+            <AdvertNavbar />
+            {/* <Slider /> */}
+            {foundPath && <CategoryPath path={foundPath} />}
+        </>
+    );
 };
 
 export default Advert;

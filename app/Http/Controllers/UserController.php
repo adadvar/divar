@@ -39,8 +39,14 @@ class UserController extends Controller
 
       // Specify a pagination size, for example 10 items per page
       $perPage = $r->per_page ?? 21;
+      $query = Advert::query();
+      $conditions = [];
+      $conditions['state'] = ['accepted'];
+      $query->orderBy('id', 'desc');
+      $query->where($conditions);
+      $query->with(['user', 'category']);
+      $pageData['adverts'] = $query->paginate($perPage);
 
-      $pageData['adverts'] = Advert::where('state', 'accepted')->with(['user', 'category'])->paginate($perPage);
       $pageData['categories'] = Category::with('child')->get();
 
       return response()->json(

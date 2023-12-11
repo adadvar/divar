@@ -33,9 +33,11 @@ const Index = () => {
                     <SupportButton />
                     <RegisterAdvertButton />
                 </div>
-                <div className="lg:hidden flex items-center w-full ">
-                    {isHomePage ? <SearchBoxMob /> : <>hi</>}
-                </div>
+                {isHomePage && (
+                    <div className="lg:hidden flex items-center w-full ">
+                        <SearchBoxMob />
+                    </div>
+                )}
             </div>
         </div>
     );

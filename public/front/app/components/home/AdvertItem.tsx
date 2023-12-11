@@ -1,5 +1,6 @@
 import { advert } from "@/public/interfaces";
 import { getAge } from "@/public/utils";
+import Image from "next/image";
 import Link from "next/link";
 import {
     BiMessageRounded as ChatIcon,
@@ -39,6 +40,9 @@ const AdvertItem = ({ advert }: { advert: advert }) => {
     if (!advert) {
         return <LoadingPlaceholder />;
     }
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const image_url = BASE_URL + "adverts/" + advert.user_id + "/";
+
     return (
         <div className="flex w-full h-44 md:w-1/2 llg:w-1/3 xl:w-1/3 p-2">
             <Link
@@ -62,11 +66,19 @@ const AdvertItem = ({ advert }: { advert: advert }) => {
                     <div className="flex h-full justify-center items-end w-6 text-gray-500 text-xl">
                         <ChatIcon />
                     </div>
-                    <div
-                        className="flex items-center justify-center h-full min-w-[126px] bg-gray-200
-                    rounded text-4xl m-auto"
-                    >
-                        <ImageIcon />
+                    <div className="flex items-center justify-center h-full max-w-[126px] min-w-[126px] bg-gray-200 rounded text-4xl m-auto">
+                        {advert.images ? (
+                            <Image
+                                src={image_url + advert.images[0]}
+                                alt="advert image"
+                                className="h-full w-full object-cover"
+                                width={126}
+                                height={126}
+                                unoptimized={true}
+                            />
+                        ) : (
+                            <ImageIcon />
+                        )}
                     </div>
                 </div>
             </Link>
