@@ -5,15 +5,12 @@ import {
     BiChevronUp as UpIcon,
 } from "react-icons/bi";
 
-interface RegularDropDownSubmenuProps {
+interface RegularDropDownProps {
     title: string;
     submenuItems: React.ReactNode[];
 }
 
-const RegularDropDownSubmenu = ({
-    title,
-    submenuItems,
-}: RegularDropDownSubmenuProps) => {
+const RegularDropDown = ({ title, submenuItems }: RegularDropDownProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleSubMenu = () => {
@@ -42,4 +39,4 @@ const RegularDropDownSubmenu = ({
     );
 };
 
-export default RegularDropDownSubmenu;
+export default RegularDropDown;

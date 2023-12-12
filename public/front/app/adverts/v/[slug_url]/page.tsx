@@ -6,7 +6,13 @@ const AdvertPage = ({
 }: {
     params: { slug_url: string };
 }) => {
-    return <Advert slug_url={slug_url} />;
+    return (
+        <>
+            <main className="max-w-screen-lg mx-auto py-5 px-2">
+                <Advert slug_url={slug_url} />
+            </main>
+        </>
+    );
 };
 
 export default AdvertPage;

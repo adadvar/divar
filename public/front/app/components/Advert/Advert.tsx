@@ -5,13 +5,16 @@ import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
 import { useEffect } from "react";
 import { showAdvert } from "@/app/GlobalRedux/features/advert/advertSlice";
 import { findCategoryPath } from "@/public/utils";
-import CategoryPath from "./CategoryPath";
+import CategoryPathItem from "./CategoryPathItem";
 import AdvertNavbar from "../navbar/AdvertNavbar";
 import Slider from "../Slider";
+import RegularList from "../RegularList";
 
 const Advert = ({ slug_url }: { slug_url: string }) => {
     const { advert } = useSelector((state: RootState) => state.advert);
     const { categories } = useSelector((state: RootState) => state.global.data);
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const image_url = BASE_URL + "adverts/" + advert.user_id + "/";
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -24,8 +27,18 @@ const Advert = ({ slug_url }: { slug_url: string }) => {
     return (
         <>
             <AdvertNavbar />
-            {/* <Slider /> */}
-            {foundPath && <CategoryPath path={foundPath} />}
+            <Slider image_url={image_url} images={advert.images} />
+            {foundPath && (
+                <div className="flex items-center text-center text-gray-500 text-xs font-bold my-7">
+                    <RegularList
+                        items={foundPath}
+                        resourceName="category"
+                        ItemComponent={CategoryPathItem}
+                    />
+                    <p className="text-gray-400 px-2">{advert.title}</p>
+                </div>
+            )}
+            <div className="text-gray-800 ms-2 font-bold">{advert.title}</div>
         </>
     );
 };

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
-import RegularDropDownSubmenu from "../RegularDropDownSubmenu";
+import RegularDropDownSubmenu from "../RegularDropDown";
 
 const SidePriceFilter = () => {
     const [minPrice, setMinPrice] = useState("");

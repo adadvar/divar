@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
-import RegularDropDownSubmenu from "../RegularDropDownSubmenu";
+import RegularDropDownSubmenu from "../RegularDropDown";
 import ToggleButton from "../ToggleButton";
 
 const SideStatusFilter = () => {
