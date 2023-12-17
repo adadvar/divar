@@ -1,7 +1,9 @@
 import "./globals.css";
-import { Providers } from "@/app/GlobalRedux/provider";
 import type { Metadata } from "next";
-import LayoutContent from "@/app/LayoutContent";
+import Spinner from "./components/Spinner";
+import Overlay from "./components/Overlay";
+import Navbar from "@/app/components/navbar/Index";
+import ButtomNavbar from "@/app/components/navbar/IndexBottom";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -11,6 +13,8 @@ export const metadata: Metadata = {
     },
 };
 
+// const vazirFont = localFont({ src: "../public/fonts/Vazirmatn-Regular.woff2" });
+
 export default function RootLayout({
     children,
 }: {
@@ -19,12 +23,12 @@ export default function RootLayout({
     return (
         <html lang="en" dir="rtl">
             <body>
-                <Providers>
-                    <main className="max-w-screen-xl mx-auto py-20 px-2">
-                        <LayoutContent />
-                        {children}
-                    </main>
-                </Providers>
+                <main className="max-w-screen-xl mx-auto py-20 px-2">
+                    <Overlay />
+                    <Navbar />
+                    <ButtomNavbar />
+                    {children}
+                </main>
             </body>
         </html>
     );

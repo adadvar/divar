@@ -1,25 +1,22 @@
 "use client";
 
-import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
-import { RootState } from "@/app/GlobalRedux/store";
+import { useGlobal } from "@/app/store/auth-store";
 import { DIALOG_TYPE_CHAT_MOB } from "@/public/utils";
 import React from "react";
 import { BsFillChatFill as ChatIcon } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 
 const ChatButtonMob = () => {
-    const typeOpenDialog = useSelector(
-        (state: RootState) => state.global.typeOpenDialog
-    );
-    const dispatch = useDispatch();
+    const typeDialog = useGlobal.getState().typeDialog;
+    const setTypeDialog = useGlobal.getState().setTypeDialog;
     return (
         <button
             className={`flex flex-col items-center gap-1 px-2 m-0 ${
-                typeOpenDialog == DIALOG_TYPE_CHAT_MOB
+                typeDialog == DIALOG_TYPE_CHAT_MOB
                     ? "text-red-700"
                     : "text-gray-800"
             }`}
-            onClick={() => dispatch(openDialog(DIALOG_TYPE_CHAT_MOB))}
+            onClick={() => setTypeDialog(DIALOG_TYPE_CHAT_MOB)}
         >
             <div className="text-xl">
                 <ChatIcon />

@@ -1,7 +1,6 @@
 "use client";
 import { MouseEvent, ReactNode } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
 import {
     BsBoxArrowInLeft as LoginIcon,
     BsPin as PinIcon,
@@ -23,23 +22,16 @@ import {
     BiLogoLinkedinSquare as LinkedinIcon,
 } from "react-icons/bi";
 
-import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
-import {
-    closeDialog,
-    openDialog,
-} from "@/app/GlobalRedux/features/global/globalSlice";
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
 import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 import Link from "next/link";
-import { logout } from "@/app/GlobalRedux/features/auth/authSlice";
+import { useGlobal } from "@/app/store/auth-store";
 
 const ProfileMobOverlay = () => {
-    const { token, me, isLoading, isSuccess } = useSelector(
-        (state: RootState) => state.auth
-    );
-
-    const isLogged = token || isSuccess;
-    const dispatch = useAppDispatch();
+    const typeDialog = useGlobal.getState().typeDialog;
+    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const isLogged = false;
+    const me = { mobile: "", email: "" };
 
     return (
         <MobOverlayLayout title="دیوار من" haveBottomNav>
@@ -67,9 +59,7 @@ const ProfileMobOverlay = () => {
                         <CustomButton
                             icon={<LoginIcon />}
                             title="ورود و ثبت نام"
-                            onClick={() =>
-                                dispatch(openDialog(DIALOG_TYPE_LOGIN_MOB))
-                            }
+                            onClick={() => setTypeDialog(DIALOG_TYPE_LOGIN_MOB)}
                         />
                     )}
                     <hr className="pb-2 mt-2" />
@@ -110,8 +100,8 @@ const ProfileMobOverlay = () => {
                                 icon={<LogoutIcon />}
                                 title="خروج"
                                 onClick={() => {
-                                    dispatch(logout());
-                                    dispatch(closeDialog());
+                                    // dispatch(logout());
+                                    setTypeDialog("");
                                 }}
                             />
                             <hr className="pb-2 mt-2" />

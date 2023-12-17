@@ -1,8 +1,4 @@
-"use client";
-
 import { data } from "@/public/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "./GlobalRedux/store";
 import RegularList from "./components/RegularList";
 import AdvertItem from "./components/home/AdvertItem";
 import MobCatItem from "./components/home/MobCatItem";
@@ -11,9 +7,10 @@ import SidePriceFilter from "./components/home/SidePriceFilter";
 import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
+import globalActions from "./actions/global-actions";
 
-export default function Home() {
-    const data: data = useSelector((state: RootState) => state.global.data);
+export default async function Home() {
+    const data: data = await globalActions.getHomeData({ page: "1" });
     const isDataLoaded =
         data && data.adverts.length && data.categories.length ? true : false;
 

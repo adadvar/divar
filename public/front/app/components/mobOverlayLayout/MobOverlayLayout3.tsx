@@ -1,5 +1,5 @@
+"use client";
 import React, { ReactNode, useRef, useEffect } from "react";
-import { openDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import {
     BsArrowRightShort as BackIcon,
     BsXLg as CloseIcon,
@@ -84,14 +84,13 @@ const MobOverlayHeader = ({
     haveCategory = false,
     whereBack = "",
 }) => {
-    const dispatch = useDispatch();
     return (
         <div className="flex justify-between w-full text-sm font-bold">
             <div className="flex items-center">
                 {haveBackButton && haveCategory && (
                     <button
                         className="text-gray-600 rounded-full text-2xl pe-1"
-                        onClick={() => dispatch(openDialog(whereBack))}
+                        onClick={() => {}}
                     >
                         <BackIcon />
                     </button>
@@ -100,7 +99,7 @@ const MobOverlayHeader = ({
                 {haveBackButton && !haveCategory && (
                     <button
                         className="text-gray-600 rounded-full text-2xl pe-1"
-                        onClick={() => dispatch(openDialog(whereBack))}
+                        onClick={() => {}}
                     >
                         <BackIcon />
                     </button>
@@ -134,7 +133,7 @@ const MobOverlayCloseButton = ({
             {haveCloseButton && (
                 <button
                     className="text-gray-600 bg-gray-200  rounded-full font-semibold hover:bg-gray-300 p-2"
-                    onClick={() => dispatch(openDialog(whereClose))}
+                    onClick={() => {}}
                 >
                     <CloseIcon />
                 </button>

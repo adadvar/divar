@@ -13,8 +13,8 @@
 
 @font-face {
 	font-family: "iran";
-	src: url("../public/fonts/IRANSans(FaNum)_Light.ttf") format("embedded-opentype"),
-		 url("../public/fonts/IRANSans(FaNum)_Light.ttf") format("truetype");
+	src: url("../public/fonts/Vazirmatn-Regular.woff2") format("embedded-opentype"),
+		 url("../public/fonts/Vazirmatn-Regular.woff2") format("truetype");
 }
 
 @media (prefers-color-scheme: dark) {

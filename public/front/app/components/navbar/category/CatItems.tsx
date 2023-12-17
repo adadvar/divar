@@ -1,4 +1,3 @@
-"use client";
 import { category } from "@/public/interfaces";
 import CatItem from "./CatItem";
 

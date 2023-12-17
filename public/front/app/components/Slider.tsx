@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -8,6 +9,7 @@ interface SliderProps {
 
 const Slider = ({ images, image_url }: SliderProps) => {
     const [current, setCurrent] = useState(0);
+    if (!images) return null;
 
     const nextSlide = () => {
         setCurrent(current === images.length - 1 ? 0 : current + 1);
@@ -17,7 +19,6 @@ const Slider = ({ images, image_url }: SliderProps) => {
         setCurrent(current === 0 ? images.length - 1 : current - 1);
     };
 
-    if (!images) return null;
     return (
         <div className="relative flex w-full h-96 items-center justify-center">
             {current !== 0 && (

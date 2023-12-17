@@ -1,12 +1,9 @@
 export interface globalState {
   isError: boolean;
   isSuccess: boolean;
-  isRegisterSuccess: boolean;
   isLoading: boolean;
   message: object;
   typeOpenDialog: string;
-  adverts: advert[];
-  categories: category[];
   selectedCategory: number;
   selectedCity: number[];
   data: data;
@@ -96,7 +93,7 @@ export interface user {
   // deleted_at: string | null;
 }
 
-interface me {
+export interface me {
   id: number;
   mobile: string;
   email: string;

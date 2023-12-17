@@ -1,44 +1,33 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 
-import {
-    BsXLg as CloseIcon,
-    BsArrowRightShort as BackIcon,
-} from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    closeDialog,
-    getHomeData,
-    openDialog,
-} from "@/app/GlobalRedux/features/global/globalSlice";
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../mobOverlayLayout/MobOverlayLayout";
-import Link from "next/link";
-import { login, me } from "@/app/GlobalRedux/features/auth/authSlice";
-import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
+import { useGlobal } from "@/app/store/global-store";
+import authActions from "@/app/actions/auth-actions";
+
 const LoginMobOverlay = () => {
-    const dispatch = useAppDispatch();
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const { token, isLoading, isError, isSuccess, message } = useSelector(
-        (state: RootState) => state.auth
-    );
+    const typeDialog = useGlobal.getState().typeDialog;
+    const setTypeDialog = useGlobal.getState().setTypeDialog;
 
     useEffect(() => {
         inputRef.current?.focus();
 
-        if (isSuccess) {
-            dispatch(me());
-            dispatch(getHomeData({ page: 1 }));
-            dispatch(closeDialog());
-        }
-    }, [isSuccess]);
+        // if (isSuccess) {
+        //     authActions.me();
+        //     dispatch(getHomeData({ page: 1 }));
+        //     dispatch(closeDialog());
+        // }
+    }, []);
 
-    const onSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        dispatch(login({ username, password }));
+    const onLogin = async (formData: FormData) => {
+        const username = formData.get("username");
+        const password = formData.get("password");
+        await authActions.login({ username, password });
     };
 
     return (
@@ -50,7 +39,7 @@ const LoginMobOverlay = () => {
                 برای استفاده از امکانات دیوار لطفا شماره موبایل یا ایمیل و
                 رمزعبور خود را وارد کنید.
             </p>
-            <form onSubmit={onSubmit} className="p-4">
+            <form action={onLogin} className="p-4">
                 <input
                     ref={inputRef}
                     type="text"
@@ -60,9 +49,6 @@ const LoginMobOverlay = () => {
                     style={{ direction: "ltr" }}
                     className="border mb-4 p-2 outline-none w-full text-sm rounded-lg text-gray-900 bg-white   focus:border-red-500"
                     placeholder="شماره موبایل یا ایمیل"
-                    onChange={(e) => {
-                        setUsername(e.target.value);
-                    }}
                 />
                 <input
                     type="password"
@@ -70,16 +56,13 @@ const LoginMobOverlay = () => {
                     name="password"
                     className="border p-2  outline-none w-full text-sm rounded-lg text-gray-900 bg-white   focus:border-red-500"
                     placeholder="رمز عبور"
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                    }}
                 />
 
                 <div className="flex justify-center flex-wrap p-4 text-sm text-gray-500">
                     <span>اگر در دیوار حساب کاربری ندارید&nbsp;</span>
                     <button
                         onClick={() =>
-                            dispatch(openDialog(DIALOG_TYPE_REGISTER_USER_MOB))
+                            setTypeDialog(DIALOG_TYPE_REGISTER_USER_MOB)
                         }
                         className="text-red-700"
                     >

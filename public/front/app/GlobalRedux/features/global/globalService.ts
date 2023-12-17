@@ -1,19 +1,19 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
-//get home data
+// //get home data
 
-const getHomeData = async (params: any) => {
-    const config = {
-        method: "GET",
-    };
-    const response = await fetch(`${BASE_URL}/home-data?page=${params.page}`, config);
-    const data = await response.json();
+// const getHomeData = async (params: any) => {
+//     const config = {
+//         method: "GET",
+//     };
+//     const response = await fetch(`${BASE_URL}/home-data?page=${params.page}`, config);
+//     const data = await response.json();
 
-    return data;
-};
+//     return data;
+// };
 
-const globalService = {
-    getHomeData,
-};
+// const globalService = {
+//     getHomeData,
+// };
 
-export default globalService;
+// export default globalService;

@@ -2,14 +2,11 @@
 import { useRef, useEffect } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/GlobalRedux/store";
-import { closeDialog } from "@/app/GlobalRedux/features/global/globalSlice";
 import { BiRightArrowAlt as RightIcon } from "react-icons/bi";
+import { useGlobal } from "@/app/store/auth-store";
 
 const SearchMobOverlay = () => {
-    const typeOpenDialog = useSelector(
-        (state: RootState) => state.global.typeOpenDialog
-    );
+    const setTypeDialog = useGlobal.getState().setTypeDialog;
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
@@ -22,7 +19,7 @@ const SearchMobOverlay = () => {
                 <div className="flex justify-start text-gray-600 text-sm font-bold shadow-sm py-3 px-4">
                     <button
                         className="text-xl"
-                        onClick={() => dispatch(closeDialog())}
+                        onClick={() => setTypeDialog("")}
                     >
                         <RightIcon />
                     </button>

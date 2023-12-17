@@ -2,24 +2,23 @@
 
 import { useInView } from "react-intersection-observer";
 import SpinnerSvg from "../SpinnerSvg";
-import { useEffect } from "react";
-import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
-import { getHomeData } from "@/app/GlobalRedux/features/global/globalSlice";
-import { useSelector } from "react-redux";
-import { data } from "@/public/interfaces";
+import { useEffect, useState } from "react";
+import { advert, data } from "@/public/interfaces";
+import advertActions from "@/app/actions/advert-actions";
 
 let page = 2;
 const LoadMoreAdvert = () => {
-    const dispatch = useAppDispatch();
     const { ref, inView } = useInView();
-    const data: data = useSelector((state: RootState) => state.global.data);
-    const isCurrentPage = data.last_advert >= page;
+    const [data, setData] = useState<advert[]>([]);
+    const [isCurrentPage, setIsCurrentPage] = useState(true);
+
     useEffect(() => {
-        if (inView && isCurrentPage) {
-            dispatch(getHomeData({ page: page }));
-            page++;
-        }
-    }, [inView]);
+        advertActions.list({ page }).then((res) => {
+            res.last_page < page && setIsCurrentPage(false);
+            setData([...data, ...res.adverts.data]);
+        });
+        page++;
+    }, [inView, data]);
 
     return (
         <div ref={ref} className="text-center">

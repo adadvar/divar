@@ -1,20 +1,9 @@
 "use client";
 import { useRef, useEffect } from "react";
-
-import {
-    BsXLg as CloseIcon,
-    BsArrowRightShort as BackIcon,
-} from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import {
-    closeDialog,
-    openDialog,
-} from "@/app/GlobalRedux/features/global/globalSlice";
 import { DIALOG_TYPE_LOGIN_MOB, DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 import MobOverlayLayout from "../mobOverlayLayout/MobOverlayLayout";
 import Link from "next/link";
 const RegisterMobOverlay = () => {
-    const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {

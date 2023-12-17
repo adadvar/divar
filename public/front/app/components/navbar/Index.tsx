@@ -9,11 +9,9 @@ import ChatButton from "./chat/ChatButton";
 import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
 import SearchBox from "./search/InputBox";
-import SearchBoxMob from "./search/InputBoxMob";
+import HomeSearchMob from "./home-search-mob";
 
 const Index = () => {
-    const pathname = usePathname();
-    const isHomePage = pathname === "/";
     return (
         <div className="shadow-sm fixed flex items-center h-16 top-0 left-0 right-0 bg-white z-40">
             <div className="flex justify-between w-full 2xl:container 2xl:px-16 px-5 mx-auto">
@@ -33,11 +31,7 @@ const Index = () => {
                     <SupportButton />
                     <RegisterAdvertButton />
                 </div>
-                {isHomePage && (
-                    <div className="lg:hidden flex items-center w-full ">
-                        <SearchBoxMob />
-                    </div>
-                )}
+                <HomeSearchMob />
             </div>
         </div>
     );

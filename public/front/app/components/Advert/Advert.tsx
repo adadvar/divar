@@ -1,25 +1,17 @@
-"use client";
-
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/app/GlobalRedux/store";
-import { useEffect } from "react";
-import { showAdvert } from "@/app/GlobalRedux/features/advert/advertSlice";
 import { findCategoryPath } from "@/public/utils";
 import CategoryPathItem from "./CategoryPathItem";
 import AdvertNavbar from "../navbar/AdvertNavbar";
 import Slider from "../Slider";
 import RegularList from "../RegularList";
+import { advert, category } from "@/public/interfaces";
+import advertActions from "@/app/actions/advert-actions";
+import categoryActions from "@/app/actions/categoris-actions";
 
-const Advert = ({ slug_url }: { slug_url: string }) => {
-    const { advert } = useSelector((state: RootState) => state.advert);
-    const { categories } = useSelector((state: RootState) => state.global.data);
+const Advert = async ({ slug_url }: { slug_url: string }) => {
+    const advert: advert = await advertActions.show({ slug_url });
+    const categories: category[] = await categoryActions.list();
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
     const image_url = BASE_URL + "adverts/" + advert.user_id + "/";
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(showAdvert({ slug_url: slug_url }));
-    }, []);
 
     const childId = advert && advert.category_id;
     const foundPath = findCategoryPath(categories, childId);
