@@ -1,13 +1,12 @@
-'use server';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+const isServer = typeof window === 'undefined';
+const HOST_URL = isServer ? process.env.BASE_SERVER_API_URL : process.env.BASE_CLIENT_API_URL;
 
 //Login user with google
-const loginWithGoogle = async (params: object) => {
+export const loginWithGoogle = async (params: object) => {
   const config = {
     method: "GET",
   };
-  const response = await fetch(`${BASE_URL}/auth/google/callback${params}`, config);
+  const response = await fetch(`${HOST_URL}/auth/google/callback${params}`, config);
   const data = await response.json();
   // let userMe;
   if (data) {
@@ -18,7 +17,7 @@ const loginWithGoogle = async (params: object) => {
 };
 
 //Login user
-const login = async (params: object) => {
+export const login = async (params: object) => {
   const config = {
     method: "POST",
     headers: {
@@ -29,12 +28,12 @@ const login = async (params: object) => {
         ...params,
         grant_type: 'password',
         client_id: 2,
-        client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET
+        client_secret: process.env.CLIENT_SECRET
       }
     ),
   };
 
-  const response = await fetch(`${BASE_URL}/login`, config);
+  const response = await fetch(`${HOST_URL}/login`, config);
   const data = await response.json();
   // let userMe;
   if (data) {
@@ -45,84 +44,84 @@ const login = async (params: object) => {
 };
 
 //Logout user
-const logout = () => {
+export const logout = () => {
   localStorage.removeItem("auth");
   localStorage.removeItem("me");
 };
 
 //Register user
-const register = async (params: object) => {
+export const register = async (params: object) => {
   const config = {
     method: "POST",
     body: JSON.stringify(params),
   };
-  const response = await fetch(`${BASE_URL}/register`, config);
+  const response = await fetch(`${HOST_URL}/register`, config);
   const data = await response.json();
 
   return data;
 };
 
 //Register user
-const registerVerify = async (params: object) => {
+export const registerVerify = async (params: object) => {
   const config = {
     method: "POST",
     body: JSON.stringify(params),
   };
-  const response = await fetch(`${BASE_URL}/register-verify`, config);
+  const response = await fetch(`${HOST_URL}/register-verify`, config);
   const data = await response.json();
 
   return data;
 };
 
 //Resend verification user
-const resendVerificationCode = async (params: object) => {
+export const resendVerificationCode = async (params: object) => {
   const config = {
     method: "POST",
     body: JSON.stringify(params),
   };
-  const response = await fetch(`${BASE_URL}/resend-verification-code`, config);
+  const response = await fetch(`${HOST_URL}/resend-verification-code`, config);
   const data = await response.json();
 
   return data;
 };
 
 //Change email user
-const changeEmail = async (params: object, token: string) => {
+export const changeEmail = async (params: object, token: string) => {
   const config = {
     body: JSON.stringify(params),
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await fetch(`${BASE_URL}/change-email`, config);
+  const response = await fetch(`${HOST_URL}/change-email`, config);
   const data = await response.json();
 
   return data;
 };
 
 //Change password user
-const changePassword = async (params: object, token: string) => {
+export const changePassword = async (params: object, token: string) => {
   const config = {
     body: JSON.stringify(params),
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await fetch(`${BASE_URL}/change-password`, config);
+  const response = await fetch(`${HOST_URL}/change-password`, config);
   const data = await response.json();
 
   return data;
 };
 
 //Change email submit user
-const changeEmailSubmit = async (params: object, token: string) => {
+export const changeEmailSubmit = async (params: object, token: string) => {
   const config = {
     body: JSON.stringify(params),
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await fetch(`${BASE_URL}/change-email-submit`, config);
+  const response = await fetch(`${HOST_URL}/change-email-submit`, config);
   const data = await response.json();
 
   if (data) {
@@ -133,34 +132,19 @@ const changeEmailSubmit = async (params: object, token: string) => {
   return data;
 };
 
-//get user
-// const me = async (token: string) => {
-//   const config = {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   };
-//   const response = await fetch(`${BASE_URL}/user/me`, config);
-//   const data = await response.json();
+export const me = async (token: string) => {
+  const config = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${HOST_URL}/user/me`, config);
+  const data = await response.json();
 
-//   if (data) {
-//     localStorage.setItem("me", JSON.stringify(data));
-//   }
-//   return data;
-// };
-
-const authActions = {
-  loginWithGoogle,
-  login,
-  logout,
-  register,
-  registerVerify,
-  resendVerificationCode,
-  changeEmail,
-  changePassword,
-  changeEmailSubmit,
-  // me,
+  if (data) {
+    localStorage.setItem("me", JSON.stringify(data));
+  }
+  return data;
 };
 
-export default authActions;

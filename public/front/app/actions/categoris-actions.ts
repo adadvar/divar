@@ -1,35 +1,14 @@
-'use server';
+const isServer = typeof window === 'undefined';
+const HOST_URL = isServer ? process.env.BASE_SERVER_API_URL : process.env.BASE_CLIENT_API_URL;
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-
-const resendVerificationCode = async (params: object) => {
-  const config = {
-    method: "POST",
-    body: JSON.stringify(params),
-  };
-  const response = await fetch(`${BASE_URL}/resend-verification-code`, config);
-  const data = await response.json();
-
-  return data;
-};
-
-
-
-
-// get user
-const list = async () => {
+export const listCategories = async () => {
   const config = {
     method: "GET",
   };
-  const response = await fetch(`${BASE_URL}/category`, config);
+  const response = await fetch(`${HOST_URL}/category`, config);
   const data = await response.json();
 
   return data;
 };
 
-const categoryActions = {
-  resendVerificationCode,
-  list,
-};
 
-export default categoryActions;

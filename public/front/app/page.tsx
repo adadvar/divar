@@ -1,4 +1,4 @@
-import { data } from "@/public/interfaces";
+export const dynamic = "force-dynamic";
 import RegularList from "./components/RegularList";
 import AdvertItem from "./components/home/AdvertItem";
 import MobCatItem from "./components/home/MobCatItem";
@@ -7,12 +7,15 @@ import SidePriceFilter from "./components/home/SidePriceFilter";
 import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
-import globalActions from "./actions/global-actions";
 
 export default async function Home() {
-    const data: data = await globalActions.getHomeData({ page: "1" });
-    const isDataLoaded =
-        data && data.adverts.length && data.categories.length ? true : false;
+    const isServer = typeof window === "undefined";
+    const HOST_URL = isServer
+        ? process.env.BASE_SERVER_API_URL
+        : process.env.BASE_CLIENT_API_URL;
+    const response = await fetch(`http://nginx/api/home-data?page=1`);
+    const data = await response.json();
+    const isDataLoaded = data && data.adverts && data.categories ? true : false;
 
     return (
         <main className="">
@@ -61,7 +64,7 @@ export default async function Home() {
                         <RegularList
                             items={
                                 isDataLoaded
-                                    ? data.adverts
+                                    ? data.adverts.data
                                     : Array(21).fill(null)
                             }
                             resourceName="advert"

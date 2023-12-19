@@ -1,6 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Spinner from "./components/Spinner";
 import Overlay from "./components/Overlay";
 import Navbar from "@/app/components/navbar/Index";
 import ButtomNavbar from "@/app/components/navbar/IndexBottom";

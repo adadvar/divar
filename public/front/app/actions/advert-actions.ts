@@ -1,13 +1,13 @@
-'use server';
+'use server'
+const isServer = typeof window === 'undefined';
+const HOST_URL = 'http://nginx/api';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
-
-const resendVerificationCode = async (params: object) => {
+export const resendVerificationCode = async (params: object) => {
   const config = {
     method: "POST",
     body: JSON.stringify(params),
   };
-  const response = await fetch(`${BASE_URL}/resend-verification-code`, config);
+  const response = await fetch(`${HOST_URL}/resend-verification-code`, config);
   const data = await response.json();
 
   return data;
@@ -17,30 +17,24 @@ const resendVerificationCode = async (params: object) => {
 
 
 //get user
-const show = async (params: any) => {
+export const showAdvert = async (params: any) => {
   const config = {
     method: "GET",
   };
-  const response = await fetch(`${BASE_URL}/advert/show/${params.slug_url}`, config);
+  const response = await fetch(`${HOST_URL}/advert/show/${params.slug_url}`, config);
   const data = await response.json();
 
   return data;
 };
 
-const list = async (params: any) => {
+export const listAdverts = async (params: any) => {
   const config = {
-    method: "GET",
+    method: "GET", headers: {
+      'Content-Type': 'application/json'
+    },
   };
-  const response = await fetch(`${BASE_URL}/advert?page=${params.page}`, config);
+  const response = await fetch(`http://nginx/api/advert?page=${params.page}`, config);
   const data = await response.json();
 
   return data;
 };
-
-const advertActions = {
-  resendVerificationCode,
-  show,
-  list
-};
-
-export default advertActions;

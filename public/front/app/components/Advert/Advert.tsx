@@ -4,12 +4,20 @@ import AdvertNavbar from "../navbar/AdvertNavbar";
 import Slider from "../Slider";
 import RegularList from "../RegularList";
 import { advert, category } from "@/public/interfaces";
-import advertActions from "@/app/actions/advert-actions";
-import categoryActions from "@/app/actions/categoris-actions";
+import { showAdvert } from "@/app/actions/advert-actions";
+import { listCategories } from "@/app/actions/categoris-actions";
 
 const Advert = async ({ slug_url }: { slug_url: string }) => {
-    const advert: advert = await advertActions.show({ slug_url });
-    const categories: category[] = await categoryActions.list();
+    const isServer = typeof window === "undefined";
+    const HOST_URL = isServer
+        ? process.env.BASE_SERVER_API_URL
+        : process.env.BASE_CLIENT_API_URL;
+
+    const response = await fetch(`http://nginx/api/advert/show/${slug_url}`);
+    const advert: advert = await response.json();
+    const resp = await fetch(`http://nginx/api/category`);
+    const categories: category[] = await resp.json();
+
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
     const image_url = BASE_URL + "adverts/" + advert.user_id + "/";
 

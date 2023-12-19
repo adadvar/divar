@@ -13,4 +13,6 @@ RUN  npm install
 
 EXPOSE 3000
 
+ENV HOSTNAME "0.0.0.0"
+
 CMD ["npm", "run", "dev"] 

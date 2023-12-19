@@ -1,3 +1,4 @@
+"use client";
 import { advert } from "@/public/interfaces";
 import { getAge } from "@/public/utils";
 import Image from "next/image";
@@ -41,7 +42,7 @@ const AdvertItem = ({ advert }: { advert: advert }) => {
         return <LoadingPlaceholder />;
     }
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-    const image_url = BASE_URL + "adverts/" + advert.user_id + "/";
+    const image_url = "http://nginx/" + "adverts/" + advert.user_id + "/";
 
     return (
         <div className="flex w-full h-44 md:w-1/2 llg:w-1/3 xl:w-1/3 p-2">

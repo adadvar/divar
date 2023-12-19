@@ -1,15 +1,13 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../mobOverlayLayout/MobOverlayLayout";
 import { useGlobal } from "@/app/store/global-store";
-import authActions from "@/app/actions/auth-actions";
+import { login } from "@/app/actions/auth-actions";
 
 const LoginMobOverlay = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
 
     const typeDialog = useGlobal.getState().typeDialog;
     const setTypeDialog = useGlobal.getState().setTypeDialog;
@@ -27,7 +25,7 @@ const LoginMobOverlay = () => {
     const onLogin = async (formData: FormData) => {
         const username = formData.get("username");
         const password = formData.get("password");
-        await authActions.login({ username, password });
+        await login({ username, password });
     };
 
     return (
