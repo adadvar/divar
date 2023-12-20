@@ -7,13 +7,14 @@ import SidePriceFilter from "./components/home/SidePriceFilter";
 import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
+import { getHomeData } from "./actions/global-actions";
 
 export default async function Home() {
     const isServer = typeof window === "undefined";
     const HOST_URL = isServer
-        ? process.env.BASE_SERVER_API_URL
-        : process.env.BASE_CLIENT_API_URL;
-    const response = await fetch(`http://nginx/api/home-data?page=1`);
+        ? process.env.NEXT_PUBLIC_SERVER_API_URL
+        : process.env.NEXT_PUBLIC_CLIENT_API_URL;
+    const response = await fetch(`${HOST_URL}/home-data?page=1`);
     const data = await response.json();
     const isDataLoaded = data && data.adverts && data.categories ? true : false;
 
@@ -32,7 +33,7 @@ export default async function Home() {
                         دسته ها
                     </p>
                     <RegularList
-                        items={data.categories}
+                        items={isDataLoaded && data.categories}
                         resourceName="category"
                         ItemComponent={SideCatItem}
                     />
@@ -71,7 +72,9 @@ export default async function Home() {
                             ItemComponent={AdvertItem}
                         />
                     </div>
-                    <LoadMoreAdvert />
+                    {isDataLoaded && (
+                        <LoadMoreAdvert last_page={data.adverts.last_page} />
+                    )}
                 </div>
             </div>
         </main>

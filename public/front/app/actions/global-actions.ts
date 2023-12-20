@@ -1,12 +1,11 @@
-const isServer = typeof window === 'undefined';
-const HOST_URL = isServer ? process.env.BASE_SERVER_API_URL : process.env.BASE_CLIENT_API_URL;
+// 'use server'
 
-
-export const getHomeData = async (params: any) => {
+export const getHomeData = async (params: any, host_url: string) => {
   const config = {
     method: "GET",
   };
-  const response = await fetch(`${HOST_URL}/home-data?page=${params.page}`, config);
+  console.log(params)
+  const response = await fetch(`${host_url}/home-data?page=${params.page}`, config);
   const data = await response.json();
 
   return data.data;

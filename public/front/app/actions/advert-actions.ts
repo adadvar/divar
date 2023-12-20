@@ -1,13 +1,11 @@
 'use server'
-const isServer = typeof window === 'undefined';
-const HOST_URL = 'http://nginx/api';
 
-export const resendVerificationCode = async (params: object) => {
+export const resendVerificationCode = async (params: any) => {
   const config = {
     method: "POST",
     body: JSON.stringify(params),
   };
-  const response = await fetch(`${HOST_URL}/resend-verification-code`, config);
+  const response = await fetch(`${params.host_url}/resend-verification-code`, config);
   const data = await response.json();
 
   return data;
@@ -21,7 +19,7 @@ export const showAdvert = async (params: any) => {
   const config = {
     method: "GET",
   };
-  const response = await fetch(`${HOST_URL}/advert/show/${params.slug_url}`, config);
+  const response = await fetch(`${params.host_url}/advert/show/${params.slug_url}`, config);
   const data = await response.json();
 
   return data;
@@ -33,7 +31,7 @@ export const listAdverts = async (params: any) => {
       'Content-Type': 'application/json'
     },
   };
-  const response = await fetch(`http://nginx/api/advert?page=${params.page}`, config);
+  const response = await fetch(`${params.host_url}/advert?page=${params.page}`, config);
   const data = await response.json();
 
   return data;

@@ -10,12 +10,12 @@ import { listCategories } from "@/app/actions/categoris-actions";
 const Advert = async ({ slug_url }: { slug_url: string }) => {
     const isServer = typeof window === "undefined";
     const HOST_URL = isServer
-        ? process.env.BASE_SERVER_API_URL
-        : process.env.BASE_CLIENT_API_URL;
+        ? process.env.NEXT_PUBLIC_SERVER_API_URL
+        : process.env.NEXT_PUBLIC_CLIENT_API_URL;
 
-    const response = await fetch(`http://nginx/api/advert/show/${slug_url}`);
+    const response = await fetch(`${HOST_URL}/advert/show/${slug_url}`);
     const advert: advert = await response.json();
-    const resp = await fetch(`http://nginx/api/category`);
+    const resp = await fetch(`${HOST_URL}/api/category`);
     const categories: category[] = await resp.json();
 
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
