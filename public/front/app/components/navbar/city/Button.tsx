@@ -1,15 +1,15 @@
 "use client";
 
+import { useGlobal } from "@/app/src/store/global-store";
 import { DIALOG_TYPE_CITY } from "@/public/utils";
 import { BiMap as LocationIcon } from "react-icons/bi";
-import { useGlobal } from "@/app/store/global-store";
 
 interface Props {
     text: string;
 }
 
 const Button = ({ text }: Props) => {
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <>

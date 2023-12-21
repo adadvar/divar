@@ -15,11 +15,11 @@ import CateogrySelectMobOverlay from "./navbar/category/SelectMobOverlay";
 import ProfileMobOverlay from "./navbar/profile/ProfileMobOverlay";
 import LoginMobOverlay from "./login/LoginMobOverlay";
 import RegisterMobOverlay from "./login/RegisterMobOverlay";
-import { useGlobal } from "@/app/store/global-store";
+import { useEffect } from "react";
+import { useGlobal } from "@/app/src/store/global-store";
 
 const Overlay = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <>
@@ -54,7 +54,7 @@ const Overlay = () => {
                     DIALOG_TYPE_REGISTER_USER_MOB,
                 ].includes(typeDialog) && (
                     <div
-                        className={`w-full h-[calc(100vh_-_66px)] absolute bottom-0 bg-black ${
+                        className={`w-full h-[calc(100vh_-_66px)] fixed bottom-0 bg-black ${
                             typeDialog ? "opacity-30" : "opacity-0"
                         } overflow-auto transition duration-300 ease-in-out`}
                         onClick={() => setTypeDialog("")}

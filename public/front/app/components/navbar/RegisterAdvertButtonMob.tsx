@@ -3,11 +3,10 @@
 import { DIALOG_TYPE_REGISTER_ADVERT_MOB } from "@/public/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { BiSolidPlusCircle as AddIcon } from "react-icons/bi";
-import { useGlobal } from "@/app/store/auth-store";
+import { useGlobal } from "@/app/src/store/global-store";
 
 const RegisterAdvertButtonMob = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <button

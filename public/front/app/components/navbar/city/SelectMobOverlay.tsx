@@ -1,10 +1,10 @@
 "use client";
 import CityItems from "./CityItems";
-import { useDispatch, useSelector } from "react-redux";
-import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
-import { useGlobal } from "@/app/store/auth-store";
+import MobOverlayLayout from "../../MobOverlayLayout";
+import { useGlobal } from "@/app/src/store/global-store";
+
 const SelectMobOverlay = () => {
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <MobOverlayLayout title="انتخاب شهر" haveClearButton haveSearchInput>

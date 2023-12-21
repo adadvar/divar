@@ -11,24 +11,24 @@
 // import { findCategory } from "@/public/utils";
 // import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 
-// const SelectMobOverlay = () => {
-//     const parent = findCategory(global.categories, selectedCategory);
-//     const title = selectedCategory ? parent.title : "انتخاب دسته بندی";
-//     const child = selectedCategory
-//         ? findCategory(global.categories, selectedCategory)["child"]
-//         : global.categories;
+const SelectMobOverlay = () => {
+    //     const parent = findCategory(global.categories, selectedCategory);
+    //     const title = selectedCategory ? parent.title : "انتخاب دسته بندی";
+    //     const child = selectedCategory
+    //         ? findCategory(global.categories, selectedCategory)["child"]
+    //         : global.categories;
+    //     return (
+    //         <MobOverlayLayout
+    //             title={title}
+    //             haveCloseButton
+    //             haveBackButton={selectedCategory != 0}
+    //         >
+    //             <div className="mt-16">
+    //                 <CatItems categories={child} />
+    //             </div>
+    //         </MobOverlayLayout>
+    //     );
+    return <></>;
+};
 
-//     return (
-//         <MobOverlayLayout
-//             title={title}
-//             haveCloseButton
-//             haveBackButton={selectedCategory != 0}
-//         >
-//             <div className="mt-16">
-//                 <CatItems categories={child} />
-//             </div>
-//         </MobOverlayLayout>
-//     );
-// };
-
-// export default SelectMobOverlay;
+export default SelectMobOverlay;

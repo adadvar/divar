@@ -1,11 +1,11 @@
 "use client";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal } from "@/app/src/store/global-store";
 import { DIALOG_TYPE_CATEGORY_MOB } from "@/public/utils";
+import { use } from "react";
 import { BiListUl as ListIcon } from "react-icons/bi";
 
 const ButtonMob = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <button
@@ -14,7 +14,9 @@ const ButtonMob = () => {
                     ? "text-red-700"
                     : "text-gray-800"
             }`}
-            onClick={() => setTypeDialog(DIALOG_TYPE_CATEGORY_MOB)}
+            onClick={() =>
+                useGlobal.setState({ typeDialog: DIALOG_TYPE_CATEGORY_MOB })
+            }
         >
             <div className="text-xl">
                 <ListIcon />

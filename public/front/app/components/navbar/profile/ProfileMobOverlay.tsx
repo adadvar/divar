@@ -23,15 +23,15 @@ import {
 } from "react-icons/bi";
 
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
-import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
+import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
-import { useGlobal } from "@/app/store/auth-store";
+import { useGlobal } from "@/app/src/store/global-store";
 
 const ProfileMobOverlay = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
     const isLogged = false;
     const me = { mobile: "", email: "" };
+
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <MobOverlayLayout title="دیوار من" haveBottomNav>

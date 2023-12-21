@@ -3,10 +3,11 @@ import { useRef, useEffect } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BiRightArrowAlt as RightIcon } from "react-icons/bi";
-import { useGlobal } from "@/app/store/auth-store";
+import { useGlobal } from "@/app/src/store/global-store";
 
 const SearchMobOverlay = () => {
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
+
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {

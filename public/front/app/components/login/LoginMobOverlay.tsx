@@ -2,15 +2,14 @@
 import { useRef, useEffect } from "react";
 
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
-import MobOverlayLayout from "../mobOverlayLayout/MobOverlayLayout";
-import { useGlobal } from "@/app/store/global-store";
+import MobOverlayLayout from "../MobOverlayLayout";
 import { login } from "@/app/actions/auth-actions";
+import { useGlobal } from "@/app/src/store/global-store";
 
 const LoginMobOverlay = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     useEffect(() => {
         inputRef.current?.focus();
@@ -25,7 +24,7 @@ const LoginMobOverlay = () => {
     const onLogin = async (formData: FormData) => {
         const username = formData.get("username");
         const password = formData.get("password");
-        await login({ username, password });
+        // await login({ username, password });
     };
 
     return (

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Overlay from "./components/Overlay";
 import Navbar from "@/app/components/navbar/Index";
 import ButtomNavbar from "@/app/components/navbar/IndexBottom";
+import StoreInitializer from "./components/StoreInitializer";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -22,11 +23,12 @@ export default function RootLayout({
     return (
         <html lang="en" dir="rtl">
             <body>
+                {/* <StoreInitializer typeDialog="" /> */}
                 <main className="max-w-screen-xl mx-auto py-20 px-2">
                     <Overlay />
-                    <Navbar />
-                    <ButtomNavbar />
                     {children}
+                    <ButtomNavbar />
+                    <Navbar />
                 </main>
             </body>
         </html>

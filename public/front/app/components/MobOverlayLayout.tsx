@@ -4,8 +4,10 @@ import {
     BsXLg as CloseIcon,
     BsArrowRightShort as BackIcon,
 } from "react-icons/bs";
-import CitySearchBox from "../navbar/city/SearchBox";
-import SelectedCity from "../navbar/city/SelectedCity";
+import CitySearchBox from "./navbar/city/SearchBox";
+import SelectedCity from "./navbar/city/SelectedCity";
+import { useGlobal } from "../src/store/global-store";
+import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 
 interface LayoutProps {
     children: ReactNode;
@@ -35,13 +37,14 @@ const MobOverlayLayout = ({
     title,
 }: LayoutProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     useEffect(() => {
         inputRef.current?.focus();
     }, []);
     return (
         <div
-            className={`lg:hidden absolute  top-0 left-0 right-0 ${
+            className={`lg:hidden fixed top-0 left-0 right-0 ${
                 haveBottomNav ? "bottom-[66px]" : "bottom-0"
             } bg-white w-full h-[calc(100vh-${
                 haveBottomNav ? "66px" : "0px"
@@ -93,7 +96,9 @@ const MobOverlayLayout = ({
                     {haveCloseButton && (
                         <button
                             className="text-gray-600 bg-gray-200  rounded-full font-semibold hover:bg-gray-300 p-2"
-                            onClick={() => {}}
+                            onClick={() => {
+                                setTypeDialog(DIALOG_TYPE_PROFILE_MOB);
+                            }}
                         >
                             <CloseIcon />
                         </button>

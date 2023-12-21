@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useEffect } from "react";
 import { DIALOG_TYPE_LOGIN_MOB, DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
-import MobOverlayLayout from "../mobOverlayLayout/MobOverlayLayout";
+import MobOverlayLayout from "../MobOverlayLayout";
 import Link from "next/link";
 const RegisterMobOverlay = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);

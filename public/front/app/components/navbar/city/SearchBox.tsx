@@ -1,7 +1,6 @@
 "use client";
 
 import { BiSearch as SearchIcon } from "react-icons/bi";
-import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector, useDispatch } from "react-redux";
 
 const SearchBox = () => {

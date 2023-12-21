@@ -1,13 +1,11 @@
 "use client";
 
+import { useGlobal } from "@/app/src/store/global-store";
 import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
-import { useDispatch, useSelector } from "react-redux";
 import { BsPersonFill as PersonIcon } from "react-icons/bs";
-import { useGlobal } from "@/app/store/auth-store";
 
 const ProfileButtonMob = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <button

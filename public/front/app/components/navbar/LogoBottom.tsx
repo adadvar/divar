@@ -4,11 +4,10 @@ import logo_dark from "@/public/logo-dark.svg";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal } from "@/app/src/store/global-store";
 
 const LogoBottom = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     const src =
         typeof typeDialog === "string"

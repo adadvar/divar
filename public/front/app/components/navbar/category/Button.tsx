@@ -1,5 +1,5 @@
 "use client";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal } from "@/app/src/store/global-store";
 import { DIALOG_TYPE_CATEGORY } from "@/public/utils";
 import {
     BiChevronDown as DownIcon,
@@ -7,8 +7,7 @@ import {
 } from "react-icons/bi";
 
 const Button = () => {
-    const typeDialog = useGlobal.getState().typeDialog;
-    const setTypeDialog = useGlobal.getState().setTypeDialog;
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     return (
         <button

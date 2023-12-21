@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { BsChat as ChatIcon } from "react-icons/bs";
 

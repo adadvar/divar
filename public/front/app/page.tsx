@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 import RegularList from "./components/RegularList";
 import AdvertItem from "./components/home/AdvertItem";
 import MobCatItem from "./components/home/MobCatItem";
@@ -8,6 +7,7 @@ import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
 import { getHomeData } from "./actions/global-actions";
+import { useGlobal } from "@/app/src/store/global-store";
 
 export default async function Home() {
     const isServer = typeof window === "undefined";
@@ -17,7 +17,8 @@ export default async function Home() {
     const response = await fetch(`${HOST_URL}/home-data?page=1`);
     const data = await response.json();
     const isDataLoaded = data && data.adverts && data.categories ? true : false;
-
+    const typeDialog = useGlobal.getState().typeDialog;
+    if (typeDialog) return null;
     return (
         <main className="">
             <div className="lg:hidden flex justify-around items-center mx-auto flex-wrap">
