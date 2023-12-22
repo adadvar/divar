@@ -7,7 +7,7 @@ import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
 import { getHomeData } from "./actions/global-actions";
-import { useGlobal } from "@/app/src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 
 export default async function Home() {
     const isServer = typeof window === "undefined";
@@ -20,7 +20,7 @@ export default async function Home() {
     const typeDialog = useGlobal.getState().typeDialog;
     if (typeDialog) return null;
     return (
-        <main className="">
+        <div className="">
             <div className="lg:hidden flex justify-around items-center mx-auto flex-wrap">
                 <RegularList
                     items={isDataLoaded ? data.categories : Array(4).fill(null)}
@@ -57,7 +57,7 @@ export default async function Home() {
                     <hr />
                     <SideLinks />
                 </div>
-                <div className="lg:ms-[280px]">
+                <div className="lg:ms-[280px] overflow-hidden scrollbar-none">
                     <p className="text-gray-700 w-full text-xs text-end pt-4 pb-3 px-2">
                         دیوار قم - نیازمندی‌ های رایگان، آگهی‌های خرید، فروش نو
                         و دست دوم و کارکرده، استخدام و خدمات
@@ -78,6 +78,6 @@ export default async function Home() {
                     )}
                 </div>
             </div>
-        </main>
+        </div>
     );
 }

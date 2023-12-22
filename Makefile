@@ -27,7 +27,7 @@ build:
 	docker compose -f $(COMPOSE_FILES) up -d --build
 
 up:
-	docker compose -f $(COMPOSE_FILES) up -d
+	docker compose -f $(COMPOSE_FILES) up
 
 status:
 	docker compose -f $(COMPOSE_FILES) ps

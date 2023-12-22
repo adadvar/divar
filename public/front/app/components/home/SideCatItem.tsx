@@ -5,7 +5,6 @@ import * as Icons from "react-icons/bi";
 const SideCatItem = ({ category }: { category: category }) => {
     const IconComponent =
         category.icon && Icons[category.icon as keyof typeof Icons];
-    console.log(category);
     if (category.parent_id === null) {
         return (
             <Link

@@ -1,6 +1,6 @@
 "use client";
 
-import { useGlobal } from "@/app/src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 import { DIALOG_TYPE_CHAT_MOB } from "@/public/utils";
 import React from "react";
 import { BsFillChatFill as ChatIcon } from "react-icons/bs";

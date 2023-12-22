@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BiRightArrowAlt as RightIcon } from "react-icons/bi";
 import MobOverlayLayout from "../../MobOverlayLayout";
-import { useGlobal } from "@/app/src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 
 const SearchMobOverlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();

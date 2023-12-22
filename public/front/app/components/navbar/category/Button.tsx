@@ -1,5 +1,5 @@
 "use client";
-import { useGlobal } from "@/app/src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 import { DIALOG_TYPE_CATEGORY } from "@/public/utils";
 import {
     BiChevronDown as DownIcon,

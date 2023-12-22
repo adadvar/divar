@@ -34,7 +34,6 @@ const LoadMoreAdvert = ({ last_page }: { last_page: number }) => {
             getHomeData({ page }).then((res) => {
                 setData([...data, ...res.adverts.data]);
             });
-            console.log({ page: page, last_page });
             page++;
         }
     }, [inView]);

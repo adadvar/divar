@@ -1,6 +1,6 @@
 "use client";
 
-import { useGlobal } from "@/app/src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 import { DIALOG_TYPE_CITY } from "@/public/utils";
 import { BiMap as LocationIcon } from "react-icons/bi";
 

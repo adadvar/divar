@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import { login } from "@/app/actions/auth-actions";
-import { useGlobal } from "@/app/src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 
 const LoginMobOverlay = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);

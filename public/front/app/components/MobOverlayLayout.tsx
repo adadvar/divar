@@ -6,7 +6,7 @@ import {
 } from "react-icons/bs";
 import CitySearchBox from "./navbar/city/SearchBox";
 import SelectedCity from "./navbar/city/SelectedCity";
-import { useGlobal } from "../src/store/global-store";
+import { useGlobal } from "@/app/src/global-store";
 import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 
 interface LayoutProps {
@@ -44,11 +44,7 @@ const MobOverlayLayout = ({
     }, []);
     return (
         <div
-            className={`lg:hidden fixed top-0 left-0 right-0 ${
-                haveBottomNav ? "bottom-[66px]" : "bottom-0"
-            } bg-white w-full h-[calc(100vh-${
-                haveBottomNav ? "66px" : "0px"
-            })] z-50`}
+            className={`lg:hidden fixed inset-0 bg-white overflow-y-auto z-50`}
         >
             <div
                 className={`fixed flex flex-col items-center shadow-sm p-4 ${
