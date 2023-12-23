@@ -3,7 +3,7 @@ import ChatButtonMob from "./chat/ChatButtonMob";
 import CategoryButtonMob from "./category/ButtonMob";
 import LogoBottom from "./LogoBottom";
 import ProfileButtonMob from "./profile/ProfileButtonMob";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
 import { useEffect } from "react";
 

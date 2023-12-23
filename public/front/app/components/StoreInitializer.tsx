@@ -1,5 +1,5 @@
 "use client";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 import { useRef } from "react";
 
 const StoreInitializer = () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 import { DIALOG_TYPE_CATEGORY_MOB } from "@/public/utils";
 import { use } from "react";
 import { BiListUl as ListIcon } from "react-icons/bi";

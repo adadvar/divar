@@ -16,7 +16,7 @@ import ProfileMobOverlay from "./navbar/profile/ProfileMobOverlay";
 import LoginMobOverlay from "./login/LoginMobOverlay";
 import RegisterMobOverlay from "./login/RegisterMobOverlay";
 import { useEffect } from "react";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 
 const Overlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();

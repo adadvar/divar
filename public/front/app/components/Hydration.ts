@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useGlobal } from '../src/global-store';
+import { useGlobal } from '@/app/store/global-store';
 
 
 export default function Hydrations() {

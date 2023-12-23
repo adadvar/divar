@@ -6,7 +6,7 @@ import {
 } from "react-icons/bs";
 import CitySearchBox from "./navbar/city/SearchBox";
 import SelectedCity from "./navbar/city/SelectedCity";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
 
 interface LayoutProps {

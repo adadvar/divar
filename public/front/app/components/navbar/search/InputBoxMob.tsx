@@ -7,7 +7,7 @@ import {
 
 import { DIALOG_TYPE_CITY_MOB, DIALOG_TYPE_SEARCH_MOB } from "@/public/utils";
 import Divider from "@/app/components/Divider";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 
 const InputBoxMob = () => {
     const { typeDialog, setTypeDialog } = useGlobal();

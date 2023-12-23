@@ -7,7 +7,7 @@ import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
 import { getHomeData } from "./actions/global-actions";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 
 export default async function Home() {
     const isServer = typeof window === "undefined";

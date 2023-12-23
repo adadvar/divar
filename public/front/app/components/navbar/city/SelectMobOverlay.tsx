@@ -1,7 +1,7 @@
 "use client";
 import CityItems from "./CityItems";
 import MobOverlayLayout from "../../MobOverlayLayout";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 
 const SelectMobOverlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();

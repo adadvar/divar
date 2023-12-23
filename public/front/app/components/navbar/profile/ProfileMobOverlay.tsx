@@ -25,7 +25,7 @@ import {
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
 import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
-import { useGlobal } from "@/app/src/global-store";
+import { useGlobal } from "@/app/store/global-store";
 
 const ProfileMobOverlay = () => {
     const isLogged = false;
