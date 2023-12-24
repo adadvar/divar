@@ -3,28 +3,64 @@ import { useRef, useEffect } from "react";
 
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
-import { login } from "@/app/actions/auth-actions";
 import { useGlobal } from "@/app/store/global-store";
+import { me } from "@/app/actions/auth-actions";
 
 const LoginMobOverlay = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const isServer = typeof window === "undefined";
+    const HOST_URL = isServer
+        ? process.env.NEXT_PUBLIC_SERVER_API_URL
+        : process.env.NEXT_PUBLIC_CLIENT_API_URL;
 
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const {
+        typeDialog,
+        isSuccess,
+        auth,
+        setTypeDialog,
+        setAuth,
+        setIsSuccess,
+        setMe,
+    } = useGlobal();
 
     useEffect(() => {
         inputRef.current?.focus();
 
         // if (isSuccess) {
-        //     authActions.me();
-        //     dispatch(getHomeData({ page: 1 }));
-        //     dispatch(closeDialog());
+        //     (async () => {
+        //         const meData = await me({ token: auth.access_token });
+        //         setMe(meData);
+        //     })();
         // }
     }, []);
 
     const onLogin = async (formData: FormData) => {
         const username = formData.get("username");
         const password = formData.get("password");
-        // await login({ username, password });
+        const config = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username,
+                password,
+                grant_type: "password",
+                client_id: 2,
+                client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+            }),
+        };
+
+        const response = await fetch(`${HOST_URL}/login`, config);
+        if (response.ok) {
+            const data1 = await response.json();
+            setAuth(data1);
+            setTypeDialog("");
+            setIsSuccess(true);
+            const data2 = await me(data1.access_token);
+            setMe(data2);
+        } else {
+        }
     };
 
     return (
@@ -67,7 +103,7 @@ const LoginMobOverlay = () => {
                     </button>
                 </div>
 
-                <div className="fixed bottom-0 left-0 right-0 p-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
+                <div className="fixed inset-x-0 bottom-16 p-2 bg-white w-full">
                     <button
                         type="submit"
                         className="btn btn-ghost w-full bg-red-700 text-white"

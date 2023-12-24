@@ -93,6 +93,13 @@ export interface user {
   // deleted_at: string | null;
 }
 
+export interface auth {
+  access_type: string;
+  expires_in: number;
+  access_token: string;
+  refresh_token: string;
+}
+
 export interface me {
   id: number;
   mobile: string;
