@@ -1,10 +1,9 @@
-"use client";
 import { useRef, useEffect } from "react";
 
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import { useGlobal } from "@/app/store/global-store";
-import { me } from "@/app/actions/auth-actions";
+import { login, me } from "@/app/actions/auth-actions";
 
 const LoginMobOverlay = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -23,37 +22,16 @@ const LoginMobOverlay = () => {
         setMe,
     } = useGlobal();
 
-    useEffect(() => {
-        inputRef.current?.focus();
-
-        // if (isSuccess) {
-        //     (async () => {
-        //         const meData = await me({ token: auth.access_token });
-        //         setMe(meData);
-        //     })();
-        // }
-    }, []);
+    // useEffect(() => {
+    //     inputRef.current?.focus();
+    // }, []);
 
     const onLogin = async (formData: FormData) => {
         const username = formData.get("username");
         const password = formData.get("password");
-        const config = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                password,
-                grant_type: "password",
-                client_id: 2,
-                client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
-            }),
-        };
 
-        const response = await fetch(`${HOST_URL}/login`, config);
-        if (response.ok) {
-            const data1 = await response.json();
+        const data1 = await login({ username, password });
+        if (data1) {
             setAuth(data1);
             setTypeDialog("");
             setIsSuccess(true);
