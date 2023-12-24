@@ -6,12 +6,6 @@ import { useGlobal } from "@/app/store/global-store";
 import { login, me } from "@/app/actions/auth-actions";
 
 const LoginMobOverlay = () => {
-    const inputRef = useRef<HTMLInputElement | null>(null);
-    const isServer = typeof window === "undefined";
-    const HOST_URL = isServer
-        ? process.env.NEXT_PUBLIC_SERVER_API_URL
-        : process.env.NEXT_PUBLIC_CLIENT_API_URL;
-
     const {
         typeDialog,
         isSuccess,
@@ -21,10 +15,6 @@ const LoginMobOverlay = () => {
         setIsSuccess,
         setMe,
     } = useGlobal();
-
-    // useEffect(() => {
-    //     inputRef.current?.focus();
-    // }, []);
 
     const onLogin = async (formData: FormData) => {
         const username = formData.get("username");
@@ -52,11 +42,11 @@ const LoginMobOverlay = () => {
             </p>
             <form action={onLogin} className="p-4">
                 <input
-                    ref={inputRef}
                     type="text"
                     id="username"
                     name="username"
                     autoComplete="off"
+                    autoFocus
                     style={{ direction: "ltr" }}
                     className="border mb-4 p-2 outline-none w-full text-sm rounded-lg text-gray-900 bg-white   focus:border-red-500"
                     placeholder="شماره موبایل یا ایمیل"

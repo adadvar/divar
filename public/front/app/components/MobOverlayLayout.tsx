@@ -1,5 +1,4 @@
-"use client";
-import React, { ReactNode, useRef, useEffect } from "react";
+import React, { ReactNode } from "react";
 import {
     BsXLg as CloseIcon,
     BsArrowRightShort as BackIcon,
@@ -36,12 +35,8 @@ const MobOverlayLayout = ({
     whereClose = "",
     title,
 }: LayoutProps) => {
-    const inputRef = useRef<HTMLInputElement | null>(null);
     const { typeDialog, setTypeDialog } = useGlobal();
 
-    useEffect(() => {
-        inputRef.current?.focus();
-    }, []);
     return (
         <div
             className={`lg:hidden fixed inset-0 bg-white overflow-y-auto z-50`}
@@ -65,7 +60,9 @@ const MobOverlayLayout = ({
                         {haveBackButton && !haveCategory && (
                             <button
                                 className="text-gray-600 rounded-full text-2xl pe-1"
-                                onClick={() => {}}
+                                onClick={() => {
+                                    setTypeDialog(whereBack);
+                                }}
                             >
                                 <BackIcon />
                             </button>
@@ -77,7 +74,6 @@ const MobOverlayLayout = ({
                         {haveInput && (
                             <form className="flex p-[5px]">
                                 <input
-                                    ref={inputRef}
                                     type="text"
                                     className="bg-transparent outline-none ms-5"
                                 />

@@ -19,6 +19,7 @@ interface GlobalState {
   setTypeDialog: (typeDialog: string) => void;
   setAuth: (auth: auth) => void;
   setMe: (me: me) => void;
+  setMessage: (message: object) => void;
 }
 
 export const useGlobal = create<GlobalState>()(
@@ -38,6 +39,7 @@ export const useGlobal = create<GlobalState>()(
         setTypeDialog: (typeDialog: string) => set({ typeDialog }),
         setAuth: (auth: auth) => set({ auth }),
         setMe: (me: me) => set({ me }),
+        setMessage: (message: object) => set({ message }),
       }),
       {
         name: 'global',

@@ -48,6 +48,9 @@ export const logout = () => {
 export const register = async (params: object) => {
   const config = {
     method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(params),
   };
   const response = await fetch(`${HOST_URL}/register`, config);

@@ -72,3 +72,13 @@ export const getAge = (age: string): string => {
 
     return res;
 };
+
+export const isEmail = (value: string | undefined): boolean => {
+    // Simple email regex, use a more complex one if needed
+    if (value) {
+
+        const emailPattern = /\S+@\S+\.\S+/;
+        return emailPattern.test(value);
+    }
+    return false;
+};
