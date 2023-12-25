@@ -6,26 +6,20 @@ import SidePriceFilter from "./components/home/SidePriceFilter";
 import LoadMoreAdvert from "./components/home/LoadMoreAdvert";
 import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
-import { getHomeData } from "./actions/global-actions";
 import { useGlobal } from "@/app/store/global-store";
-import { advert, category } from "@/public/interfaces";
+import { listAdverts } from "./actions/advert-actions";
+import { listCategories } from "./actions/categoris-actions";
 
 export default async function Home({
     searchParams,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-    const isServer = typeof window === "undefined";
-    const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
+    const price = searchParams.price ? searchParams.price.toString() : "0";
 
-    const price = searchParams.price ? searchParams.price : 0;
-    console.log(price);
+    const adverts = await listAdverts({ page: 1, price });
 
-    const advRes = await fetch(`${HOST_URL}/advert/list?price=${price}`);
-    const adverts = await advRes.json();
-
-    const catRes = await fetch(`${HOST_URL}/category`);
-    const categories: any = await catRes.json();
+    const categories = await listCategories();
 
     const isDataLoaded = adverts && categories ? true : false;
     const typeDialog = useGlobal.getState().typeDialog;
@@ -85,7 +79,10 @@ export default async function Home({
                         />
                     </div>
                     {isDataLoaded && (
-                        <LoadMoreAdvert last_page={adverts.last_page} />
+                        <LoadMoreAdvert
+                            last_page={adverts.last_page}
+                            price={price}
+                        />
                     )}
                 </div>
             </div>

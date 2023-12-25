@@ -1,5 +1,6 @@
 'use server'
 const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
+
 export const resendVerificationCode = async (params: any) => {
   const config = {
     method: "POST",
@@ -11,10 +12,6 @@ export const resendVerificationCode = async (params: any) => {
   return data;
 };
 
-
-
-
-//get user
 export const showAdvert = async (params: any) => {
   const config = {
     method: "GET",
@@ -29,13 +26,20 @@ export const showAdvert = async (params: any) => {
 };
 
 export const listAdverts = async (params: any) => {
-  const config = {
+
+  const config: any = {
     method: "GET",
     headers: {
       'Content-Type': 'application/json'
     },
+    cache: 'no-store'
   };
-  const response = await fetch(`${HOST_URL}/advert/list?page=${params.page}`, config);
+  // if (params.price) {
+  //   config.cache = 'no-cache'
+  // } else {
+  //   config.next = { revalidate: 10 }
+  // }
+  const response = await fetch(`${HOST_URL}/advert/list?page=${params.page}&price=${params.price}`, config);
   const data = await response.json();
 
   return data;

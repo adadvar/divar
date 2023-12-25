@@ -40,7 +40,10 @@ const SidePriceFilter = () => {
             <p>تومان</p>
         </div>,
         <Link
-            href={`?price=${minPrice}-${maxPrice}`}
+            href={`?price=${minPrice.replace(",", "")}-${maxPrice.replace(
+                ",",
+                ""
+            )}`}
             className="btn btn-ghost flex btn-hover min-h-[20px] h-6 m-auto text-white text-xs bg-red-700 hover:bg-red-600"
         >
             اعمال قیمت

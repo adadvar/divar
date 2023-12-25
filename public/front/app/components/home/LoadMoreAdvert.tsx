@@ -5,38 +5,32 @@ import { useEffect, useState } from "react";
 import { advert, data } from "@/public/interfaces";
 import RegularList from "../RegularList";
 import AdvertItem from "./AdvertItem";
+import { listAdverts } from "@/app/actions/advert-actions";
 
 let page = 2;
-const LoadMoreAdvert = ({ last_page }: { last_page: number }) => {
-    const isServer = typeof window === "undefined";
-    const HOST_URL = isServer
-        ? process.env.NEXT_PUBLIC_SERVER_API_URL
-        : process.env.NEXT_PUBLIC_CLIENT_API_URL;
-
+const LoadMoreAdvert = ({
+    last_page,
+    price,
+}: {
+    last_page: number;
+    price: string;
+}) => {
     const { ref, inView } = useInView();
     const [data, setData] = useState<advert[]>([]);
 
-    const getHomeData = async (params: any) => {
-        const config = {
-            method: "GET",
-        };
-        const response = await fetch(
-            `${HOST_URL}/home-data?page=${params.page}`,
-            config
-        );
-        const data = await response.json();
-
-        return data;
-    };
-
     useEffect(() => {
         if (inView && page <= last_page) {
-            getHomeData({ page }).then((res) => {
-                setData([...data, ...res.adverts.data]);
+            listAdverts({ page, price }).then((res) => {
+                setData([...data, ...res.data]);
             });
             page++;
         }
     }, [inView]);
+
+    useEffect(() => {
+        page = 2;
+        setData([]);
+    }, [price]);
 
     return (
         <>
