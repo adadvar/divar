@@ -11,6 +11,7 @@ export const DIALOG_TYPE_CHAT_MOB = 'chat_mob';
 export const DIALOG_TYPE_PROFILE_MOB = 'profile_mob';
 export const DIALOG_TYPE_LOGIN_MOB = 'login_mob';
 export const DIALOG_TYPE_REGISTER_USER_MOB = 'register_user_mob';
+export const DIALOG_TYPE_REGISTER_VERIFY_USER_MOB = 'register_verify_user_mob';
 
 
 export const findCategory = (arr: category[], itemId: number): category | null =>

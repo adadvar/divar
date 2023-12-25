@@ -2,19 +2,13 @@ import { useRef, useEffect } from "react";
 
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
-import { useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal } from "@/app/store/global-store";
 import { login, me } from "@/app/actions/auth-actions";
 
 const LoginMobOverlay = () => {
-    const {
-        typeDialog,
-        isSuccess,
-        auth,
-        setTypeDialog,
-        setAuth,
-        setIsSuccess,
-        setMe,
-    } = useGlobal();
+    const { typeDialog, isSuccess, setTypeDialog, setIsSuccess } = useGlobal();
+
+    const { auth, setAuth, setMe } = useAuth();
 
     const onLogin = async (formData: FormData) => {
         const username = formData.get("username");

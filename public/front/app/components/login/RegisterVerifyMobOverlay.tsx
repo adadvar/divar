@@ -1,25 +1,35 @@
-import {
-    DIALOG_TYPE_LOGIN_MOB,
-    DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
-    isEmail,
-} from "@/public/utils";
+import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import Link from "next/link";
-import { me, register } from "@/app/actions/auth-actions";
+import {
+    login,
+    me,
+    register,
+    registerVerify,
+} from "@/app/actions/auth-actions";
 import { useAuth, useGlobal } from "@/app/store/global-store";
-const RegisterMobOverlay = () => {
-    const { typeDialog, isSuccess, setTypeDialog, setMessage } = useGlobal();
+const RegisterVerifyMobOverlay = () => {
+    const { typeDialog, isSuccess, message, setTypeDialog, setMessage } =
+        useGlobal();
 
     const { auth, setAuth, setMe } = useAuth();
 
     const onRegister = async (formData: FormData) => {
-        const input = formData.get("mobile_email");
-        const isEmailInput = isEmail(input?.toString());
-        const params = isEmailInput ? { email: input } : { mobile: input };
-        const data1 = await register(params);
+        const code = formData.get("code");
+        const data1 = await registerVerify({ code, ...message.params });
         if (data1) {
-            setMessage({ ...data1, params });
-            setTypeDialog(DIALOG_TYPE_REGISTER_VERIFY_USER_MOB);
+            setMe(data1);
+            const isEmail = data1.email != null;
+            const params = isEmail
+                ? { username: data1.email, password: data1.email }
+                : {
+                      username: data1.mobile,
+                      password: data1.mobile.replace("+98", "0"),
+                  };
+
+            const data2 = await login(params);
+            setAuth(data2);
+            setTypeDialog("");
         } else {
         }
     };
@@ -32,7 +42,7 @@ const RegisterMobOverlay = () => {
             title="ایجاد حساب کاربری"
         >
             <p className="text-gray-900 font-bold mx-4 mt-24 mb-7">
-                شماره موبایل یا ایمیل خود را وارد کنید{" "}
+                کد تایید خود را وارد کنید.{" "}
             </p>
             <p className="text-gray-500 text-sm mx-4 mb-2">
                 برای استفاده از امکانات دیوار لطفا شماره موبایل یا ایمیل خود را
@@ -42,11 +52,11 @@ const RegisterMobOverlay = () => {
             <form action={onRegister} className="p-4">
                 <input
                     type="text"
-                    id="mobile_email"
-                    name="mobile_email"
+                    id="code"
+                    name="code"
                     autoComplete="off"
                     className="border p-2  outline-none w-full text-sm rounded-lg text-gray-900 bg-white   focus:border-red-500"
-                    placeholder="شماره موبایل یا ایمیل"
+                    placeholder="کد تایید"
                     autoFocus
                 />
 
@@ -71,4 +81,4 @@ const RegisterMobOverlay = () => {
     );
 };
 
-export default RegisterMobOverlay;
+export default RegisterVerifyMobOverlay;

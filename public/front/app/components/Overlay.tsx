@@ -6,6 +6,7 @@ import {
     DIALOG_TYPE_LOGIN_MOB,
     DIALOG_TYPE_PROFILE_MOB,
     DIALOG_TYPE_REGISTER_USER_MOB,
+    DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
     DIALOG_TYPE_SEARCH_MOB,
 } from "@/public/utils";
 import CitySelectOverlay from "./navbar/city/SelectOverlay";
@@ -17,6 +18,7 @@ import LoginMobOverlay from "./login/LoginMobOverlay";
 import RegisterMobOverlay from "./login/RegisterMobOverlay";
 import { useEffect } from "react";
 import { useGlobal } from "@/app/store/global-store";
+import RegisterVerifyMobOverlay from "./login/RegisterVerifyMobOverlay";
 
 const Overlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
@@ -29,6 +31,10 @@ const Overlay = () => {
             {typeDialog && typeDialog == DIALOG_TYPE_REGISTER_USER_MOB && (
                 <RegisterMobOverlay />
             )}
+            {typeDialog &&
+                typeDialog == DIALOG_TYPE_REGISTER_VERIFY_USER_MOB && (
+                    <RegisterVerifyMobOverlay />
+                )}
             {typeDialog && typeDialog == DIALOG_TYPE_CITY && (
                 <CitySelectOverlay />
             )}
@@ -52,6 +58,7 @@ const Overlay = () => {
                     DIALOG_TYPE_PROFILE_MOB,
                     DIALOG_TYPE_LOGIN_MOB,
                     DIALOG_TYPE_REGISTER_USER_MOB,
+                    DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
                 ].includes(typeDialog) && (
                     <div
                         className={`w-full h-[calc(100vh_-_66px)] fixed bottom-0 bg-black ${

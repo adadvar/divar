@@ -62,6 +62,9 @@ export const register = async (params: object) => {
 //Register user
 export const registerVerify = async (params: object) => {
   const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
     method: "POST",
     body: JSON.stringify(params),
   };
@@ -74,6 +77,9 @@ export const registerVerify = async (params: object) => {
 //Resend verification user
 export const resendVerificationCode = async (params: object) => {
   const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
     method: "POST",
     body: JSON.stringify(params),
   };
