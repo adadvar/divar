@@ -8,22 +8,33 @@ import SideStatusFilter from "./components/home/SideStatusFilter";
 import SideLinks from "./components/home/SideLinks";
 import { getHomeData } from "./actions/global-actions";
 import { useGlobal } from "@/app/store/global-store";
+import { advert, category } from "@/public/interfaces";
 
-export default async function Home() {
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined };
+}) {
     const isServer = typeof window === "undefined";
-    const HOST_URL = isServer
-        ? process.env.NEXT_PUBLIC_SERVER_API_URL
-        : process.env.NEXT_PUBLIC_CLIENT_API_URL;
-    const response = await fetch(`${HOST_URL}/home-data?page=1`);
-    const data = await response.json();
-    const isDataLoaded = data && data.adverts && data.categories ? true : false;
+    const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
+
+    const price = searchParams.price ? searchParams.price : 0;
+    console.log(price);
+
+    const advRes = await fetch(`${HOST_URL}/advert/list?price=${price}`);
+    const adverts = await advRes.json();
+
+    const catRes = await fetch(`${HOST_URL}/category`);
+    const categories: any = await catRes.json();
+
+    const isDataLoaded = adverts && categories ? true : false;
     const typeDialog = useGlobal.getState().typeDialog;
-    if (typeDialog) return null;
+    if (useGlobal.getState().typeDialog != "") return null;
     return (
         <div className="">
             <div className="lg:hidden flex justify-around items-center mx-auto flex-wrap">
                 <RegularList
-                    items={isDataLoaded ? data.categories : Array(4).fill(null)}
+                    items={isDataLoaded ? categories : Array(4).fill(null)}
                     resourceName="category"
                     ItemComponent={MobCatItem}
                 />
@@ -34,7 +45,7 @@ export default async function Home() {
                         دسته ها
                     </p>
                     <RegularList
-                        items={isDataLoaded && data.categories}
+                        items={categories}
                         resourceName="category"
                         ItemComponent={SideCatItem}
                     />
@@ -66,7 +77,7 @@ export default async function Home() {
                         <RegularList
                             items={
                                 isDataLoaded
-                                    ? data.adverts.data
+                                    ? adverts.data
                                     : Array(21).fill(null)
                             }
                             resourceName="advert"
@@ -74,7 +85,7 @@ export default async function Home() {
                         />
                     </div>
                     {isDataLoaded && (
-                        <LoadMoreAdvert last_page={data.adverts.last_page} />
+                        <LoadMoreAdvert last_page={adverts.last_page} />
                     )}
                 </div>
             </div>

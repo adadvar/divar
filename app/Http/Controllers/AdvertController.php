@@ -81,11 +81,11 @@ class AdvertController extends Controller
 
         // TODO:ایا یک api دیگر زده شود برای ادمین؟ جهت جلوگیری از نمایش pending
         $conditions['state'] = 'accepted';
-        if (auth('api')->user()->isAdmin()) {
-            if ($r->state) {
-                $conditions['state'] = $r->state;
-            }
-        }
+        // if (auth('api')->user()->isAdmin()) {
+        //     if ($r->state) {
+        //         $conditions['state'] = $r->state;
+        //     }
+        // }
 
 
         if ($categoryRequest) {
@@ -103,7 +103,7 @@ class AdvertController extends Controller
         }
 
         // Include the 'user' relationship
-        $query->with('user');
+        $query->with(['user', 'category']);
 
         // Order by 'id'
         if ($r->o == 'n' || $r->o == null) $query->orderBy('id', 'desc');

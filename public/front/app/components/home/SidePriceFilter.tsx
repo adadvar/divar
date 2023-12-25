@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
 import RegularDropDownSubmenu from "../RegularDropDown";
+import Link from "next/link";
 
 const SidePriceFilter = () => {
     const [minPrice, setMinPrice] = useState("");
@@ -18,6 +19,7 @@ const SidePriceFilter = () => {
 
         setMaxPrice(formattedPrice);
     };
+
     const submenuContent = [
         <div className="flex justify-between my-4 text-sm">
             <p className="ms-2">حداقل</p>
@@ -37,6 +39,12 @@ const SidePriceFilter = () => {
             />
             <p>تومان</p>
         </div>,
+        <Link
+            href={`?price=${minPrice}-${maxPrice}`}
+            className="btn btn-ghost flex btn-hover min-h-[20px] h-6 m-auto text-white text-xs bg-red-700 hover:bg-red-600"
+        >
+            اعمال قیمت
+        </Link>,
     ];
     return (
         <div className="my-5">

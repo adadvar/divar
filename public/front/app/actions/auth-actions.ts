@@ -40,8 +40,7 @@ export const login = async (params: object) => {
 
 //Logout user
 export const logout = () => {
-  localStorage.removeItem("auth");
-  localStorage.removeItem("me");
+  localStorage.removeItem("global");
 };
 
 //Register user

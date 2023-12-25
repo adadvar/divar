@@ -25,13 +25,14 @@ import {
 import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
 import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
-import { useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal } from "@/app/store/global-store";
+import { logout } from "@/app/actions/auth-actions";
 
 const ProfileMobOverlay = () => {
-    const isLogged = false;
-    const me = { mobile: "", email: "" };
+    const { typeDialog, isSuccess, setTypeDialog, setMessage } = useGlobal();
 
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { auth, me, setAuth, setMe } = useAuth();
+    const isLogged = auth.access_token ? true : false;
 
     return (
         <MobOverlayLayout title="دیوار من" haveBottomNav>
@@ -48,12 +49,16 @@ const ProfileMobOverlay = () => {
                                 <PersonIcon />
                                 <p className="ps-2">کاربر دیوار</p>
                             </div>
-                            <p className="ps-6 text-xs text-gray-400">
-                                {"تلفن : " + me.mobile.replace("+98", "0")}
-                            </p>
-                            <p className="ps-6 text-xs text-gray-400">
-                                {"ایمیل : " + me.email}
-                            </p>
+                            {me.mobile && (
+                                <p className="ps-6 text-xs text-gray-400">
+                                    {"تلفن : " + me.mobile.replace("+98", "0")}
+                                </p>
+                            )}
+                            {me.email && (
+                                <p className="ps-6 text-xs text-gray-400">
+                                    {"ایمیل : " + me.email}
+                                </p>
+                            )}
                         </>
                     ) : (
                         <CustomButton
@@ -99,8 +104,9 @@ const ProfileMobOverlay = () => {
                             <CustomButton
                                 icon={<LogoutIcon />}
                                 title="خروج"
-                                onClick={() => {
-                                    // dispatch(logout());
+                                onClick={async () => {
+                                    setAuth({});
+                                    localStorage.removeItem("global");
                                     setTypeDialog("");
                                 }}
                             />
