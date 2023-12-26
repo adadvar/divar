@@ -32,14 +32,23 @@ export const listAdverts = async (params: any) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    cache: 'no-store'
+    next: {
+      revalidate: 20
+    }
   };
-  // if (params.price) {
-  //   config.cache = 'no-cache'
-  // } else {
-  //   config.next = { revalidate: 10 }
-  // }
-  const response = await fetch(`${HOST_URL}/advert/list?page=${params.page}&price=${params.price}`, config);
+  let url = `${HOST_URL}/advert/list`
+  if (params.slug && params.slug[0])
+    url += `/${params.slug[0]}`
+  if (params.slug && params.slug[1])
+    url += `/${params.slug[1]}`
+  url += '?'
+  if (params.page)
+    url += `&page=${params.page}`
+  if (params.price)
+    url += `&price=${params.price}`
+  console.log(url)
+
+  const response = await fetch(url, config);
   const data = await response.json();
 
   return data;

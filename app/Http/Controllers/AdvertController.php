@@ -34,8 +34,8 @@ class AdvertController extends Controller
 {
     public function list(AdvertListRequest $r)
     {
-        $cityCookieId = $r->cookie('city_id');
-        $newCookie = null;
+        // $cityCookieId = $r->cookie('city_id');
+        // $newCookie = null;
         $whereIns = [];
         $conditions = [];
         $cityRequest = null;
@@ -51,27 +51,29 @@ class AdvertController extends Controller
         }
 
         $iran = City::whereSlug('iran')->first();
-        if ($cityCookieId) {
-            $city = City::with('child')->find($cityCookieId);
-            if ($cityRequest && $cityCookieId != $cityRequest) {
-                // Set cookie
-                $newCookie = cookie('city_id', $cityRequest->id);
-                $city = City::with('child')->find($cityRequest->id);
-            }
-        } else {
-            if ($cityRequest) {
-                // Set cookie
-                $newCookie = cookie('city_id', $cityRequest->id);
-                $city = $cityRequest->load('child');
-            } else $city = $iran;
-        }
+        // if ($cityCookieId) {
+        //     $city = City::with('child')->find($cityCookieId);
+        //     if ($cityRequest && $cityCookieId != $cityRequest) {
+        //         // Set cookie
+        //         $newCookie = cookie('city_id', $cityRequest->id);
+        //         $city = City::with('child')->find($cityRequest->id);
+        //     }
+        // } else {
+        //     if ($cityRequest) {
+        //         // Set cookie
+        //         $newCookie = cookie('city_id', $cityRequest->id);
+        //         $city = $cityRequest->load('child');
+        //     } else $city = $iran;
+        // }
 
         // Set conditions if not Iran
-        if ($city->id != $iran->id) {
-            $ids = City::extractChildrenIds($city);
-            $whereIns['city_id'] = $ids;
+        if ($cityRequest) {
+            $city = $cityRequest->load('child');
+            if ($city->id != $iran->id) {
+                $ids = City::extractChildrenIds($city);
+                $whereIns['city_id'] = $ids;
+            }
         }
-
 
         if ($r->price) {
             $prices = explode('-', $r->price);
@@ -92,16 +94,15 @@ class AdvertController extends Controller
             $ids = (Category::extractChildrenIds($categoryRequest));
             $whereIns['category_id'] = $ids;
         }
+
         $query = Advert::query();
 
         // Add other conditions to the query
         $query->where($conditions);
-
         // Add WHERE IN whereIns for col1 and col2
         foreach ($whereIns as $column => $values) {
             $query->whereIn($column, $values);
         }
-
         // Include the 'user' relationship
         $query->with(['user', 'category']);
 
@@ -114,8 +115,8 @@ class AdvertController extends Controller
         $perPage = $r->per_page ?? 10;
         $adverts = $query->paginate($perPage);
 
-        if ($newCookie)
-            return response($adverts)->cookie($newCookie);
+        // if ($newCookie)
+        //     return response($adverts)->cookie($newCookie);
         return response($adverts);
     }
 

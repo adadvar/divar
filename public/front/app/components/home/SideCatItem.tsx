@@ -8,7 +8,7 @@ const SideCatItem = ({ category }: { category: category }) => {
     if (category.parent_id === null) {
         return (
             <Link
-                href="#"
+                href={`/${category.slug}`}
                 className="flex items-center text-gray-400 hover:text-gray-600 my-2"
             >
                 <div className="text-2xl  p-1 rounded">

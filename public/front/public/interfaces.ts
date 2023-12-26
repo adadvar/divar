@@ -41,7 +41,7 @@ export interface category {
   parent_id: number | null;
   user_id: number | null;
   title: string;
-  // slug: string;
+  slug: string;
   // xml: string | null;
   // json: string | null;
   // html: string | null;

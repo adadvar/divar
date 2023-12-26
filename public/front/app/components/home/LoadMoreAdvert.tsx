@@ -11,16 +11,18 @@ let page = 2;
 const LoadMoreAdvert = ({
     last_page,
     price,
+    slug,
 }: {
     last_page: number;
     price: string;
+    slug?: string[];
 }) => {
     const { ref, inView } = useInView();
     const [data, setData] = useState<advert[]>([]);
 
     useEffect(() => {
         if (inView && page <= last_page) {
-            listAdverts({ page, price }).then((res) => {
+            listAdverts({ page, price, slug }).then((res) => {
                 setData([...data, ...res.data]);
             });
             page++;
@@ -30,7 +32,7 @@ const LoadMoreAdvert = ({
     useEffect(() => {
         page = 2;
         setData([]);
-    }, [price]);
+    }, [price, slug]);
 
     return (
         <>
