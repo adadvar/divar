@@ -13,17 +13,14 @@ interface GlobalState {
   setIsSuccess: (isSuccess: boolean) => void;
   setIsError: (isError: boolean) => void;
   setTypeDialog: (typeDialog: string) => void;
-
   setMessage: (message: object) => void;
 }
 
 interface AuthState {
   auth: any;
   me: any;
-  selectedCategory: string;
   setAuth: (auth: any) => void;
   setMe: (me: me) => void;
-  setSelectedCategory: (setSelectedCategory: string) => void;
 }
 
 export const useGlobal = create<GlobalState>()(
@@ -52,10 +49,8 @@ export const useAuth = create<AuthState>()(
       (set) => ({
         auth: {},
         me: {},
-        selectedCategory: '',
         setAuth: (auth: any) => set({ auth }),
         setMe: (me: any) => set({ me }),
-        setSelectedCategory: (selectedCategory: string) => set({ selectedCategory })
       }),
       {
         name: 'global',

@@ -14,13 +14,15 @@ export const DIALOG_TYPE_REGISTER_USER_MOB = 'register_user_mob';
 export const DIALOG_TYPE_REGISTER_VERIFY_USER_MOB = 'register_verify_user_mob';
 
 
-export const findCategory = (arr: category[], itemId: number): category | null =>
+export const findCategory = (arr: category[], searchKey: 'id' | 'slug', searchValue: number | string): category | null =>
     arr.reduce((a: category | null, item: category) => {
         if (a) return a;
-        if (item.id === itemId) return item;
-        if (item.child) return findCategory(item.child, itemId);
+        if (searchKey === 'id' && item.id === searchValue) return item;
+        if (searchKey === 'slug' && item.slug === searchValue) return item;
+        if (item.child) return findCategory(item.child, searchKey, searchValue);
         return null;
     }, null);
+
 
 export const findCategoryPath = (categories: category[], childId: number, path: category[] = []): category[] | null => {
     for (const category of categories) {

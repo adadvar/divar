@@ -2,12 +2,14 @@ interface RegularListProps {
     items: object[];
     resourceName: string;
     ItemComponent: React.ComponentType<any>;
+    itemProps?: object;
 }
 
 const RegularList = ({
     items,
     resourceName,
     ItemComponent,
+    itemProps = {},
 }: RegularListProps) => {
     return (
         <>
@@ -17,6 +19,7 @@ const RegularList = ({
                         <ItemComponent
                             key={key}
                             {...{ [resourceName]: item }}
+                            {...itemProps}
                         />
                     );
                 })}
