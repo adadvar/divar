@@ -13,14 +13,16 @@ const SideCatItem = ({
         category.icon && Icons[category.icon as keyof typeof Icons];
     if (
         category.parent_id !== null ||
-        (slug.length && slug[0] !== category.slug)
+        (slug.length && slug[1] !== category.slug)
     )
         return null;
+
+    const city = slug.length && slug[0] ? slug[0] : "iran";
     return (
         <Link
-            href={`/s/${category.slug}`}
+            href={`/s/${city}/${category.slug}`}
             className={`flex items-center ${
-                slug[0] === category.slug ? "text-gray-600" : "text-gray-400"
+                slug[1] === category.slug ? "text-gray-600" : "text-gray-400"
             } text-gray-400 hover:text-gray-600 my-2`}
         >
             <div className="text-2xl p-1 rounded">

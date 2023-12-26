@@ -1,6 +1,5 @@
 import { category } from "@/public/interfaces";
 import Link from "next/link";
-import * as Icons from "react-icons/bi";
 
 const SideSubCatItem = ({
     category,
@@ -9,11 +8,11 @@ const SideSubCatItem = ({
     category: category;
     slug: string[];
 }) => {
-    const IconComponent =
-        category.icon && Icons[category.icon as keyof typeof Icons];
+    const city = slug.length && slug[0] ? slug[0] : "iran";
+
     return (
         <Link
-            href={`/s/${category.slug}`}
+            href={`/s/${city}/${category.slug}`}
             className="flex items-center text-gray-400 hover:text-gray-600 my-2"
         >
             <p className="text-sm my-1 ms-10 font-bold">{category.title}</p>

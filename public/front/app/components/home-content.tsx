@@ -21,9 +21,9 @@ type Props = {
 
 const HomeContent = ({ adverts, categories, price, slug }: Props) => {
     const isDataLoaded = adverts && categories ? true : false;
-    const subCategory = findCategory(categories, "slug", slug[0])
-        ? findCategory(categories, "slug", slug[0])?.child
-        : [];
+    const subCategory =
+        slug && slug[1] && findCategory(categories, "slug", slug[1])?.child;
+
     return (
         <div className="">
             <div className="lg:hidden flex justify-around items-center mx-auto flex-wrap">
@@ -39,7 +39,7 @@ const HomeContent = ({ adverts, categories, price, slug }: Props) => {
                         دسته ها
                     </p>
 
-                    {slug.length && slug[0] ? (
+                    {slug && slug[0] ? (
                         <Link
                             href={"/"}
                             className="flex text-gray-400 hover:text-gray-600 my-2"
@@ -60,7 +60,7 @@ const HomeContent = ({ adverts, categories, price, slug }: Props) => {
                         itemProps={{ slug }}
                     />
                     <RegularList
-                        items={subCategory}
+                        items={subCategory ? subCategory : []}
                         resourceName="category"
                         ItemComponent={SideSubCatItem}
                         itemProps={{ slug }}

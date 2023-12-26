@@ -1,5 +1,3 @@
-"use client";
-import { useAuth } from "@/app/store/global-store";
 import { category } from "@/public/interfaces";
 import Link from "next/link";
 import * as Icons from "react-icons/bi";
@@ -25,15 +23,14 @@ const MobCatItem = ({ category }: { category: category }) => {
 
     if (category.parent_id === null) {
         return (
-            <Link legacyBehavior href={`/s/${category.slug}`}>
-                <a className="flex flex-col items-center">
-                    <div className="text-2xl text-red-700 bg-gray-100 p-1 rounded">
-                        {category.icon && <IconComponent />}
-                    </div>
-                    <p className="text-xs text-gray-700 my-1">
-                        {category.title}
-                    </p>
-                </a>
+            <Link
+                className="flex flex-col items-center"
+                href={`/s/iran/${category.slug}`}
+            >
+                <div className="text-2xl text-red-700 bg-gray-100 p-1 rounded">
+                    {category.icon && <IconComponent />}
+                </div>
+                <p className="text-xs text-gray-700 my-1">{category.title}</p>
             </Link>
         );
     } else {
