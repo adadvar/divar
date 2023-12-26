@@ -1,4 +1,5 @@
 import { category } from "@/public/interfaces";
+import Link from "next/link";
 import * as Icons from "react-icons/bi";
 
 const LoadingPlaceholder = () => {
@@ -22,12 +23,15 @@ const MobCatItem = ({ category }: { category: category }) => {
 
     if (category.parent_id === null) {
         return (
-            <div className="flex flex-col items-center">
+            <Link
+                href={`/s/${category.slug}`}
+                className="flex flex-col items-center"
+            >
                 <div className="text-2xl text-red-700 bg-gray-100 p-1 rounded">
                     {category.icon && <IconComponent />}
                 </div>
                 <p className="text-xs text-gray-700 my-1">{category.title}</p>
-            </div>
+            </Link>
         );
     } else {
         return null;
