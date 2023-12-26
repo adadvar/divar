@@ -1,4 +1,3 @@
-"use client";
 import { advert } from "@/public/interfaces";
 import { getAge } from "@/public/utils";
 import Image from "next/image";

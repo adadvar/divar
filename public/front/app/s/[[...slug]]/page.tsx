@@ -6,7 +6,7 @@ import SidePriceFilter from "@/app/components/home/SidePriceFilter";
 import LoadMoreAdvert from "@/app/components/home/LoadMoreAdvert";
 import SideStatusFilter from "@/app/components/home/SideStatusFilter";
 import SideLinks from "@/app/components/home/SideLinks";
-import { useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal } from "@/app/store/global-store";
 import { listAdverts } from "@/app/actions/advert-actions";
 import { listCategories } from "@/app/actions/categoris-actions";
 
@@ -24,8 +24,6 @@ export default async function Home({
     const categories = await listCategories();
 
     const isDataLoaded = adverts && categories ? true : false;
-    const typeDialog = useGlobal.getState().typeDialog;
-    if (useGlobal.getState().typeDialog != "") return null;
     return (
         <div className="">
             <div className="lg:hidden flex justify-around items-center mx-auto flex-wrap">

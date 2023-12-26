@@ -1,3 +1,5 @@
+"use client";
+import { useAuth } from "@/app/store/global-store";
 import { category } from "@/public/interfaces";
 import Link from "next/link";
 import * as Icons from "react-icons/bi";
@@ -15,6 +17,7 @@ const LoadingPlaceholder = () => {
 };
 
 const MobCatItem = ({ category }: { category: category }) => {
+    const { setSelectedCategory } = useAuth();
     if (!category) {
         return <LoadingPlaceholder />;
     }
@@ -23,14 +26,18 @@ const MobCatItem = ({ category }: { category: category }) => {
 
     if (category.parent_id === null) {
         return (
-            <Link
-                href={`/s/${category.slug}`}
-                className="flex flex-col items-center"
-            >
-                <div className="text-2xl text-red-700 bg-gray-100 p-1 rounded">
-                    {category.icon && <IconComponent />}
-                </div>
-                <p className="text-xs text-gray-700 my-1">{category.title}</p>
+            <Link legacyBehavior href={`/s/${category.slug}`}>
+                <a
+                    className="flex flex-col items-center"
+                    onClick={() => setSelectedCategory(category.slug)}
+                >
+                    <div className="text-2xl text-red-700 bg-gray-100 p-1 rounded">
+                        {category.icon && <IconComponent />}
+                    </div>
+                    <p className="text-xs text-gray-700 my-1">
+                        {category.title}
+                    </p>
+                </a>
             </Link>
         );
     } else {
