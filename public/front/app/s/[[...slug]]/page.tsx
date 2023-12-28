@@ -9,7 +9,7 @@ export default async function Home({
     searchParams: { [key: string]: string | string[] | undefined };
     params: { slug: string[] };
 }) {
-    const price = searchParams.price ? searchParams.price.toString() : "0";
+    const price = searchParams?.price ? searchParams.price.toString() : "0";
 
     const adverts = await listAdverts({ page: 1, price, slug: params.slug });
 
@@ -19,7 +19,7 @@ export default async function Home({
         <HomeContent
             adverts={adverts}
             categories={categories}
-            price={price}
+            searchParams={searchParams}
             slug={params.slug}
         />
     );

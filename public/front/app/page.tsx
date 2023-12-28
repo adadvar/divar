@@ -17,7 +17,7 @@ export default async function Home({
         <HomeContent
             adverts={adverts}
             categories={categories}
-            price={price}
+            searchParams={searchParams}
             slug={[]}
         />
     );

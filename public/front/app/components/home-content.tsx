@@ -15,14 +15,17 @@ import { BsArrowRightShort as BackIcon } from "react-icons/bs";
 type Props = {
     adverts: any;
     categories: any;
-    price: string;
+    searchParams: { [key: string]: string | string[] | undefined };
     slug: string[];
 };
 
-const HomeContent = ({ adverts, categories, price, slug }: Props) => {
+const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
     const isDataLoaded = adverts && categories ? true : false;
+    const price = searchParams?.price ? searchParams.price.toString() : "0";
+
     const subCategory =
         slug && slug[1] && findCategory(categories, "slug", slug[1])?.child;
+    console.log("subCategory", subCategory);
 
     return (
         <div className="">
@@ -39,7 +42,7 @@ const HomeContent = ({ adverts, categories, price, slug }: Props) => {
                         دسته ها
                     </p>
 
-                    {slug && slug[0] ? (
+                    {slug && slug[1] ? (
                         <Link
                             href={"/"}
                             className="flex text-gray-400 hover:text-gray-600 my-2"
@@ -57,14 +60,20 @@ const HomeContent = ({ adverts, categories, price, slug }: Props) => {
                         items={categories}
                         resourceName="category"
                         ItemComponent={SideCatItem}
-                        itemProps={{ slug }}
+                        itemProps={{ slug, searchParams, level: 1 }}
                     />
                     <RegularList
                         items={subCategory ? subCategory : []}
                         resourceName="category"
-                        ItemComponent={SideSubCatItem}
-                        itemProps={{ slug }}
+                        ItemComponent={SideCatItem}
+                        itemProps={{ slug, searchParams, level: 2 }}
                     />
+                    {/* <RegularList
+                        items={categories}
+                        resourceName="category"
+                        ItemComponent={SideCatItem}
+                        itemProps={{ slug, searchParams, level: 3 }}
+                    /> */}
                     <hr />
                     <SidePriceFilter />
                     <hr />

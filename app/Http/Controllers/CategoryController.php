@@ -18,30 +18,30 @@ class CategoryController extends Controller
 {
     public function list(CategoryListRequest $r)
     {
-        $categories = Category::all()->load('child');
+        $categories = Category::where('parent_id', null)->with('child')->get();
         return $categories;
     }
 
     public function show(CategoryShowRequest $r)
     {
         $city = $r->city;
-        $cookie = cookie('city',$city);
-        $conditions = [];   
+        $cookie = cookie('city', $city);
+        $conditions = [];
         $conditions['city'] = $city;
-        if($r->price){
-            $prices = explode('-',$r->price);
-            if($prices[0])$conditions[]=['price','>=',$prices[0]];
-            if($prices[1])$conditions[]=['price','<=',$prices[1]];
+        if ($r->price) {
+            $prices = explode('-', $r->price);
+            if ($prices[0]) $conditions[] = ['price', '>=', $prices[0]];
+            if ($prices[1]) $conditions[] = ['price', '<=', $prices[1]];
         }
         $conditions['state'] = 'accepted';
-        
-        $category = $r->category->load(['adverts'=>fn($q)=> $q->where($conditions),'child','child.adverts'=>fn($q)=> $q->where($conditions)]);
+
+        $category = $r->category->load(['adverts' => fn ($q) => $q->where($conditions), 'child', 'child.adverts' => fn ($q) => $q->where($conditions)]);
         return response(compact('category'))->cookie($cookie);
     }
 
     public function menu(CategoryListRequest $r)
     {
-        $categories = Category::where('parent_id',null)->with('child')->get();
+        $categories = Category::where('parent_id', null)->with('child')->get();
         return $categories;
     }
 
