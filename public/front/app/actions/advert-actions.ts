@@ -46,7 +46,6 @@ export const listAdverts = async (params: any) => {
     url += `&page=${params.page}`
   if (params.price)
     url += `&price=${params.price}`
-  console.log(url)
 
   const response = await fetch(url, config);
   const data = await response.json();

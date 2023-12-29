@@ -1,39 +1,64 @@
 import { category } from "@/public/interfaces";
-import { findCategory } from "@/public/utils";
 import Link from "next/link";
 import * as Icons from "react-icons/bi";
+import RegularList from "../RegularList";
 
 const SideCatItem = ({
     category,
     slug = [],
-    level,
+    searchParams,
+    parentSlug,
 }: {
     category: category;
     slug: string[];
-    level: number;
+    searchParams: { [key: string]: string | string[] | undefined };
+    parentSlug: string | null;
 }) => {
-    // const subCategory =
-    // slug && slug[1] && findCategory(categories, "slug", slug[1])?.child;
     const IconComponent =
         category.icon && Icons[category.icon as keyof typeof Icons];
-    if (level == 1 && slug.length && slug[1] !== category.slug) return null;
-
+    if (parentSlug != null) {
+        if (!(slug.length && slug[1] === parentSlug)) {
+            return null;
+        }
+    } else {
+        if (slug.length && slug[1] !== category.slug) {
+            return null;
+        }
+    }
     const city = slug.length && slug[0] ? slug[0] : "iran";
     return (
-        <Link
-            href={`/s/${city}/${category.slug}`}
-            className={`flex items-center ${
-                slug[1] === category.slug ? "text-gray-600" : "text-gray-400"
-            } text-gray-400 hover:text-gray-600 my-2`}
-        >
-            <div className="text-2xl p-1 rounded">
-                {category.icon && <IconComponent />}
-            </div>
+        <>
+            <Link
+                href={`/s/${city}/${category.slug}`}
+                className={`flex items-center ${
+                    slug[1] === category.slug
+                        ? "text-gray-600"
+                        : "text-gray-400"
+                } text-gray-400 hover:text-gray-600 my-2`}
+            >
+                <div className="text-2xl p-1 rounded">
+                    {category.icon && <IconComponent />}
+                </div>
 
-            <p className={`text-sm my-1 font-bold ${level != 1 && "ps-10"}`}>
-                {category.title}
-            </p>
-        </Link>
+                <p
+                    className={`text-sm my-1 font-bold ${
+                        parentSlug ? "ms-10" : ""
+                    }`}
+                >
+                    {category.title}
+                </p>
+            </Link>
+            <RegularList
+                items={category.child}
+                resourceName="category"
+                ItemComponent={SideCatItem}
+                itemProps={{
+                    slug,
+                    searchParams,
+                    parentSlug: category.slug,
+                }}
+            />
+        </>
     );
 };
 

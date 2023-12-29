@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,6 +26,12 @@ Route::group(['prefix' => '/test'], function ($r) {
     $r->get('/', [TestController::class, 'index']);
     $r->get('/get', [TestController::class, 'getSession']);
 });
+
+Route::group(['prefix' => '/home'], function ($r) {
+    $r->get('/home-data', [HomeController::class, 'homeData'])->name('home.home.data');
+    $r->get('/cities', [HomeController::class, 'cities'])->name('home.cities');
+});
+
 
 Route::group([], function ($router) {
 

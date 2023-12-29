@@ -1,11 +1,8 @@
 "use client";
 
 import { BiSearch as SearchIcon } from "react-icons/bi";
-import { useSelector, useDispatch } from "react-redux";
 
 const SearchBox = () => {
-    const dispatch = useDispatch();
-
     return (
         <form className="relative w-full">
             <div className="absolute inset-y-0 start-2 flex items-center pointer-events-none">

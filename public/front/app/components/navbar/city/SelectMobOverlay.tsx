@@ -1,5 +1,3 @@
-"use client";
-import CityItems from "./CityItems";
 import MobOverlayLayout from "../../MobOverlayLayout";
 import { useGlobal } from "@/app/store/global-store";
 
@@ -8,7 +6,6 @@ const SelectMobOverlay = () => {
 
     return (
         <MobOverlayLayout title="انتخاب شهر" haveClearButton haveSearchInput>
-            <CityItems />
             <div className="fixed flex justify-around bottom-0 left-0 right-0 py-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
                 <button
                     className="btn btn-ghost border text-gray-500 border-gray-600 w-[45%]"

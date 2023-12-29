@@ -25,7 +25,6 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
 
     const subCategory =
         slug && slug[1] && findCategory(categories, "slug", slug[1])?.child;
-    console.log("subCategory", subCategory);
 
     return (
         <div className="">
@@ -60,20 +59,8 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
                         items={categories}
                         resourceName="category"
                         ItemComponent={SideCatItem}
-                        itemProps={{ slug, searchParams, level: 1 }}
+                        itemProps={{ slug, searchParams, parentId: null }}
                     />
-                    <RegularList
-                        items={subCategory ? subCategory : []}
-                        resourceName="category"
-                        ItemComponent={SideCatItem}
-                        itemProps={{ slug, searchParams, level: 2 }}
-                    />
-                    {/* <RegularList
-                        items={categories}
-                        resourceName="category"
-                        ItemComponent={SideCatItem}
-                        itemProps={{ slug, searchParams, level: 3 }}
-                    /> */}
                     <hr />
                     <SidePriceFilter />
                     <hr />

@@ -115,3 +115,11 @@ export interface me {
   updated_at: string;
   deleted_at: string | null;
 }
+
+export interface city {
+  id: number;
+  name: string;
+  slug: string;
+  parent_id: number;
+  child: city[];
+}

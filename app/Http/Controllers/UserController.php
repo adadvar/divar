@@ -11,11 +11,8 @@ use App\Http\Requests\User\UserDeleteRequest;
 use App\Http\Requests\User\UserListRequest;
 use App\Http\Requests\User\UserMeRequest;
 use App\Http\Requests\User\UserResetPasswordRequest;
-use App\Http\Requests\User\UserUpdateMeRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Mail\VerificationCodeMail;
-use App\Models\Advert;
-use App\Models\Category;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,36 +27,7 @@ class UserController extends Controller
 {
   const CHANGE_EMAIL_CACHE_KEY = 'change.email.for.user.';
 
-  public function homeData(Request $r)
-  {
-    try {
-      $pageData = [];
-      $pageData['title'] = 'صفحه اصلی';
-      $pageData['description'] = 'اینجا صفحه اصلی برنامه است.';
 
-      // Specify a pagination size, for example 10 items per page
-      $perPage = $r->per_page ?? 21;
-      $query = Advert::query();
-      $conditions = [];
-      $conditions['state'] = ['accepted'];
-      $query->orderBy('id', 'desc');
-      $query->where($conditions);
-      $query->with(['user', 'category']);
-      $pageData['adverts'] = $query->paginate($perPage);
-
-      $pageData['categories'] = Category::with('child')->get();
-
-      return response()->json(
-        $pageData,
-        200
-      );
-    } catch (Exception $e) {
-      Log::error($e);
-      return response([
-        'message' => 'خطایی رخ داده است.'
-      ], 500);
-    }
-  }
   public function changeEmail(ChangeEmailRequest $request)
   {
     try {

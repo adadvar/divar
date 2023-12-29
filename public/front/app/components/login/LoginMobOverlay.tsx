@@ -1,5 +1,3 @@
-import { useRef, useEffect } from "react";
-
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/public/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import { useAuth, useGlobal } from "@/app/store/global-store";

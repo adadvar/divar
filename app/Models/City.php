@@ -10,8 +10,17 @@ class City extends Model
     use HasFactory;
 
     protected $table = 'cities';
-    protected $fillable = ['name','parent_id'];
+    protected $fillable = ['name', 'parent_id'];
     protected $routeKeyName = 'slug';
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 
     public function parent()
     {
@@ -23,7 +32,8 @@ class City extends Model
         return $this->hasMany(City::class, 'parent_id')->with('child');
     }
 
-    static function extractChildrenIds($city){
+    static function extractChildrenIds($city)
+    {
         $cityIds = [$city->id];
 
         if ($city->child) {

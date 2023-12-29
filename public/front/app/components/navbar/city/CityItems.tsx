@@ -1,45 +1,20 @@
 import React from "react";
 import CityItem from "./CityItem";
+import { getCities } from "@/app/actions/global-actions";
+import { city } from "@/public/interfaces";
+import RegularList from "../../RegularList";
 
-const CityItems = () => {
-    const cities = [
-        { آذربایجان‌شرقی: "آذربایجان شرقی" },
-        { آذربایجان‌غربی: "آذربایجان غربی" },
-        { اردبیل: "اردبیل" },
-        { اصفهان: "اصفهان" },
-        { البرز: "البرز" },
-        { ایلام: "ایلام" },
-        { بوشهر: "بوشهر" },
-        { تهران: "تهران" },
-        { چهارمحال‌و‌بختیاری: "چهارمحال وبختیاری" },
-        { خراسان‌جنوبی: "خراسان جنوبی" },
-        { خراسان‌رضوی: "خراسان رضوی" },
-        { خراسان‌شمالی: "خراسان شمالی" },
-        { خوزستان: "خوزستان" },
-        { زنجان: "زنجان" },
-        { سمنان: "سمنان" },
-        { آذربایجان‌شرقی: "آذربایجان شرقی" },
-        { آذربایجان‌غربی: "آذربایجان غربی" },
-        { اردبیل: "اردبیل" },
-        { اصفهان: "اصفهان" },
-        { البرز: "البرز" },
-        { ایلام: "ایلام" },
-        { بوشهر: "بوشهر" },
-        { تهران: "تهران" },
-        { چهارمحال‌و‌بختیاری: "چهارمحال وبختیاری" },
-        { خراسان‌جنوبی: "خراسان جنوبی" },
-        { خراسان‌رضوی: "خراسان رضوی" },
-        { خراسان‌شمالی: "خراسان شمالی" },
-        { خوزستان: "خوزستان" },
-        { زنجان: "زنجان" },
-        { سمنان: "سمنان" },
-    ];
-    
+const CityItems = async () => {
+    const cities: city[] = await getCities();
+    console.log(cities);
     return (
         <div className="pt-32 pb-16 overflow-x-hidden overflow-y-auto px-10">
-           {cities.map((c,index) =>
-            <CityItem text={Object.values(c)[0]} key={index}/>
-  )}
+            <RegularList
+                items={cities}
+                resourceName="cities"
+                ItemComponent={CityItem}
+                itemProps={{ slug, searchParams, parentId: null }}
+            />
         </div>
     );
 };
