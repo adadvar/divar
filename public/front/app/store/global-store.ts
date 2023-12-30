@@ -9,11 +9,15 @@ interface GlobalState {
   isError: boolean
   message: any;
   typeDialog: string;
+  seletedCity: number;
+  selectedCityIds: number[];
   setIsLoading: (isLoading: boolean) => void;
   setIsSuccess: (isSuccess: boolean) => void;
   setIsError: (isError: boolean) => void;
   setTypeDialog: (typeDialog: string) => void;
   setMessage: (message: object) => void;
+  setSeletedCity: (seletedCity: number) => void;
+  setSeletedCityIds: (selectedCityIds: number[]) => void;
 }
 
 interface AuthState {
@@ -31,12 +35,16 @@ export const useGlobal = create<GlobalState>()(
       isError: false,
       message: {},
       typeDialog: "",
+      seletedCity: 0,
+      selectedCityIds: [],
       setIsLoading: (isLoading: boolean) => set({ isLoading }),
       setIsSuccess: (isSuccess: boolean) => set({ isSuccess }),
       setIsError: (isError: boolean) => set({ isError }),
       setTypeDialog: (typeDialog: string) => set({ typeDialog }),
 
       setMessage: (message: object) => set({ message }),
+      setSeletedCity: (seletedCity: number) => set({ seletedCity }),
+      setSeletedCityIds: (selectedCityIds: number[]) => set({ selectedCityIds }),
     }),
 
   ),

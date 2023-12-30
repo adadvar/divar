@@ -1,7 +1,7 @@
 import { city } from "@/public/interfaces";
 import { BiChevronLeft as LeftIcon } from "react-icons/bi";
 
-const CityItem = ({
+const SubCityItem = ({
     city,
     onItemSelect,
 }: {
@@ -15,10 +15,13 @@ const CityItem = ({
         >
             <p className="">{city.name}</p>
             <div className="text-2xl text-gray-400">
-                <LeftIcon />
+                <input
+                    type="checkbox"
+                    className="w-5 h-5 border-gray-400 bg-transparent rounded-none"
+                />
             </div>
         </button>
     );
 };
 
-export default CityItem;
+export default SubCityItem;
