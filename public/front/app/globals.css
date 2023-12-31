@@ -74,8 +74,5 @@ body {
 }
 
 input[type="checkbox"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 1px solid #eee;
+  color-scheme: none;
 }

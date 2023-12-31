@@ -6,14 +6,17 @@ import CityItem from "./CityItem";
 import { useEffect, useState } from "react";
 import { useGlobal } from "@/app/store/global-store";
 import SubCityItem from "./SubCityItem";
+import CityButton from "./CityButton";
 
 export default function SelectOverlay() {
     const [selectedItem, setSeletedItem] = useState(0);
+    const [selectedcities, setSeletedCities] = useState<city[]>([]);
     const [cities, setCities] = useState<city[]>([]);
     const subCities: any =
         selectedItem && cities.filter((c) => c.id === selectedItem)[0];
-    console.log(subCities);
     const { typeDialog, setTypeDialog } = useGlobal();
+    console.log(selectedcities);
+
     useEffect(() => {
         const citiesData = localStorage.getItem("cities");
         if (citiesData) {
@@ -30,6 +33,35 @@ export default function SelectOverlay() {
         setSeletedItem(selectedItemId);
     };
 
+    const handleDeleteItem = (selectedItemId: number) => {
+        let city: any = cities.find((c) => c.id === selectedItemId);
+        if (!city)
+            city = subCities.child.find((c: any) => c.id === selectedItemId);
+        if (city) {
+            setSeletedCities((prevItems) =>
+                prevItems.filter((c) => c.id !== city.id)
+            );
+        }
+    };
+
+    const handleSubItemSelection = (
+        selectedItemId: number,
+        isChecked: boolean
+    ) => {
+        let city: any = cities.find((c) => c.id === selectedItemId);
+        if (!city)
+            city = subCities.child.find((c: any) => c.id === selectedItemId);
+        if (city) {
+            if (isChecked) {
+                setSeletedCities((prevItems) => [...prevItems, city]);
+            } else {
+                setSeletedCities((prevItems) =>
+                    prevItems.filter((c) => c.id !== city.id)
+                );
+            }
+        }
+    };
+
     return (
         <div className="fixed inset-0  min-h-[80%] max-h-[80%] bg-white m-auto rounded-md w-1/3 z-50">
             <div className="flex flex-col py-4 overflow-hidden h-full">
@@ -39,6 +71,18 @@ export default function SelectOverlay() {
                         <button className="text-red-700 text-sm rounded-md px-2 py-1 hover:bg-red-50">
                             حذف همه
                         </button>
+                    </div>
+                    <div className="flex overflow-x-auto h-10 pb-2 pr-4 scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20">
+                        {selectedcities.length ? (
+                            <RegularList
+                                items={selectedcities}
+                                resourceName="city"
+                                ItemComponent={CityButton}
+                                itemProps={{ onItemSelect: handleDeleteItem }}
+                            />
+                        ) : (
+                            <p>حداقل یک شهر را انتخاب کنید.</p>
+                        )}
                     </div>
                     <CitySearchBox />
                 </div>
@@ -56,7 +100,7 @@ export default function SelectOverlay() {
                             items={subCities.child}
                             resourceName="city"
                             ItemComponent={SubCityItem}
-                            itemProps={{ onItemSelect: handleItemSelection }}
+                            itemProps={{ onItemSelect: handleSubItemSelection }}
                         />
                     )}
                 </div>

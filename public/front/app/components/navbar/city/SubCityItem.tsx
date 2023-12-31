@@ -1,26 +1,32 @@
+import React, { useState } from "react";
 import { city } from "@/public/interfaces";
-import { BiChevronLeft as LeftIcon } from "react-icons/bi";
 
 const SubCityItem = ({
     city,
     onItemSelect,
 }: {
     city: city;
-    onItemSelect: (id: number) => void;
+    onItemSelect: (id: number, is: boolean) => void;
 }) => {
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+        onItemSelect(city.id, !isChecked);
+    };
+
     return (
-        <button
-            className="flex justify-between items-center w-full text-gray-800 border-b border-gray-200 py-2"
-            onClick={() => onItemSelect(city.id)}
-        >
+        <div className="flex justify-between items-center w-full text-gray-800 border-b border-gray-200 py-2">
             <p className="">{city.name}</p>
-            <div className="text-2xl text-gray-400">
+            <div className="">
                 <input
                     type="checkbox"
-                    className="w-5 h-5 border-gray-400 bg-transparent rounded-none"
-                />
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                    className="w-5 h-5"
+                ></input>
             </div>
-        </button>
+        </div>
     );
 };
 
