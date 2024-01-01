@@ -1,4 +1,4 @@
-import { auth, me } from "@/public/interfaces";
+import { auth, city, me } from "@/public/interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -9,15 +9,16 @@ interface GlobalState {
   isError: boolean
   message: any;
   typeDialog: string;
-  seletedCity: number;
-  selectedCityIds: number[];
+  seletedCityId: number;
+  selectedCities: city[];
   setIsLoading: (isLoading: boolean) => void;
   setIsSuccess: (isSuccess: boolean) => void;
   setIsError: (isError: boolean) => void;
   setTypeDialog: (typeDialog: string) => void;
   setMessage: (message: object) => void;
-  setSeletedCity: (seletedCity: number) => void;
-  setSeletedCityIds: (selectedCityIds: number[]) => void;
+  setSeletedCityId: (seletedCity: number) => void;
+  addSeletedCities: (selectedCities: city) => void;
+  deleteSeletedCities: (selectedCities: city) => void;
 }
 
 interface AuthState {
@@ -35,16 +36,18 @@ export const useGlobal = create<GlobalState>()(
       isError: false,
       message: {},
       typeDialog: "",
-      seletedCity: 0,
-      selectedCityIds: [],
+      seletedCityId: 0,
+      selectedCities: [],
       setIsLoading: (isLoading: boolean) => set({ isLoading }),
       setIsSuccess: (isSuccess: boolean) => set({ isSuccess }),
       setIsError: (isError: boolean) => set({ isError }),
       setTypeDialog: (typeDialog: string) => set({ typeDialog }),
-
       setMessage: (message: object) => set({ message }),
-      setSeletedCity: (seletedCity: number) => set({ seletedCity }),
-      setSeletedCityIds: (selectedCityIds: number[]) => set({ selectedCityIds }),
+      setSeletedCityId: (seletedCityId: number) => set({ seletedCityId }),
+      addSeletedCities: (city: city) => set((state) => ({ selectedCities: [...state.selectedCities, city] })),
+      deleteSeletedCities: (city: city) => set((state) => ({
+        selectedCities: state.selectedCities.filter((c) => c.id !== city.id),
+      })),
     }),
 
   ),

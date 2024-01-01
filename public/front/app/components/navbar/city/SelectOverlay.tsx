@@ -9,13 +9,18 @@ import SubCityItem from "./SubCityItem";
 import CityButton from "./CityButton";
 
 export default function SelectOverlay() {
-    const [selectedItem, setSeletedItem] = useState(0);
-    const [selectedcities, setSeletedCities] = useState<city[]>([]);
+    const { typeDialog, seletedCityId, selectedCities, setTypeDialog } =
+        useGlobal();
     const [cities, setCities] = useState<city[]>([]);
+    const [filteredItems, setFilteredItems] = useState<city[]>([]);
+
     const subCities: any =
-        selectedItem && cities.filter((c) => c.id === selectedItem)[0];
-    const { typeDialog, setTypeDialog } = useGlobal();
-    console.log(selectedcities);
+        seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
+
+    let data = [];
+    if (filteredItems) data = filteredItems;
+    else if (subCities) data = subCities;
+    else data = cities;
 
     useEffect(() => {
         const citiesData = localStorage.getItem("cities");
@@ -29,37 +34,8 @@ export default function SelectOverlay() {
         }
     }, []);
 
-    const handleItemSelection = (selectedItemId: number) => {
-        setSeletedItem(selectedItemId);
-    };
-
-    const handleDeleteItem = (selectedItemId: number) => {
-        let city: any = cities.find((c) => c.id === selectedItemId);
-        if (!city)
-            city = subCities.child.find((c: any) => c.id === selectedItemId);
-        if (city) {
-            setSeletedCities((prevItems) =>
-                prevItems.filter((c) => c.id !== city.id)
-            );
-        }
-    };
-
-    const handleSubItemSelection = (
-        selectedItemId: number,
-        isChecked: boolean
-    ) => {
-        let city: any = cities.find((c) => c.id === selectedItemId);
-        if (!city)
-            city = subCities.child.find((c: any) => c.id === selectedItemId);
-        if (city) {
-            if (isChecked) {
-                setSeletedCities((prevItems) => [...prevItems, city]);
-            } else {
-                setSeletedCities((prevItems) =>
-                    prevItems.filter((c) => c.id !== city.id)
-                );
-            }
-        }
+    const handleFilteredItems = (filtered: city[]) => {
+        setFilteredItems(filtered);
     };
 
     return (
@@ -73,18 +49,20 @@ export default function SelectOverlay() {
                         </button>
                     </div>
                     <div className="flex overflow-x-auto h-10 pb-2 pr-4 scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20">
-                        {selectedcities.length ? (
+                        {selectedCities.length ? (
                             <RegularList
-                                items={selectedcities}
+                                items={selectedCities}
                                 resourceName="city"
                                 ItemComponent={CityButton}
-                                itemProps={{ onItemSelect: handleDeleteItem }}
                             />
                         ) : (
                             <p>حداقل یک شهر را انتخاب کنید.</p>
                         )}
                     </div>
-                    <CitySearchBox />
+                    <CitySearchBox
+                        items={cities}
+                        setFilteredItems={handleFilteredItems}
+                    />
                 </div>
                 <div className="h-1 mt-3 mb-1 left-0 right-0 shadow-sm"></div>
                 <div className="overflow-x-hidden overflow-y-auto scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20 px-10 mb-14">
@@ -93,14 +71,12 @@ export default function SelectOverlay() {
                             items={cities}
                             resourceName="city"
                             ItemComponent={CityItem}
-                            itemProps={{ onItemSelect: handleItemSelection }}
                         />
                     ) : (
                         <RegularList
                             items={subCities.child}
                             resourceName="city"
                             ItemComponent={SubCityItem}
-                            itemProps={{ onItemSelect: handleSubItemSelection }}
                         />
                     )}
                 </div>

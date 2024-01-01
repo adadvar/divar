@@ -1,32 +1,34 @@
 import React, { useState } from "react";
 import { city } from "@/public/interfaces";
+import { useGlobal } from "@/app/store/global-store";
 
-const SubCityItem = ({
-    city,
-    onItemSelect,
-}: {
-    city: city;
-    onItemSelect: (id: number, is: boolean) => void;
-}) => {
+const SubCityItem = ({ city }: { city: city }) => {
     const [isChecked, setIsChecked] = useState(false);
-
+    const { selectedCities, addSeletedCities, deleteSeletedCities } =
+        useGlobal();
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
-        onItemSelect(city.id, !isChecked);
+        !isChecked ? addSeletedCities(city) : deleteSeletedCities(city);
     };
+    const handleChecked = selectedCities.find((c) => c.id == city.id)
+        ? true
+        : false;
 
     return (
-        <div className="flex justify-between items-center w-full text-gray-800 border-b border-gray-200 py-2">
+        <button
+            className="flex justify-between items-center w-full text-gray-800 border-b border-gray-200 py-2"
+            onClick={handleCheckboxChange}
+        >
             <p className="">{city.name}</p>
             <div className="">
                 <input
                     type="checkbox"
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
+                    checked={handleChecked}
+                    onChange={() => setIsChecked(!isChecked)}
                     className="w-5 h-5"
                 ></input>
             </div>
-        </div>
+        </button>
     );
 };
 
