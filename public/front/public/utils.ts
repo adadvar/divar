@@ -85,3 +85,22 @@ export const isEmail = (value: string | undefined): boolean => {
     }
     return false;
 };
+
+
+export function appendQueryParams(url = window.location.href, queryParams: { [key: string]: string | string[] | number | undefined }) {
+    const existingParams = new URLSearchParams(url);
+
+    for (const key in queryParams) {
+        const value = queryParams[key];
+        if (Array.isArray(value)) {
+            value.forEach((item) => existingParams.append(key, item));
+        } else if (value !== undefined) {
+            existingParams.set(key, value.toString());
+        }
+    }
+
+    const queryString = existingParams.toString();
+    const separator = queryString ? (url.includes('?') ? '&' : '?') : '';
+
+    return `${url}${separator}${queryString}`;
+}

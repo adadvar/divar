@@ -17,6 +17,7 @@ interface GlobalState {
   setTypeDialog: (typeDialog: string) => void;
   setMessage: (message: object) => void;
   setSeletedCityId: (seletedCity: number) => void;
+  clearSelectedCities: () => void;
   addSeletedCities: (selectedCities: city) => void;
   deleteSeletedCities: (selectedCities: city) => void;
 }
@@ -43,6 +44,7 @@ export const useGlobal = create<GlobalState>()(
       setIsError: (isError: boolean) => set({ isError }),
       setTypeDialog: (typeDialog: string) => set({ typeDialog }),
       setMessage: (message: object) => set({ message }),
+      clearSelectedCities: () => set({ selectedCities: [] }),
       setSeletedCityId: (seletedCityId: number) => set({ seletedCityId }),
       addSeletedCities: (city: city) => set((state) => ({ selectedCities: [...state.selectedCities, city] })),
       deleteSeletedCities: (city: city) => set((state) => ({

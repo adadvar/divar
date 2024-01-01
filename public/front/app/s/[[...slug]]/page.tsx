@@ -9,9 +9,15 @@ export default async function Home({
     searchParams: { [key: string]: string | string[] | undefined };
     params: { slug: string[] };
 }) {
-    const price = searchParams?.price ? searchParams.price.toString() : "0";
+    const queryParams: { [key: string]: string | string[] | undefined } = {
+        ...searchParams,
+    };
 
-    const adverts = await listAdverts({ page: 1, price, slug: params.slug });
+    const adverts = await listAdverts({
+        page: 1,
+        slug: params.slug,
+        ...queryParams,
+    });
 
     const categories = await listCategories();
 

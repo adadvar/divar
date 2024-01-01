@@ -7,20 +7,31 @@ import { useEffect, useState } from "react";
 import { useGlobal } from "@/app/store/global-store";
 import SubCityItem from "./SubCityItem";
 import CityButton from "./CityButton";
+import Link from "next/link";
 
 export default function SelectOverlay() {
-    const { typeDialog, seletedCityId, selectedCities, setTypeDialog } =
-        useGlobal();
+    const {
+        typeDialog,
+        seletedCityId,
+        selectedCities,
+        clearSelectedCities,
+        setSeletedCityId,
+        setTypeDialog,
+    } = useGlobal();
     const [cities, setCities] = useState<city[]>([]);
     const [filteredItems, setFilteredItems] = useState<city[]>([]);
+    const [data, setData] = useState<city[]>([]);
+    const ids =
+        selectedCities.length > 1
+            ? "/s/iran?cities=" +
+              selectedCities.map((city) => city.id).join(",")
+            : selectedCities.length === 1
+            ? `/s/${selectedCities[0].slug}`
+            : "";
+    console.log(ids);
 
     const subCities: any =
         seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
-
-    let data = [];
-    if (filteredItems) data = filteredItems;
-    else if (subCities) data = subCities;
-    else data = cities;
 
     useEffect(() => {
         const citiesData = localStorage.getItem("cities");
@@ -44,7 +55,10 @@ export default function SelectOverlay() {
                 <div className="flex flex-col gap-5 px-10">
                     <div className="flex justify-between">
                         <h1 className="text-gray-900 font-bold">انتخاب شهر</h1>
-                        <button className="text-red-700 text-sm rounded-md px-2 py-1 hover:bg-red-50">
+                        <button
+                            className="text-red-700 text-sm rounded-md px-2 py-1 hover:bg-red-50"
+                            onClick={() => clearSelectedCities()}
+                        >
                             حذف همه
                         </button>
                     </div>
@@ -59,14 +73,14 @@ export default function SelectOverlay() {
                             <p>حداقل یک شهر را انتخاب کنید.</p>
                         )}
                     </div>
-                    <CitySearchBox
+                    {/* <CitySearchBox
                         items={cities}
                         setFilteredItems={handleFilteredItems}
-                    />
+                    /> */}
                 </div>
                 <div className="h-1 mt-3 mb-1 left-0 right-0 shadow-sm"></div>
                 <div className="overflow-x-hidden overflow-y-auto scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20 px-10 mb-14">
-                    {!subCities ? (
+                    {!seletedCityId ? (
                         <RegularList
                             items={cities}
                             resourceName="city"
@@ -83,13 +97,31 @@ export default function SelectOverlay() {
                 <div className="absolute flex justify-around bottom-0 left-0 right-0 py-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
                     <button
                         className="btn btn-ghost border text-gray-500 border-gray-600 w-[45%]"
-                        onClick={() => setTypeDialog("")}
+                        onClick={() => {
+                            setTypeDialog("");
+                            setSeletedCityId(0);
+                            clearSelectedCities();
+                        }}
                     >
                         انصراف
                     </button>
-                    <button className="btn btn-ghost bg-gray-200 text-gray-400 w-[45%]">
-                        تایید
-                    </button>
+                    <Link href={ids} legacyBehavior>
+                        <a
+                            onClick={() => {
+                                setTypeDialog("");
+                                setSeletedCityId(0);
+                                clearSelectedCities();
+                            }}
+                            className={`btn btn-ghost ${
+                                selectedCities.length === 0
+                                    ? "bg-gray-200 text-gray-400 "
+                                    : "bg-red-800 text-white"
+                            } w-[45%]`}
+                            aria-disabled={selectedCities.length === 0}
+                        >
+                            تایید
+                        </a>
+                    </Link>
                 </div>
             </div>
         </div>

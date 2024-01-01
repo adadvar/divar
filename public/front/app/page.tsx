@@ -7,9 +7,14 @@ export default async function Home({
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-    const price = searchParams.price ? searchParams.price.toString() : "0";
+    const queryParams: {
+        [key: string]: string | string[] | number | undefined;
+    } = {
+        ...searchParams,
+        slug: [],
+    };
 
-    const adverts = await listAdverts({ page: 1, price });
+    const adverts = await listAdverts({ page: 1, ...queryParams });
 
     const categories = await listCategories();
 

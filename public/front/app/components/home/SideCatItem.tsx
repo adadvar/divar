@@ -2,6 +2,7 @@ import { category } from "@/public/interfaces";
 import Link from "next/link";
 import * as Icons from "react-icons/bi";
 import RegularList from "../RegularList";
+import { appendQueryParams } from "@/public/utils";
 
 const SideCatItem = ({
     category,
@@ -26,6 +27,7 @@ const SideCatItem = ({
         }
     }
     const city = slug.length && slug[0] ? slug[0] : "iran";
+    const url = appendQueryParams(`/s/${city}/${category.slug}`, {});
     return (
         <>
             <Link
