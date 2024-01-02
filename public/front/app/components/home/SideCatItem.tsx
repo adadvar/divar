@@ -7,12 +7,12 @@ import { appendQueryParams } from "@/public/utils";
 const SideCatItem = ({
     category,
     slug = [],
-    searchParams,
+    queryParams,
     parentSlug,
 }: {
     category: category;
     slug: string[];
-    searchParams: { [key: string]: string | string[] | undefined };
+    queryParams: { [key: string]: string | string[] | undefined };
     parentSlug: string | null;
 }) => {
     const IconComponent =
@@ -27,7 +27,6 @@ const SideCatItem = ({
         }
     }
     const city = slug.length && slug[0] ? slug[0] : "iran";
-    const url = appendQueryParams(`/s/${city}/${category.slug}`, {});
     return (
         <>
             <Link
@@ -56,7 +55,7 @@ const SideCatItem = ({
                 ItemComponent={SideCatItem}
                 itemProps={{
                     slug,
-                    searchParams,
+                    queryParams,
                     parentSlug: category.slug,
                 }}
             />

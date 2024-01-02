@@ -15,13 +15,12 @@ import { BsArrowRightShort as BackIcon } from "react-icons/bs";
 type Props = {
     adverts: any;
     categories: any;
-    searchParams: { [key: string]: string | string[] | undefined };
+    queryParams: { [key: string]: string | string[] | undefined };
     slug: string[];
 };
 
-const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
+const HomeContent = ({ adverts, categories, queryParams, slug }: Props) => {
     const isDataLoaded = adverts && categories ? true : false;
-    const price = searchParams?.price ? searchParams.price.toString() : "0";
 
     const subCategory =
         slug && slug[1] && findCategory(categories, "slug", slug[1])?.child;
@@ -59,7 +58,7 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
                         items={categories}
                         resourceName="category"
                         ItemComponent={SideCatItem}
-                        itemProps={{ slug, searchParams, parentId: null }}
+                        itemProps={{ slug, queryParams, parentId: null }}
                     />
                     <hr />
                     <SidePriceFilter />
@@ -87,7 +86,7 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
                     {isDataLoaded && (
                         <LoadMoreAdvert
                             last_page={adverts.last_page}
-                            price={price}
+                            queryParams={queryParams}
                             slug={slug}
                         />
                     )}

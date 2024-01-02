@@ -35,14 +35,19 @@ export const listAdverts = async (params: {
     headers: {
       "Content-Type": "application/json",
     },
-    next: {
-      revalidate: 20,
-    },
+    // next: {
+    //   revalidate: 20,
+    // },
   };
 
   let url = `${HOST_URL}/advert/list`;
-  if (params.slug && params.slug[0]) url += `/${params.slug[0]}`;
-  if (params.slug && params.slug[1]) url += `/${params.slug[1]}`;
+  if (params.slug) {
+    params.slug.forEach((slug) => {
+      if (slug) {
+        url += `/${slug}`;
+      }
+    });
+  }
   const queryParams: string[] = [];
 
   for (const key in params) {
@@ -58,7 +63,7 @@ export const listAdverts = async (params: {
   if (queryParams.length > 0) {
     url += "?" + queryParams.join("&");
   }
-  console.log('url', url)
+  console.log('params', params)
   const response = await fetch(url, config);
   const data = await response.json();
 

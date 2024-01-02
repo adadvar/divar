@@ -8,7 +8,7 @@ export default async function Home({
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
     const queryParams: {
-        [key: string]: string | string[] | number | undefined;
+        [key: string]: string | string[] | undefined;
     } = {
         ...searchParams,
         slug: [],
@@ -22,7 +22,7 @@ export default async function Home({
         <HomeContent
             adverts={adverts}
             categories={categories}
-            searchParams={searchParams}
+            queryParams={queryParams}
             slug={[]}
         />
     );

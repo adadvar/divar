@@ -1,4 +1,4 @@
-import CitySearchBox from "./SearchBox";
+import { usePathname, useSearchParams } from "next/navigation";
 import { city } from "@/public/interfaces";
 import { getCities } from "@/app/actions/global-actions";
 import RegularList from "../../RegularList";
@@ -8,6 +8,7 @@ import { useGlobal } from "@/app/store/global-store";
 import SubCityItem from "./SubCityItem";
 import CityButton from "./CityButton";
 import Link from "next/link";
+import { appendQueryParams } from "@/public/utils";
 
 export default function SelectOverlay() {
     const {
@@ -28,8 +29,12 @@ export default function SelectOverlay() {
             : selectedCities.length === 1
             ? `/s/${selectedCities[0].slug}`
             : "";
-    console.log(ids);
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams);
 
+    const url = `${pathname}?${searchParams}`;
+    console.log(searchParams.toString());
     const subCities: any =
         seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
 

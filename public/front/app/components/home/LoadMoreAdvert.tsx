@@ -10,11 +10,11 @@ import { listAdverts } from "@/app/actions/advert-actions";
 let page = 2;
 const LoadMoreAdvert = ({
     last_page,
-    price,
+    queryParams,
     slug,
 }: {
     last_page: number;
-    price: string;
+    queryParams: { [key: string]: string | string[] | undefined };
     slug?: string[];
 }) => {
     const { ref, inView } = useInView();
@@ -22,7 +22,7 @@ const LoadMoreAdvert = ({
 
     useEffect(() => {
         if (inView && page <= last_page) {
-            listAdverts({ page, price, slug }).then((res) => {
+            listAdverts({ page, ...queryParams, slug }).then((res) => {
                 setData([...data, ...res.data]);
             });
             page++;
@@ -32,7 +32,7 @@ const LoadMoreAdvert = ({
     useEffect(() => {
         page = 2;
         setData([]);
-    }, [price, slug]);
+    }, [queryParams, slug]);
 
     return (
         <>

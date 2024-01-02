@@ -2,10 +2,14 @@
 import React, { useState, ChangeEvent } from "react";
 import RegularDropDownSubmenu from "../RegularDropDown";
 import Link from "next/link";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const SidePriceFilter = () => {
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
     const handleMinPriceChange = (event: ChangeEvent<HTMLInputElement>) => {
         const inputPrice = event.target.value.replace(/\D/g, "");
@@ -18,6 +22,17 @@ const SidePriceFilter = () => {
         const formattedPrice = Number(inputPrice).toLocaleString("en-US");
 
         setMaxPrice(formattedPrice);
+    };
+
+    const handleClick = () => {
+        const params = new URLSearchParams(searchParams);
+        if (minPrice || maxPrice)
+            params.set(
+                "price",
+                `${minPrice.replace(",", "")}-${maxPrice.replace(",", "")}`
+            );
+        else params.delete("price");
+        replace(`${pathname}?${params.toString()}`);
     };
 
     const submenuContent = [
@@ -39,15 +54,12 @@ const SidePriceFilter = () => {
             />
             <p>تومان</p>
         </div>,
-        <Link
-            href={`?price=${minPrice.replace(",", "")}-${maxPrice.replace(
-                ",",
-                ""
-            )}`}
+        <button
+            onClick={() => handleClick()}
             className="btn btn-ghost flex btn-hover min-h-[20px] h-6 m-auto text-white text-xs bg-red-700 hover:bg-red-600"
         >
             اعمال قیمت
-        </Link>,
+        </button>,
     ];
     return (
         <div className="my-5">
