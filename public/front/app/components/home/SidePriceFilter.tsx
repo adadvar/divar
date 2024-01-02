@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
 import RegularDropDownSubmenu from "../RegularDropDown";
-import Link from "next/link";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const SidePriceFilter = () => {

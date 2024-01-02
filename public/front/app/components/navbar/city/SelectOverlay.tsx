@@ -1,4 +1,4 @@
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { city } from "@/public/interfaces";
 import { getCities } from "@/app/actions/global-actions";
 import RegularList from "../../RegularList";
@@ -22,19 +22,10 @@ export default function SelectOverlay() {
     const [cities, setCities] = useState<city[]>([]);
     const [filteredItems, setFilteredItems] = useState<city[]>([]);
     const [data, setData] = useState<city[]>([]);
-    const ids =
-        selectedCities.length > 1
-            ? "/s/iran?cities=" +
-              selectedCities.map((city) => city.id).join(",")
-            : selectedCities.length === 1
-            ? `/s/${selectedCities[0].slug}`
-            : "";
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
+    const { replace } = useRouter();
 
-    const url = `${pathname}?${searchParams}`;
-    console.log(searchParams.toString());
     const subCities: any =
         seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
 
@@ -52,6 +43,26 @@ export default function SelectOverlay() {
 
     const handleFilteredItems = (filtered: city[]) => {
         setFilteredItems(filtered);
+    };
+
+    const handleClick = () => {
+        setTypeDialog("");
+        setSeletedCityId(0);
+        clearSelectedCities();
+        if (selectedCities.length > 1)
+            params.set(
+                "cities",
+                selectedCities.map((city) => city.id).join(",")
+            );
+        if (selectedCities.length == 1) params.delete("cities");
+        const url =
+            selectedCities.length > 1
+                ? `/s/iran`
+                : selectedCities.length === 1
+                ? `/s/${selectedCities[0].slug}`
+                : "";
+
+        replace(`${url}?${params.toString()}`);
     };
 
     return (
@@ -110,23 +121,17 @@ export default function SelectOverlay() {
                     >
                         انصراف
                     </button>
-                    <Link href={ids} legacyBehavior>
-                        <a
-                            onClick={() => {
-                                setTypeDialog("");
-                                setSeletedCityId(0);
-                                clearSelectedCities();
-                            }}
-                            className={`btn btn-ghost ${
-                                selectedCities.length === 0
-                                    ? "bg-gray-200 text-gray-400 "
-                                    : "bg-red-800 text-white"
-                            } w-[45%]`}
-                            aria-disabled={selectedCities.length === 0}
-                        >
-                            تایید
-                        </a>
-                    </Link>
+                    <button
+                        onClick={() => handleClick()}
+                        className={`btn btn-ghost ${
+                            selectedCities.length === 0
+                                ? "bg-gray-200 text-gray-400 "
+                                : "bg-red-800 text-white"
+                        } w-[45%]`}
+                        aria-disabled={selectedCities.length === 0}
+                    >
+                        تایید
+                    </button>
                 </div>
             </div>
         </div>

@@ -2,7 +2,6 @@ import { category } from "@/public/interfaces";
 import Link from "next/link";
 import * as Icons from "react-icons/bi";
 import RegularList from "../RegularList";
-import { appendQueryParams } from "@/public/utils";
 
 const SideCatItem = ({
     category,
