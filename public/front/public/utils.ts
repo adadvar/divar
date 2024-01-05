@@ -12,6 +12,7 @@ export const DIALOG_TYPE_PROFILE_MOB = 'profile_mob';
 export const DIALOG_TYPE_LOGIN_MOB = 'login_mob';
 export const DIALOG_TYPE_REGISTER_USER_MOB = 'register_user_mob';
 export const DIALOG_TYPE_REGISTER_VERIFY_USER_MOB = 'register_verify_user_mob';
+export const DIALOG_TYPE_CATEGORY_MEGA_MENU = 'category_mega_menu';
 
 
 export const findCategory = (arr: category[], searchKey: 'id' | 'slug', searchValue: number | string): category | null =>

@@ -29,7 +29,7 @@ import { useAuth, useGlobal } from "@/app/store/global-store";
 import { logout } from "@/app/actions/auth-actions";
 
 const ProfileMobOverlay = () => {
-    const { typeDialog, isSuccess, setTypeDialog, setMessage } = useGlobal();
+    const { typeDialog, setTypeDialog } = useGlobal();
 
     const { auth, me, setAuth, setMe } = useAuth();
     const isLogged = auth.access_token ? true : false;

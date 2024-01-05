@@ -8,11 +8,18 @@ import {
 
 const Button = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
+    const handleClick = () => {
+        if (typeDialog === DIALOG_TYPE_CATEGORY) {
+            setTypeDialog("");
+        } else {
+            setTypeDialog(DIALOG_TYPE_CATEGORY);
+        }
+    };
 
     return (
         <button
             className="btn btn-ghost text-gray-500 hover:text-gray-800"
-            onClick={() => setTypeDialog(DIALOG_TYPE_CATEGORY)}
+            onClick={handleClick}
         >
             <div>دسته ها</div>
             <div className="text-lg">

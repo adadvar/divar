@@ -15,11 +15,12 @@ export default function SelectOverlay() {
         typeDialog,
         seletedCityId,
         selectedCities,
+        cities,
+        setCities,
         clearSelectedCities,
         setSeletedCityId,
         setTypeDialog,
     } = useGlobal();
-    const [cities, setCities] = useState<city[]>([]);
     const [filteredItems, setFilteredItems] = useState<city[]>([]);
     const [data, setData] = useState<city[]>([]);
     const searchParams = useSearchParams();
@@ -30,13 +31,9 @@ export default function SelectOverlay() {
         seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
 
     useEffect(() => {
-        const citiesData = localStorage.getItem("cities");
-        if (citiesData) {
-            setCities(JSON.parse(citiesData));
-        } else {
+        if (cities.length == 0) {
             getCities().then((res) => {
                 setCities(res);
-                localStorage.setItem("cities", JSON.stringify(res));
             });
         }
     }, []);
@@ -48,7 +45,7 @@ export default function SelectOverlay() {
     const handleClick = () => {
         setTypeDialog("");
         setSeletedCityId(0);
-        clearSelectedCities();
+        // clearSelectedCities();
         if (selectedCities.length > 1)
             params.set(
                 "cities",
@@ -96,6 +93,17 @@ export default function SelectOverlay() {
                 </div>
                 <div className="h-1 mt-3 mb-1 left-0 right-0 shadow-sm"></div>
                 <div className="overflow-x-hidden overflow-y-auto scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20 px-10 mb-14">
+                    <button
+                        className="flex justify-between items-center w-full text-gray-800 border-b border-gray-200 font-bold py-2"
+                        onClick={() => {
+                            clearSelectedCities();
+                            replace("/s/iran");
+                            setTypeDialog("");
+                            setSeletedCityId(0);
+                        }}
+                    >
+                        همه شهرهای ایران
+                    </button>
                     {!seletedCityId ? (
                         <RegularList
                             items={cities}
@@ -116,7 +124,7 @@ export default function SelectOverlay() {
                         onClick={() => {
                             setTypeDialog("");
                             setSeletedCityId(0);
-                            clearSelectedCities();
+                            // clearSelectedCities();
                         }}
                     >
                         انصراف

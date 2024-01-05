@@ -1,5 +1,4 @@
 import React from "react";
-import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import Divider from "../Divider";
 import CityButton from "./city/Button";
@@ -10,6 +9,9 @@ import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
 import SearchBox from "./search/InputBox";
 import HomeSearchMob from "./home-search-mob";
+import { listCategories } from "@/app/actions/categoris-actions";
+import MegaMenu from "./category/MegaMenu";
+import { category } from "@/public/interfaces";
 
 const Index = () => {
     return (
@@ -18,7 +20,7 @@ const Index = () => {
                 <div className="hidden lg:flex items-center space-x-3">
                     <Logo size={50} />
                     <Divider direction="vertical" style="" />
-                    <CityButton text="تبریز" />
+                    <CityButton />
                     <CategoryButton />
                     <div className="llg:w-[25rem] lg:w-[12rem]">
                         <SearchBox />

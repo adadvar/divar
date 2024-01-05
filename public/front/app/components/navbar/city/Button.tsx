@@ -4,12 +4,14 @@ import { useGlobal } from "@/app/store/global-store";
 import { DIALOG_TYPE_CITY } from "@/public/utils";
 import { BiMap as LocationIcon } from "react-icons/bi";
 
-interface Props {
-    text: string;
-}
-
-const Button = ({ text }: Props) => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+const Button = () => {
+    const { typeDialog, selectedCities, setTypeDialog } = useGlobal();
+    const text =
+        selectedCities.length === 1
+            ? selectedCities[0].name
+            : selectedCities.length > 1
+            ? `${selectedCities.length} شهر`
+            : "همه ایران";
 
     return (
         <>
@@ -20,7 +22,7 @@ const Button = ({ text }: Props) => {
                 <div className="text-xl">
                     <LocationIcon />
                 </div>
-                <span className="text-xs">{text}</span>
+                <span className="text-sm">{text}</span>
             </button>
         </>
     );
