@@ -1,4 +1,4 @@
-import { auth, city, me } from "@/public/interfaces";
+import { auth, category, city, me } from "@/public/interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -12,6 +12,7 @@ interface GlobalState {
   seletedCityId: number;
   selectedCities: city[];
   cities: city[];
+  categories: category[];
   // setIsLoading: (isLoading: boolean) => void;
   // setIsSuccess: (isSuccess: boolean) => void;
   // setIsError: (isError: boolean) => void;
@@ -22,6 +23,7 @@ interface GlobalState {
   addSeletedCities: (selectedCities: city) => void;
   deleteSeletedCities: (selectedCities: city) => void;
   setCities: (cities: city[]) => void;
+  setCategories: (categories: category[]) => void;
 }
 
 interface AuthState {
@@ -43,6 +45,7 @@ export const useGlobal = create<GlobalState>()(
         seletedCityId: 0,
         selectedCities: [],
         cities: [],
+        categories: [],
         // setIsLoading: (isLoading: boolean) => set({ isLoading }),
         // setIsSuccess: (isSuccess: boolean) => set({ isSuccess }),
         // setIsError: (isError: boolean) => set({ isError }),
@@ -55,6 +58,7 @@ export const useGlobal = create<GlobalState>()(
           selectedCities: state.selectedCities.filter((c) => c.id !== city.id),
         })),
         setCities: (cities: city[]) => set({ cities }),
+        setCategories: (categories: category[]) => set({ categories }),
       }),
       {
         name: 'global',

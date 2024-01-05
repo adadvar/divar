@@ -30,13 +30,13 @@ export default function SelectOverlay() {
     const subCities: any =
         seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
 
-    useEffect(() => {
-        if (cities.length == 0) {
-            getCities().then((res) => {
-                setCities(res);
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (cities.length == 0) {
+    //         getCities().then((res) => {
+    //             setCities(res);
+    //         });
+    //     }
+    // }, []);
 
     const handleFilteredItems = (filtered: city[]) => {
         setFilteredItems(filtered);

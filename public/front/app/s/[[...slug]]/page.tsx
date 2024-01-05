@@ -1,6 +1,10 @@
 import { listAdverts } from "@/app/actions/advert-actions";
 import { listCategories } from "@/app/actions/categoris-actions";
+import { getCities } from "@/app/actions/global-actions";
+import SetData from "@/app/components/SetData";
 import HomeContent from "@/app/components/home-content";
+import { useGlobal } from "@/app/store/global-store";
+import { category, city } from "@/public/interfaces";
 
 export default async function Home({
     searchParams,
@@ -19,14 +23,19 @@ export default async function Home({
         ...queryParams,
     });
 
-    const categories = await listCategories();
+    const cities: city[] = await getCities();
+
+    const categories: category[] = await listCategories();
 
     return (
-        <HomeContent
-            adverts={adverts}
-            categories={categories}
-            queryParams={queryParams}
-            slug={params.slug}
-        />
+        <>
+            <SetData categories={categories} cities={cities} />;
+            <HomeContent
+                adverts={adverts}
+                categories={categories}
+                queryParams={queryParams}
+                slug={params.slug}
+            />
+        </>
     );
 }
