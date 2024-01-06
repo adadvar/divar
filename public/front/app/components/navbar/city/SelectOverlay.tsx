@@ -118,7 +118,7 @@ export default function SelectOverlay() {
                         />
                     )}
                 </div>
-                <div className="absolute flex justify-around bottom-0 left-0 right-0 py-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
+                <div className=" flex justify-around bottom-0 left-0 right-0 py-2 bg-white w-full shadow-[rgba(0,0,0,0.1)_0px_-2px_5px]">
                     <button
                         className="btn btn-ghost border text-gray-500 border-gray-600 w-[45%]"
                         onClick={() => {

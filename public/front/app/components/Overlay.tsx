@@ -35,7 +35,6 @@ const Overlay = () => {
                     DIALOG_TYPE_LOGIN_MOB,
                     DIALOG_TYPE_REGISTER_USER_MOB,
                     DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
-                    DIALOG_TYPE_CATEGORY_MEGA_MENU,
                 ].includes(typeDialog) && (
                     <div
                         className={`fixed w-full h-[calc(100vh_-_66px)] inset-x-0 bottom-0 bg-black opacity-50  overflow-auto transition duration-300 ease-in-out z-50`}

@@ -33,6 +33,20 @@ interface AuthState {
   setMe: (me: me) => void;
 }
 
+interface tmpState {
+  hoveredCatId: number;
+  setHoveredCat: (hoveredCatId: number) => void;
+}
+
+export const useTmp = create<tmpState>()(
+  devtools(
+    (set) => ({
+      hoveredCatId: 0,
+      setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId })
+    })
+  )
+)
+
 export const useGlobal = create<GlobalState>()(
   devtools(
     persist(
@@ -85,3 +99,4 @@ export const useAuth = create<AuthState>()(
     )
   )
 )
+

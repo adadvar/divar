@@ -1,6 +1,6 @@
 "use client";
 import { useGlobal } from "@/app/store/global-store";
-import { DIALOG_TYPE_CATEGORY } from "@/public/utils";
+import { DIALOG_TYPE_CATEGORY_MEGA_MENU } from "@/public/utils";
 import {
     BiChevronDown as DownIcon,
     BiChevronUp as UpIcon,
@@ -9,10 +9,10 @@ import {
 const Button = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
     const handleClick = () => {
-        if (typeDialog === DIALOG_TYPE_CATEGORY) {
+        if (typeDialog === DIALOG_TYPE_CATEGORY_MEGA_MENU) {
             setTypeDialog("");
         } else {
-            setTypeDialog(DIALOG_TYPE_CATEGORY);
+            setTypeDialog(DIALOG_TYPE_CATEGORY_MEGA_MENU);
         }
     };
 
@@ -23,7 +23,7 @@ const Button = () => {
         >
             <div>دسته ها</div>
             <div className="text-lg">
-                {typeDialog && typeDialog == DIALOG_TYPE_CATEGORY ? (
+                {typeDialog && typeDialog == DIALOG_TYPE_CATEGORY_MEGA_MENU ? (
                     <UpIcon />
                 ) : (
                     <DownIcon />
