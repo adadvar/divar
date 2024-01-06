@@ -1,27 +1,36 @@
 import { category } from "@/public/interfaces";
 import Link from "next/link";
 import RegularList from "../../RegularList";
-import { useTmp } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
+import MegaSubSubCatItem from "./MegaSubSubCatItem";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const MegaSubCatItem = ({ category }: { category: category }) => {
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams);
+    const { replace } = useRouter();
     const { hoveredCatId, setHoveredCat } = useTmp();
+    const { setTypeDialog } = useGlobal();
 
     const subCatitem = hoveredCatId ? category?.child : [];
-
+    const handleClick = () => {
+        const url = `/s/iran/${category.slug}${
+            params.toString() && `?${params.toString()}`
+        }`;
+        setTypeDialog("");
+        replace(url);
+    };
     return (
         <>
-            <button
-                // href={`/s/${city}/${category.slug}`}
-                className="w-1/3 ps-10 w-30  my-1"
-            >
-                <p className="text-start text-xs font-bold text-gray-800 hover:text-red-800">
+            <button className="w-1/3 ps-10 w-30  my-1" onClick={handleClick}>
+                <p className="text-start text-xs text-gray-900 hover:text-red-800">
                     {category.title}
                 </p>
             </button>
             <RegularList
                 items={subCatitem}
                 resourceName="category"
-                ItemComponent={MegaSubCatItem}
+                ItemComponent={MegaSubSubCatItem}
             />
         </>
     );

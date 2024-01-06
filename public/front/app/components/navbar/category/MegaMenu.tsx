@@ -15,13 +15,23 @@ const MegaMenu = () => {
     const { replace } = useRouter();
     const { categories } = useGlobal();
     const { hoveredCatId, setHoveredCat } = useTmp();
+    const { setTypeDialog } = useGlobal();
+
     const subCatitem = hoveredCatId ? categories[hoveredCatId - 1].child : [];
-    console.log(subCatitem);
+
+    const handleClick = () => {
+        const url = `/s/iran${params.toString() && `?${params.toString()}`}`;
+        setTypeDialog("");
+        replace(url);
+    };
 
     return (
-        <div className="fixed flex left-5 top-16 bottom-0 min-h-[80%] max-h-[80%] p-6 bg-white m-auto rounded-md gap-1 w-3/4 z-50">
+        <div className="fixed flex left-5 top-0 bottom-8 min-h-[80%] max-h-[80%] p-6 bg-white m-auto rounded-md gap-1 w-3/4 z-50">
             <div className="flex flex-col w-1/5 overflow-hidden h-full text-xs text-gray-600 gap-y-3">
-                <button className="flex border border-gray-100 rounded px-2 py-1 text-start hover:bg-gray-100">
+                <button
+                    className="flex border border-gray-100 rounded px-2 py-1 text-start hover:bg-gray-100"
+                    onClick={handleClick}
+                >
                     <span className="text-lg">
                         <BackIcon />
                     </span>
