@@ -27,6 +27,7 @@ import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
 import { useAuth, useGlobal } from "@/app/store/global-store";
 import { logout } from "@/app/actions/auth-actions";
+import CusProfButton from "../../CusProfButton";
 
 const ProfileMobOverlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
@@ -61,7 +62,7 @@ const ProfileMobOverlay = () => {
                             )}
                         </>
                     ) : (
-                        <CustomButton
+                        <CusProfButton
                             icon={<LoginIcon />}
                             title="ورود و ثبت نام"
                             onClick={() => setTypeDialog(DIALOG_TYPE_LOGIN_MOB)}
@@ -70,7 +71,7 @@ const ProfileMobOverlay = () => {
                     <hr className="pb-2 mt-2" />
                     {isLogged && (
                         <>
-                            <CustomButton
+                            <CusProfButton
                                 icon={<CheckIcon />}
                                 title="تایید هویت"
                             />
@@ -78,22 +79,25 @@ const ProfileMobOverlay = () => {
                         </>
                     )}
                     {isLogged && (
-                        <CustomButton icon={<MyadIcon />} title="آگهی های من" />
+                        <CusProfButton
+                            icon={<MyadIcon />}
+                            title="آگهی های من"
+                        />
                     )}
 
-                    <CustomButton icon={<PinIcon />} title="نشان ها" />
-                    <CustomButton icon={<NoteIcon />} title="یادداشت ها" />
-                    <CustomButton
+                    <CusProfButton icon={<PinIcon />} title="نشان ها" />
+                    <CusProfButton icon={<NoteIcon />} title="یادداشت ها" />
+                    <CusProfButton
                         icon={<RecentIcon />}
                         title="بازدیدهای اخیر"
                     />
 
                     {isLogged && (
-                        <CustomButton icon={<PersonIcon />} title="رزومه من" />
+                        <CusProfButton icon={<PersonIcon />} title="رزومه من" />
                     )}
                     <hr className="pb-2 mt-2" />
 
-                    <CustomButton
+                    <CusProfButton
                         icon={<ShopIcon />}
                         title="دیوار برای کسب و کارها"
                     />
@@ -101,27 +105,27 @@ const ProfileMobOverlay = () => {
                     <hr className="pb-2 mt-2" />
                     {isLogged && (
                         <>
-                            <CustomButton
+                            <CusProfButton
                                 icon={<LogoutIcon />}
                                 title="خروج"
-                                onClick={async () => {
+                                onClick={() => {
                                     setAuth({});
-                                    localStorage.removeItem("global");
+                                    localStorage.removeItem("auth");
                                     setTypeDialog("");
                                 }}
                             />
                             <hr className="pb-2 mt-2" />
                         </>
                     )}
-                    <CustomButton icon={<RuleIcon />} title="قوانین" />
-                    <CustomButton icon={<InfoIcon />} title="درباره دیوار" />
+                    <CusProfButton icon={<RuleIcon />} title="قوانین" />
+                    <CusProfButton icon={<InfoIcon />} title="درباره دیوار" />
 
                     <hr className="pb-2 mt-2" />
-                    <CustomButton
+                    <CusProfButton
                         icon={<DownloadIcon />}
                         title="دریافت برنامه"
                     />
-                    <CustomButton icon={<SupportIcon />} title="پشتیبانی" />
+                    <CusProfButton icon={<SupportIcon />} title="پشتیبانی" />
                 </div>
                 <div className="flex flex-1 justify-center items-center text-gray-600">
                     <SocialButton icon={<TwitterIcon />} />
@@ -131,37 +135,6 @@ const ProfileMobOverlay = () => {
             </div>
         </MobOverlayLayout>
     );
-};
-
-type CustomButtonProps = {
-    icon: ReactNode;
-    title: string;
-    linkTo?: string;
-    onClick?: (event: MouseEvent<HTMLElement>) => void;
-};
-
-const CustomButton = ({ icon, title, linkTo, onClick }: CustomButtonProps) => {
-    if (linkTo) {
-        return (
-            <Link
-                href={linkTo}
-                className="flex items-center hover:bg-gray-200 w-full p-2 rounded"
-            >
-                {icon}
-                <p className="ps-2">{title}</p>
-            </Link>
-        );
-    } else {
-        return (
-            <button
-                className="flex items-center hover:bg-gray-200 w-full p-2 rounded"
-                onClick={onClick}
-            >
-                {icon}
-                <p className="ps-2">{title}</p>
-            </button>
-        );
-    }
 };
 
 type SocialButtonProps = {

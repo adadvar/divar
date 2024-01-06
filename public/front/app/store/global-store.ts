@@ -35,14 +35,22 @@ interface AuthState {
 
 interface tmpState {
   hoveredCatId: number;
+  showProfileMenu: boolean;
+  res: any;
   setHoveredCat: (hoveredCatId: number) => void;
+  setShowProfileMenu: (showProfileMenu: boolean) => void;
+  setRes: (res: any) => void;
 }
 
 export const useTmp = create<tmpState>()(
   devtools(
     (set) => ({
       hoveredCatId: 0,
-      setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId })
+      showProfileMenu: false,
+      res: {},
+      setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId }),
+      setShowProfileMenu: (showProfileMenu: boolean) => set({ showProfileMenu }),
+      setRes: (res: any) => set({ res })
     })
   )
 )

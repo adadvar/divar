@@ -26,8 +26,8 @@ const MegaMenu = () => {
     };
 
     return (
-        <div className="fixed flex left-5 top-0 bottom-8 min-h-[80%] max-h-[80%] p-6 bg-white m-auto rounded-md gap-1 w-3/4 z-50">
-            <div className="flex flex-col w-1/5 overflow-hidden h-full text-xs text-gray-600 gap-y-3">
+        <div className="fixed flex left-5 top-0 bottom-8 min-h-[80%] max-h-[80%] p-6 bg-white m-auto  text-gray-500 rounded-md gap-1 w-3/4 z-50">
+            <div className="flex flex-col w-1/5 overflow-hidden h-full text-xs  gap-y-3">
                 <button
                     className="flex border border-gray-100 rounded px-2 py-1 text-start hover:bg-gray-100"
                     onClick={handleClick}
@@ -44,7 +44,7 @@ const MegaMenu = () => {
                 />
             </div>
             <HR />
-            <div className="flex flex-col flex-wrap w-4/5 h-full text-xs text-gray-600">
+            <div className="flex flex-col flex-wrap w-4/5 h-full text-xs ">
                 <RegularList
                     items={subCatitem}
                     resourceName="category"

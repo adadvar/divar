@@ -6,11 +6,10 @@ import {
 import MobOverlayLayout from "../MobOverlayLayout";
 import Link from "next/link";
 import { me, register } from "@/app/actions/auth-actions";
-import { useAuth, useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 const RegisterMobOverlay = () => {
-    const { typeDialog, isSuccess, setTypeDialog, setMessage } = useGlobal();
-
-    const { auth, setAuth, setMe } = useAuth();
+    const { typeDialog, setTypeDialog } = useGlobal();
+    const { setRes } = useTmp();
 
     const onRegister = async (formData: FormData) => {
         const input = formData.get("mobile_email");
@@ -18,7 +17,7 @@ const RegisterMobOverlay = () => {
         const params = isEmailInput ? { email: input } : { mobile: input };
         const data1 = await register(params);
         if (data1) {
-            setMessage({ ...data1, params });
+            setRes({ ...data1, params });
             setTypeDialog(DIALOG_TYPE_REGISTER_VERIFY_USER_MOB);
         } else {
         }

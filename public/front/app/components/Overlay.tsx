@@ -4,8 +4,10 @@ import {
     DIALOG_TYPE_CATEGORY_MOB,
     DIALOG_TYPE_CITY,
     DIALOG_TYPE_CITY_MOB,
+    DIALOG_TYPE_LOGIN,
     DIALOG_TYPE_LOGIN_MOB,
     DIALOG_TYPE_PROFILE_MOB,
+    DIALOG_TYPE_REGISTER_USER,
     DIALOG_TYPE_REGISTER_USER_MOB,
     DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
     DIALOG_TYPE_SEARCH_MOB,
@@ -20,6 +22,8 @@ import RegisterMobOverlay from "./login/RegisterMobOverlay";
 import { useGlobal } from "@/app/store/global-store";
 import RegisterVerifyMobOverlay from "./login/RegisterVerifyMobOverlay";
 import MegaMenu from "./navbar/category/MegaMenu";
+import LoginOverlay from "./login/LoginOverlay";
+import RegisterOverlay from "./login/RegisterOverlay";
 
 const Overlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
@@ -45,9 +49,14 @@ const Overlay = () => {
             {typeDialog && typeDialog == DIALOG_TYPE_LOGIN_MOB && (
                 <LoginMobOverlay />
             )}
+            {typeDialog && typeDialog == DIALOG_TYPE_LOGIN && <LoginOverlay />}
             {typeDialog && typeDialog == DIALOG_TYPE_REGISTER_USER_MOB && (
                 <RegisterMobOverlay />
             )}
+            {typeDialog && typeDialog == DIALOG_TYPE_REGISTER_USER && (
+                <RegisterOverlay />
+            )}
+
             {typeDialog &&
                 typeDialog == DIALOG_TYPE_REGISTER_VERIFY_USER_MOB && (
                     <RegisterVerifyMobOverlay />

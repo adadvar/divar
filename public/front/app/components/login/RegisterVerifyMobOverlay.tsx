@@ -7,16 +7,15 @@ import {
     register,
     registerVerify,
 } from "@/app/actions/auth-actions";
-import { useAuth, useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 const RegisterVerifyMobOverlay = () => {
-    const { typeDialog, isSuccess, message, setTypeDialog, setMessage } =
-        useGlobal();
-
-    const { auth, setAuth, setMe } = useAuth();
+    const { setTypeDialog } = useGlobal();
+    const { setAuth, setMe } = useAuth();
+    const { res } = useTmp();
 
     const onRegister = async (formData: FormData) => {
         const code = formData.get("code");
-        const data1 = await registerVerify({ code, ...message.params });
+        const data1 = await registerVerify({ code, ...res.params });
         if (data1) {
             setMe(data1);
             const isEmail = data1.email != null;

@@ -27,17 +27,22 @@ const MegaCatItem = ({ category }: { category: category }) => {
     };
     return (
         <button
-            className={`flex items-center rounded cursor-pointer px-2 py-1 ${
+            className={`flex items-center justify-between rounded cursor-pointer w-full px-2 py-1 ${
                 isHovered ? "bg-gray-100" : ""
             }`}
             onClick={handleClick}
             onMouseEnter={() => setHoveredCat(category.id)}
         >
-            <div className="text-xl p-1 rounded">
-                {category.icon && <IconComponent />}
-            </div>
+            <div className="flex">
+                <div className="text-xl p-1">
+                    {category.icon && <IconComponent />}
+                </div>
 
-            <p className={`text-xs my-1 font-bold`}>{category.title}</p>
+                <p className={`text-xs my-1 font-bold`}>{category.title}</p>
+            </div>
+            <div className="text-xl">
+                <Icons.BiChevronLeft />
+            </div>
         </button>
     );
 };

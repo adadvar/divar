@@ -22,7 +22,7 @@ const MegaSubCatItem = ({ category }: { category: category }) => {
     };
     return (
         <>
-            <button className="w-1/3 ps-10 w-30  my-1" onClick={handleClick}>
+            <button className="w-1/3 ps-10 my-3" onClick={handleClick}>
                 <p className="text-start text-xs text-gray-900 hover:text-red-800">
                     {category.title}
                 </p>

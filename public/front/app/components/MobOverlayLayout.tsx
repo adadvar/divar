@@ -98,7 +98,7 @@ const MobOverlayLayout = ({
                 </div>
 
                 {haveSearchInput && <SelectedCity />}
-                {haveSearchInput && <CitySearchBox />}
+                {/* {haveSearchInput && <CitySearchBox />} */}
             </div>
             {children}
         </div>

@@ -9,9 +9,6 @@ import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
 import SearchBox from "./search/InputBox";
 import HomeSearchMob from "./home-search-mob";
-import { listCategories } from "@/app/actions/categoris-actions";
-import MegaMenu from "./category/MegaMenu";
-import { category } from "@/public/interfaces";
 
 const Index = () => {
     return (
