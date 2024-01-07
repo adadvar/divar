@@ -13,7 +13,7 @@ const CityItems = async () => {
                 items={cities}
                 resourceName="cities"
                 ItemComponent={CityItem}
-                itemProps={{ slug, searchParams, parentId: null }}
+                // itemProps={{ slug, searchParams, parentId: null }}
             />
         </div>
     );

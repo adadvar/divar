@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-  },images: {
+    appDir:true
+  },
+  images: {
     domains:['localhost']
   },
 }

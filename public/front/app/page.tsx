@@ -1,7 +1,7 @@
 import { listAdverts } from "@/app/actions/advert-actions";
 import { listCategories } from "@/app/actions/categoris-actions";
-import HomeContent from "@/app/components/home-content";
-import SetData from "./components/SetData";
+import HomeContent from "@/app/ui/home-content";
+import SetData from "./ui/SetData";
 import { city } from "@/public/interfaces";
 import { getCities } from "./actions/global-actions";
 

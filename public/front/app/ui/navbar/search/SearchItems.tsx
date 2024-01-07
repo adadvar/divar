@@ -1,4 +1,4 @@
-import Divider from "@/app/components/Divider";
+import Divider from "@/app/ui/Divider";
 import SearchItem from "./SearchItem";
 
 const SearchItems = () => {

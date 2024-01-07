@@ -1,4 +1,4 @@
-import Advert from "@/app/components/Advert/Advert";
+import Advert from "@/app/ui/Advert/Advert";
 import React from "react";
 
 const AdvertPage = ({
