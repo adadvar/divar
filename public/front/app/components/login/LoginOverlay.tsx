@@ -1,11 +1,10 @@
 import { login, me } from "@/app/actions/auth-actions";
-import { useAuth, useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_REGISTER_USER } from "@/public/utils";
 import { BiX as CloseIcon } from "react-icons/bi";
 
 const LoginOverlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
-
     const { auth, setAuth, setMe } = useAuth();
 
     const onLogin = async (formData: FormData) => {

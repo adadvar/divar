@@ -37,9 +37,11 @@ interface tmpState {
   hoveredCatId: number;
   showProfileMenu: boolean;
   res: any;
+  ProfMenuOpen: boolean;
   setHoveredCat: (hoveredCatId: number) => void;
   setShowProfileMenu: (showProfileMenu: boolean) => void;
   setRes: (res: any) => void;
+  setProfMenuOpen: (isProfileMenuOpen: boolean) => void;
 }
 
 export const useTmp = create<tmpState>()(
@@ -48,9 +50,11 @@ export const useTmp = create<tmpState>()(
       hoveredCatId: 0,
       showProfileMenu: false,
       res: {},
+      ProfMenuOpen: false,
       setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId }),
       setShowProfileMenu: (showProfileMenu: boolean) => set({ showProfileMenu }),
-      setRes: (res: any) => set({ res })
+      setRes: (res: any) => set({ res }),
+      setProfMenuOpen: (ProfMenuOpen: boolean) => set({ ProfMenuOpen })
     })
   )
 )

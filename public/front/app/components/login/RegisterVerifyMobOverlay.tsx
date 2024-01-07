@@ -13,7 +13,7 @@ const RegisterVerifyMobOverlay = () => {
     const { setAuth, setMe } = useAuth();
     const { res } = useTmp();
 
-    const onRegister = async (formData: FormData) => {
+    const onVerify = async (formData: FormData) => {
         const code = formData.get("code");
         const data1 = await registerVerify({ code, ...res.params });
         if (data1) {
@@ -48,7 +48,7 @@ const RegisterVerifyMobOverlay = () => {
                 وارد کنید کد تایید به این شماره یا ایمیل ارسال خواهد شد.
             </p>
 
-            <form action={onRegister} className="p-4">
+            <form action={onVerify} className="p-4">
                 <input
                     type="text"
                     id="code"

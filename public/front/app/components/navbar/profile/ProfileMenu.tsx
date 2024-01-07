@@ -12,16 +12,17 @@ import {
 } from "react-icons/bs";
 
 import CusProfButton from "../../CusProfButton";
-import { useAuth, useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_LOGIN } from "@/public/utils";
 
 const ProfileMenu = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
     const { auth, me, setAuth, setMe } = useAuth();
+    const { setProfMenuOpen } = useTmp();
     const isLogged = auth.access_token ? true : false;
 
     return (
-        <div className="flex flex-col absolute p-2 w-60 right-0 shadow-md bg-white">
+        <div className="flex flex-col absolute p-2 w-60 right-0 shadow-md bg-white rounded">
             {isLogged ? (
                 <>
                     <CusProfButton icon={<PersonIcon />} title="کاربر دیوار" />
@@ -40,7 +41,10 @@ const ProfileMenu = () => {
                 <CusProfButton
                     icon={<LoginIcon />}
                     title="ورود"
-                    onClick={() => setTypeDialog(DIALOG_TYPE_LOGIN)}
+                    onClick={() => {
+                        setTypeDialog(DIALOG_TYPE_LOGIN);
+                        setProfMenuOpen(false);
+                    }}
                 />
             )}
             <hr className="pb-2 mt-2" />
@@ -65,6 +69,7 @@ const ProfileMenu = () => {
                 </>
             )}
             <CusProfButton icon={<ShopIcon />} title="دیوار برای کسب و کارها" />
+            <hr className="pb-2 mt-2" />
             {isLogged && (
                 <>
                     <CusProfButton
@@ -74,9 +79,9 @@ const ProfileMenu = () => {
                             setAuth({});
                             localStorage.removeItem("auth");
                             setTypeDialog("");
+                            setProfMenuOpen(false);
                         }}
                     />
-                    <hr className="pb-2 mt-2" />
                 </>
             )}
         </div>
