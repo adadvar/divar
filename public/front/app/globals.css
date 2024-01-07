@@ -8,7 +8,6 @@
   --text-size : 15px;
   --foreground-rgb: 0, 0, 0;
   background: var(--bg-color);
-
 }
 
 @font-face {

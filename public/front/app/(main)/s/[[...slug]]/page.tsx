@@ -3,7 +3,6 @@ import { listCategories } from "@/app/actions/categoris-actions";
 import { getCities } from "@/app/actions/global-actions";
 import SetData from "@/app/ui/SetData";
 import HomeContent from "@/app/ui/home-content";
-import { useGlobal } from "@/app/store/global-store";
 import { category, city } from "@/public/interfaces";
 
 export default async function Home({
