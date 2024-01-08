@@ -45,7 +45,7 @@ export const findCategoryPath = (categories: category[], childId: number, path: 
 
 export const getAge = (age: string): string => {
     const isYr = age.includes('yr');
-    const isMos = age.includes('mos');
+    const isMo = age.includes('mo');
     const isW = age.includes('w');
     const isD = age.includes('d');
     const isH = age.includes('h');
@@ -54,13 +54,17 @@ export const getAge = (age: string): string => {
     const mMatch = age.match(/\b(\d+)m\b/);
     const m = mMatch ? parseInt(mMatch[1], 10) : 0;
     let res = '';
-    if (isYr && isMos) {
+    if (isYr && isMo) {
         res = age.replace('yr', 'سال و')
-            .replace('mos', 'ماه پیش')
+            .replace('mo', 'ماه پیش')
     }
-    if (isMos && isW) {
-        res = age.replace('mos', 'ماه و')
+    if (isMo && isW) {
+        res = age.replace('mo', 'ماه و')
             .replace('w', 'هفته پیش')
+    }
+    if (isMo && isD) {
+        res = age.replace('mo', 'ماه و')
+            .replace('d', 'روز پیش')
     }
     if (isW && isD) {
         res = age.replace('w', 'هفته و')
@@ -73,7 +77,7 @@ export const getAge = (age: string): string => {
     if (isH && isM) {
         res = age.split(' ')[0].replace('h', 'ساعت پیش')
     }
-    if (isM && isS && !isMos) {
+    if (isM && isS && !isMo) {
         res = m < 30 ? 'یک ربع پیش' : 'نیم ساعت پیش'
     }
 

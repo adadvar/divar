@@ -21,6 +21,12 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        'bg': 'var(--bg)',
+        'bgSoft': 'var(--bgSoft)',
+        'text': 'var(--text)',
+        'textSoft': 'var(--textSoft)',
+      }
     },
   },
   plugins: [

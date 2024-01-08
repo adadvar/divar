@@ -16,7 +16,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" dir="rtl">
+        <html lang="en">
             <body>
                 <Hydrations />
                 {children}
