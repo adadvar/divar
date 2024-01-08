@@ -1,6 +1,6 @@
 "use client";
 
-import { DIALOG_TYPE_REGISTER_ADVERT_MOB } from "@/public/utils";
+import { DIALOG_TYPE_REGISTER_ADVERT_MOB } from "@/app/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { BiSolidPlusCircle as AddIcon } from "react-icons/bi";
 import { useGlobal } from "@/app/store/global-store";

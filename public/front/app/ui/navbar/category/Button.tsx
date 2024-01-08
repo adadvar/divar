@@ -1,6 +1,6 @@
 "use client";
 import { useGlobal } from "@/app/store/global-store";
-import { DIALOG_TYPE_CATEGORY_MEGA_MENU } from "@/public/utils";
+import { DIALOG_TYPE_CATEGORY_MEGA_MENU } from "@/app/lib/utils";
 import {
     BiChevronDown as DownIcon,
     BiChevronUp as UpIcon,

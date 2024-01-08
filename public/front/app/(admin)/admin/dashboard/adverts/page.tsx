@@ -1,27 +1,18 @@
+import { listAdminAdverts } from "@/app/actions/advert-actions";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import Link from "next/link";
 import { MdPerson } from "react-icons/md";
 
-const AdvertsPage = ({ searchParams }: { searchParams: any }) => {
+const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    // const { count, users } = await fetchUsers(q, page);
-    const users: any[] = [
-        {
-            id: 1,
-            username: "alireza dadvar",
-            email: "test@gmail.com",
-            createdAt: "2012.01.01",
-            isAdmin: true,
-            status: "active",
-            isActive: true,
-        },
-    ];
+    const adverts: any = await listAdminAdverts({ q, page });
+    const count = adverts.total;
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
-                <Search placeholder="Search for a user..." />
+                <Search placeholder="Search for a advert..." />
                 <Link href="/admin/dashboard/adverts/add">
                     <button className="p-3 bg-[#5d57c9] text-text border-none rounded cursor-pointer">
                         Add New
@@ -40,29 +31,29 @@ const AdvertsPage = ({ searchParams }: { searchParams: any }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
+                    {adverts.map((advert: any) => (
+                        <tr key={advert.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">
                                     <MdPerson size={50} />
 
-                                    {user.username}
+                                    {advert.advertname}
                                 </div>
                             </td>
-                            <td className="p-3">{user.email}</td>
+                            <td className="p-3">{advert.email}</td>
                             <td className="p-3">
-                                {user.createdAt?.toString().slice(4, 16)}
+                                {advert.createdAt?.toString().slice(4, 16)}
                             </td>
                             <td className="p-3">
-                                {user.isAdmin ? "Admin" : "Client"}
+                                {advert.isAdmin ? "Admin" : "Client"}
                             </td>
                             <td className="p-3">
-                                {user.isActive ? "active" : "passive"}
+                                {advert.isActive ? "active" : "passive"}
                             </td>
                             <td className="p-3">
                                 <div className="flex gap-3">
                                     <Link
-                                        href={`/admin/dashboard/adverts/${user.id}`}
+                                        href={`/admin/dashboard/adverts/${advert.id}`}
                                     >
                                         <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
                                             View
@@ -72,7 +63,7 @@ const AdvertsPage = ({ searchParams }: { searchParams: any }) => {
                                         <input
                                             type="hidden"
                                             name="id"
-                                            value={user.id}
+                                            value={advert.id}
                                         />
                                         <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-rose-600">
                                             Delete
@@ -84,7 +75,7 @@ const AdvertsPage = ({ searchParams }: { searchParams: any }) => {
                     ))}
                 </tbody>
             </table>
-            <Pagination />
+            <Pagination count={count} />
         </div>
     );
 };

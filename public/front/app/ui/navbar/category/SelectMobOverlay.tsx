@@ -8,7 +8,7 @@
 // } from "react-icons/bs";
 
 // import { category } from "@/public/interfaces";
-// import { findCategory } from "@/public/utils";
+// import { findCategory } from "@/app/lib/utils";
 // import MobOverlayLayout from "../../mobOverlayLayout/MobOverlayLayout";
 
 const SelectMobOverlay = () => {

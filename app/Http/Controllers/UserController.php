@@ -148,7 +148,11 @@ class UserController extends Controller
 
   public function list(UserListRequest $request)
   {
-    return User::paginate($request->per_page ?? 10);
+    $query = User::query();
+    if ($request->q) {
+      $query->where('name', 'LIKE', '%' . $request->q . '%');
+    }
+    return $query->paginate($request->per_page ?? 10);
   }
 
   public function update(UserUpdateRequest $request)

@@ -83,12 +83,12 @@ export interface user {
   email: string;
   name: string;
   // google_id: string | null;
-  // type: 'user' | 'admin';
-  // avatar: string | null;
+  type: 'user' | 'admin';
+  avatar: string | null;
   // website: string | null;
-  // city_id: number | null;
-  // verified_at: string | null;
-  // created_at: string;
+  city_id: number | null;
+  verified_at: string | null;
+  created_at: string;
   // updated_at: string;
   // deleted_at: string | null;
 }

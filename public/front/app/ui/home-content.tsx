@@ -8,7 +8,7 @@ import SideCatItem from "@/app/ui/home/SideCatItem";
 import MobCatItem from "@/app/ui/home/MobCatItem";
 import AdvertItem from "@/app/ui/home/AdvertItem";
 import SideSubCatItem from "./home/SideSubCatItem";
-import { findCategory } from "@/public/utils";
+import { findCategory } from "@/app/lib/utils";
 import Link from "next/link";
 import { BsArrowRightShort as BackIcon } from "react-icons/bs";
 

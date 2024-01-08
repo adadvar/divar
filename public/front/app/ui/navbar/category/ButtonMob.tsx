@@ -1,6 +1,6 @@
 "use client";
 import { useGlobal } from "@/app/store/global-store";
-import { DIALOG_TYPE_CATEGORY_MOB } from "@/public/utils";
+import { DIALOG_TYPE_CATEGORY_MOB } from "@/app/lib/utils";
 import { BiListUl as ListIcon } from "react-icons/bi";
 
 const ButtonMob = () => {

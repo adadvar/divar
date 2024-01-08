@@ -13,7 +13,7 @@ import {
 
 import CusProfButton from "../../CusProfButton";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
-import { DIALOG_TYPE_LOGIN } from "@/public/utils";
+import { DIALOG_TYPE_LOGIN } from "@/app/lib/utils";
 
 const ProfileMenu = () => {
     const { typeDialog, setTypeDialog } = useGlobal();

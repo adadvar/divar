@@ -1,7 +1,7 @@
 "use client";
 
 import { useGlobal } from "@/app/store/global-store";
-import { DIALOG_TYPE_PROFILE_MOB } from "@/public/utils";
+import { DIALOG_TYPE_PROFILE_MOB } from "@/app/lib/utils";
 import { BsPersonFill as PersonIcon } from "react-icons/bs";
 
 const ProfileButtonMob = () => {

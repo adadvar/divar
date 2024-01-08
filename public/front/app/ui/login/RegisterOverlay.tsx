@@ -1,6 +1,6 @@
 import { register } from "@/app/actions/auth-actions";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
-import { DIALOG_TYPE_REGISTER_VERIFY_USER, isEmail } from "@/public/utils";
+import { DIALOG_TYPE_REGISTER_VERIFY_USER, isEmail } from "@/app/lib/utils";
 import Link from "next/link";
 import { BiX as CloseIcon } from "react-icons/bi";
 

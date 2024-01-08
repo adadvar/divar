@@ -2,7 +2,7 @@ import {
     DIALOG_TYPE_LOGIN_MOB,
     DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
     isEmail,
-} from "@/public/utils";
+} from "@/app/lib/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import Link from "next/link";
 import { me, register } from "@/app/actions/auth-actions";

@@ -8,7 +8,7 @@ import { useGlobal } from "@/app/store/global-store";
 import SubCityItem from "./SubCityItem";
 import CityButton from "./CityButton";
 import Link from "next/link";
-import { appendQueryParams } from "@/public/utils";
+import { appendQueryParams } from "@/app/lib/utils";
 
 export default function SelectOverlay() {
     const {

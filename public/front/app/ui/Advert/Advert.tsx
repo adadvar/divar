@@ -1,4 +1,4 @@
-import { findCategoryPath } from "@/public/utils";
+import { findCategoryPath } from "@/app/lib/utils";
 import CategoryPathItem from "./CategoryPathItem";
 import AdvertNavbar from "../navbar/AdvertNavbar";
 import Slider from "../Slider";

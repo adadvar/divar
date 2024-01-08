@@ -1,4 +1,4 @@
-import { category } from "./interfaces";
+import { category } from "../../public/interfaces";
 
 export const DIALOG_TYPE_SEARCH = 'search';
 export const DIALOG_TYPE_SEARCH_MOB = 'search_mob';

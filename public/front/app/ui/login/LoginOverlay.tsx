@@ -1,6 +1,6 @@
 import { login, me } from "@/app/actions/auth-actions";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
-import { DIALOG_TYPE_REGISTER_USER } from "@/public/utils";
+import { DIALOG_TYPE_REGISTER_USER } from "@/app/lib/utils";
 import { BiX as CloseIcon } from "react-icons/bi";
 
 const LoginOverlay = () => {

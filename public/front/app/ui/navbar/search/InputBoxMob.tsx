@@ -5,7 +5,7 @@ import {
     BiRightArrowAlt as RightIcon,
 } from "react-icons/bi";
 
-import { DIALOG_TYPE_CITY_MOB, DIALOG_TYPE_SEARCH_MOB } from "@/public/utils";
+import { DIALOG_TYPE_CITY_MOB, DIALOG_TYPE_SEARCH_MOB } from "@/app/lib/utils";
 import Divider from "@/app/ui/Divider";
 import { useGlobal } from "@/app/store/global-store";
 

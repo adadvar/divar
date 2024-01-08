@@ -22,7 +22,7 @@ import {
     BiLogoLinkedinSquare as LinkedinIcon,
 } from "react-icons/bi";
 
-import { DIALOG_TYPE_LOGIN_MOB } from "@/public/utils";
+import { DIALOG_TYPE_LOGIN_MOB } from "@/app/lib/utils";
 import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
 import { useAuth, useGlobal } from "@/app/store/global-store";

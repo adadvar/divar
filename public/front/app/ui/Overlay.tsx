@@ -12,7 +12,7 @@ import {
     DIALOG_TYPE_REGISTER_VERIFY_USER,
     DIALOG_TYPE_REGISTER_VERIFY_USER_MOB,
     DIALOG_TYPE_SEARCH_MOB,
-} from "@/public/utils";
+} from "@/app/lib/utils";
 import CitySelectOverlay from "./navbar/city/SelectOverlay";
 import SearchMobOverlay from "./navbar/search/SearchMobOverlay";
 import CitySelectMobOverlay from "./navbar/city/SelectMobOverlay";
