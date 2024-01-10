@@ -15,6 +15,8 @@ import RegularList from "../../RegularList";
 import menuLink from "./menuLink";
 import { cookies } from "next/headers";
 import { logout } from "@/app/lib/actions";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const menuItems = [
     {
@@ -84,7 +86,6 @@ const sidebar = () => {
     const token = cookie && JSON.parse(cookie.value);
     cookie = cookies().get("me");
     const me = cookie && JSON.parse(cookie.value);
-    console.log(token, me);
     return (
         <div className="sticky top-10">
             <div className="flex items-center gap-5 mt-5">
@@ -112,6 +113,8 @@ const sidebar = () => {
                     await logout(token.access_token);
                     cookies().delete("token");
                     cookies().delete("me");
+                    // revalidatePath("/admin/dashboard");
+                    redirect("/admin/dashboard");
                 }}
             >
                 <button className="flex p-5 items-center gap-3 my-1 rounded-xl bg-none border-none w-full text-white hover:bg-[#2e374a]">

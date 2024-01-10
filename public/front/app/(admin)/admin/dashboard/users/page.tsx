@@ -2,13 +2,17 @@ import { listUsers } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import { user } from "@/public/interfaces";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { MdPerson } from "react-icons/md";
 const UsersPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    const users: any = await listUsers({ q, page });
+    let cookie: any = cookies().get("token");
+    const token = cookie && JSON.parse(cookie.value);
+    const users: any = await listUsers({ token: token.access_token, q, page });
     const count = users.total;
+    const per_page = users.per_page;
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
@@ -31,7 +35,7 @@ const UsersPage = async ({ searchParams }: { searchParams: any }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user: any) => (
+                    {users.data.map((user: any) => (
                         <tr key={user.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">
@@ -73,7 +77,7 @@ const UsersPage = async ({ searchParams }: { searchParams: any }) => {
                     ))}
                 </tbody>
             </table>
-            <Pagination count={count} />
+            <Pagination per_page={per_page} count={count} />
         </div>
     );
 };

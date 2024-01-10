@@ -1,7 +1,14 @@
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+"use client";
 
-const Pagination = ({ count }: { count: number }) => {
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+
+const Pagination = ({
+    count,
+    per_page,
+}: {
+    count: number;
+    per_page: number;
+}) => {
     const searchParams = useSearchParams();
     const pathname = useParams();
     const { replace } = useRouter();
@@ -9,10 +16,8 @@ const Pagination = ({ count }: { count: number }) => {
     const page = searchParams.get("page") || "1";
     const params = new URLSearchParams(searchParams);
 
-    const PER_PAGE = 10;
-
-    const hasPrev = PER_PAGE * (parseInt(page) - 1) > 0;
-    const hasNext = PER_PAGE * (parseInt(page) - 1) + PER_PAGE < count;
+    const hasPrev = per_page * (parseInt(page) - 1) > 0;
+    const hasNext = per_page * (parseInt(page) - 1) + per_page < count;
 
     const handleChangePage = (type: string) => {
         type === "prev"

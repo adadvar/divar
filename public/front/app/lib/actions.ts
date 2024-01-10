@@ -4,7 +4,7 @@ const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////{{{{user}}}}///////////////////////////////////////////////////
 
 export const addUser = async (formData: FormData) => {
   const { name, email, password, mobile, type, city_id } = Object.fromEntries(formData)
@@ -23,7 +23,25 @@ export const addUser = async (formData: FormData) => {
   redirect('/admin/dashboard/users')
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+export const updateUser = async (formData: FormData) => {
+  const { name, email, mobile, type, city_id } = Object.fromEntries(formData)
+  try {
+    const updateFields: any = { name, email, mobile, type, city_id }
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || undefined) && delete updateFields[key]
+    );
+
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to create user!")
+  }
+
+  revalidatePath('/admin/dashboard/users/add')
+  redirect('/admin/dashboard/users')
+}
+
+////////////////////////////////////////////auth/////////////////////////////////////////////////
 
 //Login user with google
 export const loginWithGoogle = async (params: object) => {
@@ -63,7 +81,7 @@ export const login = async (params: object) => {
         }
       ),
     };
-
+    // @ts-ignore
     const response = await fetch(`${HOST_URL}/login`, config);
     const data = await response.json();
 

@@ -97,7 +97,6 @@ export const listAdverts = async (params: {
     if (queryParams.length > 0) {
       url += "?" + queryParams.join("&");
     }
-    console.log('params', params)
     const response = await fetch(url, config);
     const data = await response.json();
 
@@ -147,7 +146,6 @@ export const listAdminAdverts = async (params: {
     if (queryParams.length > 0) {
       url += "?" + queryParams.join("&");
     }
-    console.log('params', params)
     const response = await fetch(url, config);
     const data = await response.json();
 
@@ -176,16 +174,17 @@ export const listCategories = async () => {
   }
 };
 
-export const listUsers = async ({ q, page }: { q: string, page: string }) => {
-  const regex = new RegExp(q, 'i')
+export const listUsers = async ({ q = '', page = '1', token }: { q?: string, page?: string, token: string }) => {
+  const regex = q
   try {
     const config = {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     };
-    const response = await fetch(`${HOST_URL}/user/list?q=${regex}&${page}`, config);
+    const response = await fetch(`${HOST_URL}/user/list?q=${regex}&page=${page}`, config);
     const data = await response.json();
 
     return data;
@@ -195,3 +194,21 @@ export const listUsers = async ({ q, page }: { q: string, page: string }) => {
   }
 };
 
+export const fetchUser = async ({ id, token }: { id: number, token: string }) => {
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(`${HOST_URL}/user/get/${id}`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch user!")
+  }
+};

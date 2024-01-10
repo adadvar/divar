@@ -94,6 +94,10 @@ Route::group(['prefix' => 'user'], function ($router) {
             UserController::class, 'me'
         ])->name('user.me');
 
+        $router->get('/get/{user}', [
+            UserController::class, 'get'
+        ])->name('user.get');
+
         $router->get('/list', [
             UserController::class, 'list'
         ])->name('user.list');

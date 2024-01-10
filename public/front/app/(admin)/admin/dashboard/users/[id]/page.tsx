@@ -1,24 +1,20 @@
+import { fetchUser } from "@/app/lib/data";
+import { cookies } from "next/headers";
+import Image from "next/image";
 import { MdPerson } from "react-icons/md";
 
-const SingleUserPage = ({ params }: { params: { id: number } }) => {
+const SingleUserPage = async ({ params }: { params: { id: number } }) => {
     const { id } = params;
-    // const user = await fetchUser(id);
-    const user: any = {
-        id: 1,
-        username: "alireza dadvar",
-        email: "test@gmail.com",
-        createdAt: "2012.01.01",
-        isAdmin: true,
-        status: "active",
-        isActive: true,
-        address: "my adresss",
-    };
+    let cookie: any = cookies().get("token");
+    const token = cookie && JSON.parse(cookie.value);
+    const user = await fetchUser({ token: token.access_token, id });
+
     return (
         <div className="flex gap-12 mt-5">
             <div className="w-1/3 bg-bgSoft p-5 rounded-lg font-bold text-textSoft h-max">
                 <div className="flex items-center justify-center w-full h-72 relative rounded-lg overflow-hidden mb-5 mx-auto">
-                    {/* <Image src={user.img || "/noavatar.png"} alt="" fill /> */}
-                    <MdPerson size={270} />
+                    <Image src={user.avatar || "/noavatar.png"} alt="" fill />
+                    {/* <MdPerson size={270} /> */}
                 </div>
                 {user.username}
             </div>
@@ -30,12 +26,12 @@ const SingleUserPage = ({ params }: { params: { id: number } }) => {
                         name="id"
                         value={user.id}
                     />
-                    <label className="text-xs">Username</label>
+                    <label className="text-xs">name</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="text"
-                        name="username"
-                        placeholder={user.username}
+                        name="name"
+                        placeholder={user.name}
                     />
                     <label className="text-xs">Email</label>
                     <input
@@ -50,12 +46,12 @@ const SingleUserPage = ({ params }: { params: { id: number } }) => {
                         type="password"
                         name="password"
                     />
-                    <label className="text-xs">Phone</label>
+                    <label className="text-xs">mobile</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="text"
-                        name="phone"
-                        placeholder={user.phone}
+                        name="mobile"
+                        placeholder={user.mobile}
                     />
                     <label className="text-xs">Address</label>
                     <textarea
@@ -63,20 +59,17 @@ const SingleUserPage = ({ params }: { params: { id: number } }) => {
                         name="address"
                         placeholder={user.address}
                     />
-                    <label className="text-xs">Is Admin?</label>
+                    <label className="text-xs">type</label>
                     <select
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         name="isAdmin"
                         id="isAdmin"
                     >
-                        <option value={true.toString()} selected={user.isAdmin}>
-                            Yes
+                        <option value={"admin"} selected={user.type == "admin"}>
+                            admin
                         </option>
-                        <option
-                            value={false.toString()}
-                            selected={!user.isAdmin}
-                        >
-                            No
+                        <option value={"user"} selected={!user.isAdmin}>
+                            user
                         </option>
                     </select>
                     <label className="text-xs">Is Active?</label>
@@ -86,15 +79,12 @@ const SingleUserPage = ({ params }: { params: { id: number } }) => {
                         id="isActive"
                     >
                         <option
-                            value={true.toString()}
-                            selected={user.isActive}
+                            value={Date()}
+                            selected={user.verified_at != null}
                         >
                             Yes
                         </option>
-                        <option
-                            value={false.toString()}
-                            selected={!user.isActive}
-                        >
+                        <option value={""} selected={user.verified_at == null}>
                             No
                         </option>
                     </select>

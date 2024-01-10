@@ -1,11 +1,11 @@
 "use client";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MdSearch } from "react-icons/md";
 import { useDebouncedCallback } from "use-debounce";
 
 const Search = ({ placeholder }: { placeholder: string }) => {
     const searchParams = useSearchParams();
-    const pathname = useParams();
+    const pathname = usePathname();
     const { replace } = useRouter();
 
     const handleSearch = useDebouncedCallback((e: any) => {

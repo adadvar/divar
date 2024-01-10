@@ -8,6 +8,7 @@ use App\Http\Requests\User\ChangeEmailSubmitRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\UserUnregisterRequest;
 use App\Http\Requests\User\UserDeleteRequest;
+use App\Http\Requests\User\UserGetRequest;
 use App\Http\Requests\User\UserListRequest;
 use App\Http\Requests\User\UserMeRequest;
 use App\Http\Requests\User\UserResetPasswordRequest;
@@ -144,6 +145,12 @@ class UserController extends Controller
     $user = auth('api')->user();
 
     return $user;
+  }
+
+  public function get(UserGetRequest $r)
+  {
+
+    return $r->user;
   }
 
   public function list(UserListRequest $request)

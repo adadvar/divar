@@ -1,6 +1,7 @@
 import { login } from "@/app/lib/actions";
 import { me } from "@/app/lib/data";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 const LoginPage = () => {
     // const { auth, setAuth, setMe } = useAuth();
     // const { push } = useRouter();
@@ -11,15 +12,14 @@ const LoginPage = () => {
         const data1 = await login({ username, password });
         // if (data1) {
         // setAuth(data1);
-        // console.log(data1);
         // setMe(data2);
         // push("/admin/dashboard");
-        console.log(data1.access_token);
         cookies().delete("token");
         cookies().delete("me");
         cookies().set("token", JSON.stringify(data1));
         const data2 = await me(data1.access_token);
         cookies().set("me", JSON.stringify(data2));
+        redirect("/admin/dashboard");
         // } else {
         // }
     };
