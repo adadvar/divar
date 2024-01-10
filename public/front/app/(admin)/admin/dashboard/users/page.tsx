@@ -18,7 +18,7 @@ const UsersPage = async ({ searchParams }: { searchParams: any }) => {
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
                 <Search placeholder="Search for a user..." />
-                <Link href="/admin/dashboard/adverts/add">
+                <Link href="/admin/dashboard/users/add">
                     <button className="p-3 bg-[#5d57c9] text-text border-none rounded cursor-pointer">
                         Add New
                     </button>

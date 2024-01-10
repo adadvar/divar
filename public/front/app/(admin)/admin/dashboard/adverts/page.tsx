@@ -9,6 +9,7 @@ const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
     const page = searchParams?.page || 1;
     const adverts: any = await listAdminAdverts({ q, page });
     const count = adverts.total;
+    const per_page = adverts.per_page;
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
@@ -22,33 +23,24 @@ const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
             <table className="w-full">
                 <thead>
                     <tr>
-                        <td className="p-3">Name</td>
-                        <td className="p-3">Email</td>
+                        <td className="p-3">Photo</td>
+                        <td className="p-3">Title</td>
+                        <td className="p-3">Category</td>
                         <td className="p-3">Created At</td>
-                        <td className="p-3">Role</td>
-                        <td className="p-3">Status</td>
-                        <td className="p-3">Action</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {adverts.map((advert: any) => (
+                    {adverts.data.map((advert: any) => (
                         <tr key={advert.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">
                                     <MdPerson size={50} />
-
-                                    {advert.advertname}
                                 </div>
                             </td>
-                            <td className="p-3">{advert.email}</td>
+                            <td className="p-3">{advert.title}</td>
+                            <td className="p-3">{advert.category.title}</td>
                             <td className="p-3">
-                                {advert.createdAt?.toString().slice(4, 16)}
-                            </td>
-                            <td className="p-3">
-                                {advert.isAdmin ? "Admin" : "Client"}
-                            </td>
-                            <td className="p-3">
-                                {advert.isActive ? "active" : "passive"}
+                                {advert.created_at?.toString().slice(0, 10)}
                             </td>
                             <td className="p-3">
                                 <div className="flex gap-3">
@@ -75,7 +67,7 @@ const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
                     ))}
                 </tbody>
             </table>
-            <Pagination count={count} />
+            <Pagination per_page={per_page} count={count} />
         </div>
     );
 };

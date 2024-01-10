@@ -14,7 +14,6 @@ const Pagination = ({
     const { replace } = useRouter();
 
     const page = searchParams.get("page") || "1";
-    console.log("page", page);
     const params = new URLSearchParams(searchParams);
 
     const hasPrev = per_page * (parseInt(page) - 1) > 0;

@@ -77,7 +77,7 @@ const AddUserPage = () => {
                         <option value={0}>No</option>
                     </select>
                     <button className="w-full p-5 text-text border-none rounded-md bg-teal-500 mt-5">
-                        Update
+                        Add
                     </button>
                 </form>
             </div>
