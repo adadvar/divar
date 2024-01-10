@@ -1,6 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { city } from "@/public/interfaces";
-import { getCities } from "@/app/actions/global-actions";
 import RegularList from "../../RegularList";
 import CityItem from "./CityItem";
 import { useEffect, useState } from "react";

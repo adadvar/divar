@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { advert, data } from "@/public/interfaces";
 import RegularList from "../RegularList";
 import AdvertItem from "./AdvertItem";
-import { listAdverts } from "@/app/actions/advert-actions";
+import { listAdverts } from "@/app/lib/data";
 
 let page = 2;
 const LoadMoreAdvert = ({

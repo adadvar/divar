@@ -1,13 +1,9 @@
 import { BiX as CloseIcon } from "react-icons/bi";
 
 import Link from "next/link";
-import {
-    login,
-    me,
-    register,
-    registerVerify,
-} from "@/app/actions/auth-actions";
+
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
+import { login, registerVerify } from "@/app/lib/actions";
 const RegisterVerifyOverlay = () => {
     const { setTypeDialog } = useGlobal();
     const { setAuth, setMe } = useAuth();

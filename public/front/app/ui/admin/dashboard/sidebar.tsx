@@ -1,4 +1,3 @@
-import React from "react";
 import {
     MdPerson,
     MdDashboard,
@@ -14,6 +13,8 @@ import {
 } from "react-icons/md";
 import RegularList from "../../RegularList";
 import menuLink from "./menuLink";
+import { cookies } from "next/headers";
+import { logout } from "@/app/lib/actions";
 
 const menuItems = [
     {
@@ -79,19 +80,22 @@ const menuItems = [
 ];
 
 const sidebar = () => {
+    let cookie: any = cookies().get("token");
+    const token = cookie && JSON.parse(cookie.value);
+    cookie = cookies().get("me");
+    const me = cookie && JSON.parse(cookie.value);
+    console.log(token, me);
     return (
         <div className="sticky top-10">
             <div className="flex items-center gap-5 mt-5">
                 <MdPerson size={50} />
                 <div className="flex flex-col">
-                    <span className="font-medium">Alireza Dadvar</span>
-                    <span className="text-xs text-textSoft">
-                        Administorator
-                    </span>
+                    <span className="font-medium">{me.name}</span>
+                    <span className="text-xs text-textSoft">{me.type}</span>
                 </div>
             </div>
             {menuItems.map((cat) => (
-                <div className="">
+                <div className="" key={cat.title}>
                     <span className="text-textSoft font-bold text-xs my-3">
                         {cat.title}
                     </span>
@@ -102,10 +106,19 @@ const sidebar = () => {
                     />
                 </div>
             ))}
-            <button className="flex p-5 items-center gap-3 my-1 rounded-xl bg-none border-none w-full text-white hover:bg-[#2e374a]">
-                <MdLogout />
-                Logout
-            </button>
+            <form
+                action={async () => {
+                    "use server";
+                    await logout(token.access_token);
+                    cookies().delete("token");
+                    cookies().delete("me");
+                }}
+            >
+                <button className="flex p-5 items-center gap-3 my-1 rounded-xl bg-none border-none w-full text-white hover:bg-[#2e374a]">
+                    <MdLogout />
+                    Logout
+                </button>
+            </form>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { listUsers } from "@/app/actions/user-actions";
+import { listUsers } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import { user } from "@/public/interfaces";

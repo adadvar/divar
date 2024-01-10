@@ -1,7 +1,9 @@
+import { addUser } from "@/app/lib/actions";
+
 const AddUserPage = () => {
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
-            <form action={""} className="flex flex-wrap justify-between">
+            <form action={addUser} className="flex flex-wrap justify-between">
                 <input
                     className="p-7 w-[45%] bg-bg text-text border-solid border-2 border-[#2e374a] rounded mb-7"
                     type="text"
@@ -35,9 +37,7 @@ const AddUserPage = () => {
                     id="isAdmin"
                     className="p-7 w-[45%] bg-bg text-text border-solid border-2 border-[#2e374a] rounded mb-7"
                 >
-                    <option value={false.toString()} selected>
-                        Is Admin?
-                    </option>
+                    <option value={false.toString()}>Is Admin?</option>
                     <option value={true.toString()}>Yes</option>
                     <option value={false.toString()}>No</option>
                 </select>
@@ -46,9 +46,7 @@ const AddUserPage = () => {
                     id="isActive"
                     className="p-7 w-[45%] bg-bg text-text border-solid border-2 border-[#2e374a] rounded mb-7"
                 >
-                    <option value={true.toString()} selected>
-                        Is Active?
-                    </option>
+                    <option value={true.toString()}>Is Active?</option>
                     <option value={true.toString()}>Yes</option>
                     <option value={false.toString()}>No</option>
                 </select>

@@ -1,13 +1,9 @@
 import { DIALOG_TYPE_LOGIN_MOB } from "@/app/lib/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import Link from "next/link";
-import {
-    login,
-    me,
-    register,
-    registerVerify,
-} from "@/app/actions/auth-actions";
+
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
+import { login, registerVerify } from "@/app/lib/actions";
 const RegisterVerifyMobOverlay = () => {
     const { setTypeDialog } = useGlobal();
     const { setAuth, setMe } = useAuth();

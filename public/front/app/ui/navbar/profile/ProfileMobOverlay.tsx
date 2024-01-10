@@ -26,7 +26,6 @@ import { DIALOG_TYPE_LOGIN_MOB } from "@/app/lib/utils";
 import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
 import { useAuth, useGlobal } from "@/app/store/global-store";
-import { logout } from "@/app/actions/auth-actions";
 import CusProfButton from "../../CusProfButton";
 
 const ProfileMobOverlay = () => {

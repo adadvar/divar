@@ -4,8 +4,7 @@ import AdvertNavbar from "../navbar/AdvertNavbar";
 import Slider from "../Slider";
 import RegularList from "../RegularList";
 import { advert, category } from "@/public/interfaces";
-import { showAdvert } from "@/app/actions/advert-actions";
-import { listCategories } from "@/app/actions/categoris-actions";
+import { listCategories, showAdvert } from "@/app/lib/data";
 
 const Advert = async ({ slug_url }: { slug_url: string }) => {
     const isServer = typeof window === "undefined";

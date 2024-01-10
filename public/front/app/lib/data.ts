@@ -1,4 +1,24 @@
 const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
+// const HOST_URL = process.env.NEXT_PUBLIC_CLIENT_API_URL;
+export const me = async (token: string) => {
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(`${HOST_URL}/user/me`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch me!")
+  }
+};
 
 
 export const getCities = async () => {

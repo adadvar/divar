@@ -1,6 +1,4 @@
-import { listAdverts } from "@/app/actions/advert-actions";
-import { listCategories } from "@/app/actions/categoris-actions";
-import { getCities } from "@/app/actions/global-actions";
+import { getCities, listAdverts, listCategories } from "@/app/lib/data";
 import SetData from "@/app/ui/SetData";
 import HomeContent from "@/app/ui/home-content";
 import { category, city } from "@/public/interfaces";

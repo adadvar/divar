@@ -1,7 +1,8 @@
 import { DIALOG_TYPE_REGISTER_USER_MOB } from "@/app/lib/utils";
 import MobOverlayLayout from "../MobOverlayLayout";
 import { useAuth, useGlobal } from "@/app/store/global-store";
-import { login, me } from "@/app/actions/auth-actions";
+import { login } from "@/app/lib/actions";
+import { me } from "@/app/lib/data";
 
 const LoginMobOverlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();

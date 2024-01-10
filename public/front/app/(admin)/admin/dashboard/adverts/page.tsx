@@ -1,4 +1,4 @@
-import { listAdminAdverts } from "@/app/actions/advert-actions";
+import { listAdminAdverts } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import Link from "next/link";

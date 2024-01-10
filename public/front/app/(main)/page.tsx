@@ -1,9 +1,7 @@
-import { listAdverts } from "@/app/actions/advert-actions";
-import { listCategories } from "@/app/actions/categoris-actions";
 import HomeContent from "@/app/ui/home-content";
 import SetData from "../ui/SetData";
 import { city } from "@/public/interfaces";
-import { getCities } from "../actions/global-actions";
+import { getCities, listAdverts, listCategories } from "../lib/data";
 
 export default async function Home({
     searchParams,
