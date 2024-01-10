@@ -32,6 +32,7 @@ class User extends Authenticatable
         'avatar',
         'website',
         'city_id',
+        'is_active',
         'verify_code',
         'verified_at',
     ];

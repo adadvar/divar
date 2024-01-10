@@ -3,6 +3,7 @@ import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import { user } from "@/public/interfaces";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import Link from "next/link";
 import { MdPerson } from "react-icons/md";
 const UsersPage = async ({ searchParams }: { searchParams: any }) => {
@@ -39,18 +40,24 @@ const UsersPage = async ({ searchParams }: { searchParams: any }) => {
                         <tr key={user.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">
-                                    <MdPerson size={50} />
+                                    <Image
+                                        src={user.avatar || "/noavatar.png"}
+                                        alt=""
+                                        width={40}
+                                        height={40}
+                                        className="object-cover rounded-full"
+                                    />
 
                                     {user.name}
                                 </div>
                             </td>
                             <td className="p-3">{user.email}</td>
                             <td className="p-3">
-                                {user.created_at?.toString().slice(4, 16)}
+                                {user.created_at?.toString().slice(0, 10)}
                             </td>
                             <td className="p-3">{user.type}</td>
                             <td className="p-3">
-                                {user.verified_at ? "active" : "passive"}
+                                {user.is_active ? "active" : "passive"}
                             </td>
                             <td className="p-3">
                                 <div className="flex gap-3">

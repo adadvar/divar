@@ -30,13 +30,13 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'mobile' => ['nullable', new MobileRule, (new Unique('users'))->ignore($this->user->id)],
-            'email' => ['nullable','email', (new Unique('users'))->ignore($this->user->id)],
+            'email' => ['nullable', 'email', (new Unique('users'))->ignore($this->user->id)],
             'name' => 'nullable|string',
             'type' => ['nullable', new In(User::TYPES)],
             'avatar' => 'nullable|string',
             'website' => 'nullable|string',
-            'province' => 'nullable|string',
-            'city' => 'nullable|string',
+            'city_id' => 'nullable|string',
+            'is_active' => 'boolean',
         ];
     }
 }

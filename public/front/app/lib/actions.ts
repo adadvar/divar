@@ -6,13 +6,28 @@ import { redirect } from "next/navigation"
 
 ///////////////////////////////////////////{{{{user}}}}///////////////////////////////////////////////////
 
-export const addUser = async (formData: FormData) => {
-  const { name, email, password, mobile, type, city_id } = Object.fromEntries(formData)
+export const addUser = async ({ formData, token }: { formData: FormData, token: string }) => {
+  const { name, email, password, mobile, type, website, city_id, is_active } = Object.fromEntries(formData)
   try {
     const bcrypt = require('bcrypt')
     const salt = await bcrypt.getSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
-    const newUser = { name, email, password: hashedPassword, mobile, type, city_id }
+    const newUser = { name, email, password: hashedPassword, mobile, type, website, city_id, is_active }
+    const config = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+      body: JSON.stringify(newUser)
+    };
+
+    // @ts-ignore
+    const response = await fetch(`${HOST_URL}/user/${id}`, config);
+    const data = await response.json();
+
+    return data;
 
   } catch (err) {
     console.log(err)
@@ -24,9 +39,9 @@ export const addUser = async (formData: FormData) => {
 }
 
 export const updateUser = async ({ formData, token }: { formData: FormData, token: string }) => {
-  const { id, name, email, mobile, type, avatar, website, city_id, verified_at } = Object.fromEntries(formData)
+  const { id, name, email, mobile, type, avatar, website, city_id, is_active } = Object.fromEntries(formData)
   try {
-    const updateFields: any = { name, email, mobile, type, avatar, website, city_id }
+    const updateFields: any = { name, email, mobile, type, avatar, website, city_id, is_active }
     Object.keys(updateFields).forEach(
       (key) =>
         (updateFields[key] === "" || updateFields[key] == undefined) && delete updateFields[key]

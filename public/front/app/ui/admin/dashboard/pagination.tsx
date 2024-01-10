@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Pagination = ({
     count,
@@ -10,14 +10,15 @@ const Pagination = ({
     per_page: number;
 }) => {
     const searchParams = useSearchParams();
-    const pathname = useParams();
+    const pathname = usePathname();
     const { replace } = useRouter();
 
     const page = searchParams.get("page") || "1";
+    console.log("page", page);
     const params = new URLSearchParams(searchParams);
 
     const hasPrev = per_page * (parseInt(page) - 1) > 0;
-    const hasNext = per_page * (parseInt(page) - 1) + per_page < count;
+    const hasNext = per_page * (parseInt(page) + 1) + per_page < count;
 
     const handleChangePage = (type: string) => {
         type === "prev"
@@ -39,7 +40,7 @@ const Pagination = ({
             <button
                 className="py-1 px-2 btn btn-ghost"
                 disabled={!hasNext}
-                onClick={() => handleChangePage("prev")}
+                onClick={() => handleChangePage("next")}
             >
                 Next
             </button>
