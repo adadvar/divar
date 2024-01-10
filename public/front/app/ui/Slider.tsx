@@ -20,21 +20,21 @@ const Slider = ({ images, image_url }: SliderProps) => {
     };
 
     return (
-        <div className="relative flex w-full h-96 items-center justify-center">
+        <div className="relative flex w-full h-96 items-center justify-center shadow-lg">
             {current !== 0 && (
                 <button
                     onClick={prevSlide}
-                    className="absolute top-0 bottom-0 end-0 z-10 p-3 text-white "
+                    className="absolute top-0 bottom-0 end-0 z-10 p-3 text-red-800 shadow-lg"
                 >
-                    &#10095;
+                    <span className="shadow-lg">&#10095;</span>
                 </button>
             )}
             {current !== images.length - 1 && (
                 <button
                     onClick={nextSlide}
-                    className="absolute top-0 bottom-0 start-0 z-10 p-3  text-white"
+                    className="absolute top-0 bottom-0 start-0 z-10 p-3  text-red-800 shadow-lg"
                 >
-                    &#10094;
+                    <span className="shadow-lg">&#10094;</span>
                 </button>
             )}
             {images.map((img, index) => (

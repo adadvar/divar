@@ -1,6 +1,7 @@
 import { listAdminAdverts } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
+import Image from "next/image";
 import Link from "next/link";
 import { MdPerson } from "react-icons/md";
 
@@ -10,6 +11,8 @@ const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
     const adverts: any = await listAdminAdverts({ q, page });
     const count = adverts.total;
     const per_page = adverts.per_page;
+    const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
+    const image_url = BASE_URL + "adverts/";
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
@@ -34,7 +37,22 @@ const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
                         <tr key={advert.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">
-                                    <MdPerson size={50} />
+                                    {advert.images && advert.images[0] ? (
+                                        <Image
+                                            src={
+                                                image_url +
+                                                advert.user_id +
+                                                "/" +
+                                                advert.images[0]
+                                            }
+                                            alt=""
+                                            width={40}
+                                            height={40}
+                                            className="object-cover rounded-full"
+                                        />
+                                    ) : (
+                                        <MdPerson size={50} />
+                                    )}
                                 </div>
                             </td>
                             <td className="p-3">{advert.title}</td>
