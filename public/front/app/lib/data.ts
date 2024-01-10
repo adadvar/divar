@@ -6,7 +6,6 @@ export const me = async (token: string) => {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        // 'Accept': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
     };
@@ -20,6 +19,7 @@ export const me = async (token: string) => {
   }
 };
 
+//////////////////////////////////////city//////////////////////////////////////////
 
 export const getCities = async () => {
   try {
@@ -39,6 +39,9 @@ export const getCities = async () => {
     throw new Error("Failed to fetch cities!")
   }
 };
+
+//////////////////////////////////////advert//////////////////////////////////////////
+
 
 export const showAdvert = async (params: any) => {
   try {
@@ -156,6 +159,9 @@ export const listAdminAdverts = async (params: {
   }
 };
 
+//////////////////////////////////////category//////////////////////////////////////////
+
+
 export const listCategories = async () => {
   try {
     const config = {
@@ -173,6 +179,9 @@ export const listCategories = async () => {
     throw new Error("Failed to fetch cities!")
   }
 };
+
+//////////////////////////////////////user//////////////////////////////////////////
+
 
 export const listUsers = async ({ q = '', page = '1', token }: { q?: string, page?: string, token: string }) => {
   const regex = q

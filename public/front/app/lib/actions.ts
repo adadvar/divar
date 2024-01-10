@@ -23,22 +23,34 @@ export const addUser = async (formData: FormData) => {
   redirect('/admin/dashboard/users')
 }
 
-export const updateUser = async (formData: FormData) => {
-  const { name, email, mobile, type, city_id } = Object.fromEntries(formData)
+export const updateUser = async ({ formData, token }: { formData: FormData, token: string }) => {
+  const { id, name, email, mobile, type, avatar, website, city_id, verified_at } = Object.fromEntries(formData)
   try {
-    const updateFields: any = { name, email, mobile, type, city_id }
+    const updateFields: any = { name, email, mobile, type, avatar, website, city_id }
     Object.keys(updateFields).forEach(
       (key) =>
-        (updateFields[key] === "" || undefined) && delete updateFields[key]
+        (updateFields[key] === "" || updateFields[key] == undefined) && delete updateFields[key]
     );
+    const config = {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+      body: JSON.stringify(updateFields)
+    };
+
+    // @ts-ignore
+    const response = await fetch(`${HOST_URL}/user/${id}`, config);
+    const data = await response.json();
+
+    return data;
 
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to create user!")
+    throw new Error("Failed to update user!")
   }
-
-  revalidatePath('/admin/dashboard/users/add')
-  redirect('/admin/dashboard/users')
 }
 
 ////////////////////////////////////////////auth/////////////////////////////////////////////////
@@ -71,7 +83,7 @@ export const login = async (params: object) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      cache: 'no-store',
+      cache: 'no-cache',
       body: JSON.stringify(
         {
           ...params,

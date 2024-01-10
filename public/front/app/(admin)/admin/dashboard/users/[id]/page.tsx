@@ -1,6 +1,9 @@
+import { updateUser } from "@/app/lib/actions";
 import { fetchUser } from "@/app/lib/data";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { MdPerson } from "react-icons/md";
 
 const SingleUserPage = async ({ params }: { params: { id: number } }) => {
@@ -9,6 +12,13 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
     const token = cookie && JSON.parse(cookie.value);
     const user = await fetchUser({ token: token.access_token, id });
 
+    const handleUpdate = async (e: FormData) => {
+        "use server";
+        await updateUser({ formData: e, token: token.access_token });
+        revalidatePath("/admin/dashboard/users");
+        redirect("/admin/dashboard/users");
+    };
+
     return (
         <div className="flex gap-12 mt-5">
             <div className="w-1/3 bg-bgSoft p-5 rounded-lg font-bold text-textSoft h-max">
@@ -16,10 +26,10 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
                     <Image src={user.avatar || "/noavatar.png"} alt="" fill />
                     {/* <MdPerson size={270} /> */}
                 </div>
-                {user.username}
+                {user.name}
             </div>
             <div className="w-2/3 bg-bgSoft p-5 rounded-lg">
-                <form action={"updateUser"} className="flex flex-col">
+                <form action={handleUpdate} className="flex flex-col">
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="hidden"
@@ -40,12 +50,12 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
                         name="email"
                         placeholder={user.email}
                     />
-                    <label className="text-xs">Password</label>
+                    {/* <label className="text-xs">Password</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="password"
                         name="password"
-                    />
+                    /> */}
                     <label className="text-xs">mobile</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
@@ -53,30 +63,30 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
                         name="mobile"
                         placeholder={user.mobile}
                     />
-                    <label className="text-xs">Address</label>
+                    {/* <label className="text-xs">Address</label>
                     <textarea
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         name="address"
                         placeholder={user.address}
-                    />
+                    /> */}
                     <label className="text-xs">type</label>
                     <select
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
-                        name="isAdmin"
-                        id="isAdmin"
+                        name="type"
+                        id="type"
                     >
                         <option value={"admin"} selected={user.type == "admin"}>
                             admin
                         </option>
-                        <option value={"user"} selected={!user.isAdmin}>
+                        <option value={"user"} selected={user.type != "admin"}>
                             user
                         </option>
                     </select>
                     <label className="text-xs">Is Active?</label>
                     <select
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
-                        name="isActive"
-                        id="isActive"
+                        name="verified_at"
+                        id="verified_at"
                     >
                         <option
                             value={Date()}

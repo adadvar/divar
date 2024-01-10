@@ -31,8 +31,7 @@ class User extends Authenticatable
         'type',
         'avatar',
         'website',
-        'province',
-        'city',
+        'city_id',
         'verify_code',
         'verified_at',
     ];
