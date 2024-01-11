@@ -61,6 +61,26 @@ export const showAdvert = async (params: any) => {
   }
 };
 
+export const showAdminAdvert = async (params: any) => {
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${params.token}`,
+
+      },
+    };
+    const response = await fetch(`${HOST_URL}/advert/admin/show/${params.slug_url}`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch advert!")
+  }
+};
+
 export const listAdverts = async (params: {
   page?: number;
   slug?: string[];

@@ -50,12 +50,6 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
                         name="email"
                         placeholder={user.email}
                     />
-                    {/* <label className="text-xs">Password</label>
-                    <input
-                        className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
-                        type="password"
-                        name="password"
-                    /> */}
                     <label className="text-xs">mobile</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
@@ -63,12 +57,6 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
                         name="mobile"
                         placeholder={user.mobile}
                     />
-                    {/* <label className="text-xs">Address</label>
-                    <textarea
-                        className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
-                        name="address"
-                        placeholder={user.address}
-                    /> */}
                     <label className="text-xs">type</label>
                     <select
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"

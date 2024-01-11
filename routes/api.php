@@ -163,6 +163,10 @@ Route::group(['prefix' => 'advert'], function ($router) {
 
     Route::group(['middleware' => ['auth:api']], function ($router) {
 
+        $router->get('/admin/show/{id_slug}', [
+            AdvertController::class, 'showAdmin'
+        ])->name('advert.admin.show');
+
         $router->post('/upload-photo', [
             AdvertController::class, 'uploadPhoto'
         ])->name('advert.uploadPhoto');

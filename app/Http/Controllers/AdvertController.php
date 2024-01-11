@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\VisitAdvert;
+use App\Http\Requests\Advert\AdvertAdminShowRequest;
 use App\Http\Requests\Advert\AdvertChangeStateRequest;
 use App\Http\Requests\Advert\AdvertCreateRequest;
 use App\Http\Requests\Advert\AdvertDeleteFavouriteRequest;
@@ -124,9 +125,18 @@ class AdvertController extends Controller
     {
         $advert = Advert::find($r->id_slug);
         if (!$advert)
-            $advert = Advert::where('slug_url', $r->id_slug)->firstOrFail();
+            $advert = Advert::where(['slug_url' => $r->id_slug, 'state' => 'accepted'])->firstOrFail();
         event(new VisitAdvert($advert));
         $advert = $advert->load('user', 'category');
+        return $advert;
+    }
+
+    public function showAdmin(AdvertAdminShowRequest $r)
+    {
+        $advert = Advert::find($r->id_slug);
+        if (!$advert)
+            $advert = Advert::where('slug_url', $r->id_slug)->firstOrFail();
+        $advert = $advert->load('user', 'category', 'city');
         return $advert;
     }
 

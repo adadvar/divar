@@ -49,6 +49,7 @@ const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
                                             width={40}
                                             height={40}
                                             className="object-cover rounded-full"
+                                            unoptimized={true}
                                         />
                                     ) : (
                                         <MdPerson size={50} />
