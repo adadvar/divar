@@ -16,8 +16,7 @@ const LoginOverlay = () => {
         if (data1) {
             setAuth(data1);
             setTypeDialog("");
-            const data2 = await me(data1.access_token);
-            setMe(data2);
+            setMe(data1.user);
         } else {
         }
     };

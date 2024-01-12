@@ -9,7 +9,7 @@
 //     const data = await response.json();
 //     // let userMe;
 //     if (data) {
-//         // userMe = await me(data.access_token)
+//         // userMe = await me(data.token)
 //         localStorage.setItem("auth", JSON.stringify(data));
 //     }
 //     return data;
@@ -36,10 +36,10 @@
 //     const data = await response.json();
 //     // let userMe;
 //     if (data) {
-//         // userMe = await me(data.access_token)
+//         // userMe = await me(data.token)
 //         localStorage.setItem("auth", JSON.stringify(data));
 //     }
-//     return data.access_token;
+//     return data.token;
 // };
 
 // //Logout user

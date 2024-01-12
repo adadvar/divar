@@ -96,7 +96,7 @@ export interface user {
 export interface auth {
   access_type: string;
   expires_in: number;
-  access_token: string;
+  token: string;
   refresh_token: string;
 }
 

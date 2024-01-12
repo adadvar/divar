@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -55,11 +55,11 @@ class User extends Authenticatable
         'verified_at' => 'datetime',
     ];
 
-    public function findForPassport($username)
-    {
-        $user = $this->where('mobile', to_valid_mobile_number($username))->orWhere('email', $username)->first();
-        return $user;
-    }
+    // public function findForPassport($username)
+    // {
+    //     $user = $this->where('mobile', to_valid_mobile_number($username))->orWhere('email', $username)->first();
+    //     return $user;
+    // }
 
     public function setMobileAttribute($value)
     {

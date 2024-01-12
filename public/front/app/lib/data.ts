@@ -1,3 +1,4 @@
+'use server';
 const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
 // const HOST_URL = process.env.NEXT_PUBLIC_CLIENT_API_URL;
 export const me = async (token: string) => {
@@ -126,7 +127,7 @@ export const listAdverts = async (params: {
     return data;
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to fetch cities!")
+    throw new Error("Failed to fetch adverts!")
   }
 };
 
@@ -176,7 +177,7 @@ export const listAdminAdverts = async (params: {
     return data;
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to fetch cities!")
+    throw new Error("Failed to fetch adverts!")
   }
 };
 

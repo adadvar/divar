@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\UserAlreadyRegisteredException;
+use App\Http\Requests\Auth\LoginNewUserRequest;
 use App\Http\Requests\Auth\RegisterNewUserRequest;
 use App\Http\Requests\Auth\RegisterVerifyUserRequest;
 use App\Http\Requests\Auth\ResendVerificationCodeRequest;
@@ -12,11 +13,35 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
+
+    public function login(LoginNewUserRequest $r)
+    {
+        try {
+            $user = User::where('email', $r->username)->orWhere('mobile', to_valid_mobile_number($r->username))->first();
+
+            if (!$user || !Hash::check($r->password, $user->password)) {
+                return response([
+                    'message' => 'نام کاربری یا رمز عبور اشتباه می باشد.'
+                ], 401);
+            }
+
+            $token = $user->createToken('myapptoken')->plainTextToken;
+
+            return response(['user' => $user, 'token' => $token], 201);
+        } catch (Exception $exception) {
+            Log::error($exception);
+            return response(
+                ['message' => 'خطایی رخ داده است'],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+    }
 
     public function register(RegisterNewUserRequest $request)
     {
@@ -42,7 +67,7 @@ class AuthController extends Controller
 
             Log::info('SEND-REGISTER-CODE-MESSAGE-TO-USER', ['code' => $code]);
 
-            if (!env('APP_DEBUG', true)) {  
+            if (!env('APP_DEBUG', true)) {
                 if ($request->getFieldName() === 'email') {
                     Mail::to($user)->send(new VerificationCodeMail($code));
                 } else {
@@ -120,5 +145,4 @@ class AuthController extends Controller
             'message' => 'کاربر یافت نشد یا از قبل ثبت نام کرده است'
         ], 404);
     }
-    
 }

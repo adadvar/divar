@@ -24,22 +24,22 @@ class AddVisitedAdvertLogToAdvertRecentsTable
      */
     public function handle(VisitAdvert $event): void
     {
-        if (auth('api')->check()) {
+        if (auth()->check()) {
             try {
                 $advert = $event->getAdvert();
-                $userId = auth('api')->user()->id;
+                $userId = auth()->user()->id;
                 $conditions = [
                     'user_id' => $userId,
                     'advert_id' => $advert->id,
                 ];
                 if (!AdvertRecent::where($conditions)->count()) {
                     $advertRecent = AdvertRecent::where(['user_id' => $userId]);
-                    if($advertRecent->count()>30){
+                    if ($advertRecent->count() > 30) {
                         $advertRecent->first()->delete();
                     }
                     AdvertRecent::create([
-                    'user_id' => $userId,
-                    'advert_id' => $advert->id,
+                        'user_id' => $userId,
+                        'advert_id' => $advert->id,
                     ]);
                 }
             } catch (Exception $exception) {

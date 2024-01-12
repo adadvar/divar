@@ -27,19 +27,19 @@ class AddVisitedAdvertLogToAdvertViewsTable
         try {
             $advert = $event->getAdvert();
             $conditions = [
-                'user_id' => auth('api')->id(),
+                'user_id' => auth()->id(),
                 'advert_id' => $advert->id,
                 ['created_at', '>', now()->subDays(1)]
             ];
             $clientIp = client_ip();
 
-            if (!auth('api')->check()) {
+            if (!auth()->check()) {
                 $conditions['user_ip'] = $clientIp;
             }
 
             if (!AdvertView::where($conditions)->count()) {
                 AdvertView::create([
-                    'user_id' => auth('api')->id(),
+                    'user_id' => auth()->id(),
                     'advert_id' => $advert->id,
                     'user_ip' => $clientIp
                 ]);

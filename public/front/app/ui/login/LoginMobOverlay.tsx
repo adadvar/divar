@@ -17,7 +17,7 @@ const LoginMobOverlay = () => {
         if (data1) {
             setAuth(data1);
             setTypeDialog("");
-            const data2 = await me(data1.access_token);
+            const data2 = await me(data1.token);
             setMe(data2);
         } else {
         }

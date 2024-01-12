@@ -9,7 +9,7 @@ const SigleAdvertPage = async ({ params }: { params: { id: number } }) => {
     const { id } = params;
     const advert = await showAdminAdvert({
         slug_url: id,
-        token: token.access_token,
+        token: token.token,
     });
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
     const image_url = BASE_URL + "adverts/" + advert.user_id + "/";

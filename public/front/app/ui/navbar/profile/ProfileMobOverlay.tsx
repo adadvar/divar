@@ -32,7 +32,7 @@ const ProfileMobOverlay = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
 
     const { auth, me, setAuth, setMe } = useAuth();
-    const isLogged = auth.access_token ? true : false;
+    const isLogged = auth.token ? true : false;
 
     return (
         <MobOverlayLayout title="دیوار من" haveBottomNav>

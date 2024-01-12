@@ -84,7 +84,7 @@ class AdvertController extends Controller
 
         // TODO:ایا یک api دیگر زده شود برای ادمین؟ جهت جلوگیری از نمایش pending
         $conditions['state'] = 'accepted';
-        // if (auth('api')->user()->isAdmin()) {
+        // if (auth()->user()->isAdmin()) {
         //     if ($r->state) {
         //         $conditions['state'] = $r->state;
         //     }
@@ -252,7 +252,7 @@ class AdvertController extends Controller
     {
         //ابتدا باید وضعیت advert به accepted تغییر کند
         AdvertFavourite::create([
-            'user_id' => auth('api')->id(),
+            'user_id' => auth()->id(),
             'user_ip' => client_ip(),
             'advert_id' => $r->advert->id,
         ]);
@@ -262,7 +262,7 @@ class AdvertController extends Controller
 
     public static function unlike(AdvertUnlikeRequest $r)
     {
-        $user = auth('api')->user();
+        $user = auth()->user();
         $conditions = [
             'advert_id' => $r->advert->id,
             'user_id' => $user ? $user->id : null

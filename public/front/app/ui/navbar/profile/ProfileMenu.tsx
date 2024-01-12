@@ -19,7 +19,7 @@ const ProfileMenu = () => {
     const { typeDialog, setTypeDialog } = useGlobal();
     const { auth, me, setAuth, setMe } = useAuth();
     const { setProfMenuOpen } = useTmp();
-    const isLogged = auth.access_token ? true : false;
+    const isLogged = auth.token ? true : false;
 
     return (
         <div className="flex flex-col absolute p-2 w-60 right-0 shadow-md bg-white rounded">

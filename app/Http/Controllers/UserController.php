@@ -75,11 +75,11 @@ class UserController extends Controller
     ], 200);
   }
 
-  public function changePassword(ChangePasswordRequest $request)
+  public function changePassword(Request $request)
   {
+
     try {
       $user = auth()->user();
-
       if (!Hash::check($request->old_password, $user->password)) {
         return response(['message' => 'رمز وارد شده مطابقت ندارد'], 400);
       }
@@ -99,7 +99,7 @@ class UserController extends Controller
   public function logout(Request $request)
   {
     try {
-      $request->user()->currentAccessToken()->revoke();
+      $request->user()->tokens()->delete();
 
       return response(['message' => 'باموفقیت خارج شدید'], Response::HTTP_OK);
     } catch (Exception $e) {
@@ -142,7 +142,7 @@ class UserController extends Controller
 
   public function me(UserMeRequest $request)
   {
-    $user = auth('api')->user();
+    $user = auth()->user();
 
     return $user;
   }

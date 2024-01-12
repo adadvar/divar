@@ -11,7 +11,7 @@ const UsersPage = async ({ searchParams }: { searchParams: any }) => {
     const page = searchParams?.page || 1;
     let cookie: any = cookies().get("token");
     const token = cookie && JSON.parse(cookie.value);
-    const users: any = await listUsers({ token: token.access_token, q, page });
+    const users: any = await listUsers({ token: token.token, q, page });
     const count = users.total;
     const per_page = users.per_page;
     return (

@@ -12,7 +12,7 @@
 // const localMe = typeof window !== 'undefined' && localStorage.getItem("me");
 
 // const initialState: authState = {
-//     token: localAuth ? JSON.parse(localAuth).access_token : "",
+//     token: localAuth ? JSON.parse(localAuth).token : "",
 //     me: JSON.parse(localMe || "{}"),
 //     isError: false,
 //     isSuccess: false,

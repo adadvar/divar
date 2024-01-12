@@ -6,9 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,12 +33,17 @@ Route::group(['prefix' => '/home'], function ($r) {
 
 Route::group([], function ($router) {
 
-    Route::group(['namespace' => '\Laravel\Passport\Http\Controllers'], function ($router) {
-        $router->post('login', [
-            'middleware' => ['throttle'],
-            AccessTokenController::class, 'issueToken',
-        ])->name('auth.login');
-    });
+    // Route::group(['namespace' => '\Laravel\Passport\Http\Controllers'], function ($router) {
+    //     $router->post('login', [
+    //         'middleware' => ['throttle'],
+    //         AccessTokenController::class, 'issueToken',
+    //     ])->name('auth.login');
+    // });
+
+
+    $router->post('login', [
+        AuthController::class, 'login'
+    ])->name('auth.login');
 
     $router->post('register', [
         AuthController::class, 'register'
@@ -59,7 +62,7 @@ Route::group([], function ($router) {
     ])->name('user.home.data');
 });
 
-Route::group(['middleware' => ['auth:api']], function ($router) {
+Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
     $router->post('change-email', [
         UserController::class, 'changeEmail'
@@ -80,7 +83,7 @@ Route::group(['middleware' => ['auth:api']], function ($router) {
 
 
 Route::group(['prefix' => 'user'], function ($router) {
-    Route::group(['middleware' => ['auth:api']], function ($router) {
+    Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
         $router->delete('/me', [
             UserController::class, 'unregister'
@@ -127,7 +130,7 @@ Route::group(['prefix' => 'category'], function ($router) {
     ])->name('category.menu');
 
 
-    Route::group(['middleware' => ['auth:api']], function ($router) {
+    Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
         $router->post('/', [
             CategoryController::class, 'create'
@@ -161,7 +164,7 @@ Route::group(['prefix' => 'advert'], function ($router) {
         AdvertController::class, 'unlike'
     ])->name('advert.unlike');
 
-    Route::group(['middleware' => ['auth:api']], function ($router) {
+    Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
         $router->get('/admin/show/{id_slug}', [
             AdvertController::class, 'showAdmin'

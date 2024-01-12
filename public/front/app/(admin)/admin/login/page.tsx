@@ -17,7 +17,7 @@ const LoginPage = () => {
         cookies().delete("token");
         cookies().delete("me");
         cookies().set("token", JSON.stringify(data1));
-        const data2 = await me(data1.access_token);
+        const data2 = await me(data1.token);
         cookies().set("me", JSON.stringify(data2));
         redirect("/admin/dashboard");
         // } else {

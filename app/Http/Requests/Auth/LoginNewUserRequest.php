@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Advert;
+namespace App\Http\Requests\Auth;
 
-use App\Models\Advert;
+use App\Rules\MobileRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
-class AdvertUnlikeRequest extends FormRequest
+class LoginNewUserRequest extends FormRequest
 {
+    use GetRegisterFieldAndValueTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,8 +15,7 @@ class AdvertUnlikeRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::forUser(auth()->user())
-            ->allows('unlike', $this->advert);
+        return true;
     }
 
     /**
@@ -26,6 +25,9 @@ class AdvertUnlikeRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ];
     }
 }

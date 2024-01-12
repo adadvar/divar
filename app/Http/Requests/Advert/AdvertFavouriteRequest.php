@@ -15,7 +15,7 @@ class AdvertFavouriteRequest extends FormRequest
      */
     public function authorize()
     {
-        // return Gate::forUser(auth('api')->user())
+        // return Gate::forUser(auth()->user())
         //     ->allows('unlike', $this->advert);
         return true;
     }
@@ -27,8 +27,6 @@ class AdvertFavouriteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-         
-        ];
+        return [];
     }
 }
