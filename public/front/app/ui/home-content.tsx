@@ -35,7 +35,6 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
     if (category && parentCategory) {
         witchViewCategory = "subsub";
     }
-    console.log(witchViewCategory);
 
     return (
         <div className="">
@@ -98,8 +97,8 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
                 </div>
                 <div className="lg:ms-[280px] overflow-hidden scrollbar-none">
                     <p className="text-gray-700 w-full text-xs text-end pt-4 pb-3 px-2">
-                        دیوار قم - نیازمندی‌ های رایگان، آگهی‌های خرید، فروش نو
-                        و دست دوم و کارکرده، استخدام و خدمات
+                        {`دیوار قم - نیازمندی‌ های رایگان، آگهی‌های خرید، فروش نو
+                        و دست دوم و کارکرده، استخدام و خدمات`}
                     </p>
                     <div className="flex flex-wrap">
                         <RegularList

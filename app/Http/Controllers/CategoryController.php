@@ -22,6 +22,16 @@ class CategoryController extends Controller
         return $categories;
     }
 
+    public function listAdmin(CategoryListRequest $r)
+    {
+        $query = Category::query();
+        if ($r->q) {
+            $query->where('name', 'LIKE', '%' . $r->q . '%');
+        }
+        $query->where('parent_id', null)->with('child')->get();
+        return $query->paginate($r->per_page ?? 10);
+    }
+
     public function show(CategoryShowRequest $r)
     {
         $city = $r->city;
