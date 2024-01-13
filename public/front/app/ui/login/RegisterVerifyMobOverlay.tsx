@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { login, registerVerify } from "@/app/lib/actions";
 const RegisterVerifyMobOverlay = () => {
-    const { setTypeDialog } = useGlobal();
+    const { setTypeDialog } = useTmp();
     const { setAuth, setMe } = useAuth();
     const { res } = useTmp();
 

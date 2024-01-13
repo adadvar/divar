@@ -25,11 +25,11 @@ import {
 import { DIALOG_TYPE_LOGIN_MOB } from "@/app/lib/utils";
 import MobOverlayLayout from "../../MobOverlayLayout";
 import Link from "next/link";
-import { useAuth, useGlobal } from "@/app/store/global-store";
+import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import CusProfButton from "../../CusProfButton";
 
 const ProfileMobOverlay = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     const { auth, me, setAuth, setMe } = useAuth();
     const isLogged = auth.token ? true : false;

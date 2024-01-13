@@ -22,7 +22,7 @@ export default async function Home({
 
     return (
         <>
-            <SetData categories={categories} cities={cities} />;
+            <SetData categories={categories} cities={cities} />
             <HomeContent
                 adverts={adverts}
                 categories={categories}

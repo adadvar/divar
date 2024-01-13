@@ -8,8 +8,7 @@ import Link from "next/link";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { register } from "@/app/lib/actions";
 const RegisterMobOverlay = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
-    const { setRes } = useTmp();
+    const { typeDialog, setTypeDialog, setRes } = useTmp();
 
     const onRegister = async (formData: FormData) => {
         const input = formData.get("mobile_email");

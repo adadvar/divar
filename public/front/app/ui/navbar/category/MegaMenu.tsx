@@ -14,8 +14,7 @@ const MegaMenu = () => {
     const params = new URLSearchParams(searchParams);
     const { replace } = useRouter();
     const { categories } = useGlobal();
-    const { hoveredCatId, setHoveredCat } = useTmp();
-    const { setTypeDialog } = useGlobal();
+    const { hoveredCatId, setTypeDialog } = useTmp();
 
     const subCatitem = hoveredCatId ? categories[hoveredCatId - 1].child : [];
 

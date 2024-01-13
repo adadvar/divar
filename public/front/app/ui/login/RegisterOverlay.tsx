@@ -5,7 +5,7 @@ import { BiX as CloseIcon } from "react-icons/bi";
 import { register } from "@/app/lib/actions";
 
 const RegisterOverlay = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     const { auth, setAuth, setMe } = useAuth();
     const { setRes } = useTmp();

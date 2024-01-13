@@ -1,11 +1,12 @@
 "use client";
 
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_CITY } from "@/app/lib/utils";
 import { BiMap as LocationIcon } from "react-icons/bi";
 
 const Button = () => {
-    const { typeDialog, selectedCities, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
+    const { selectedCities } = useGlobal();
     const text =
         selectedCities.length === 1
             ? selectedCities[0].name

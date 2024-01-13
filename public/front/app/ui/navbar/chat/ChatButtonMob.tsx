@@ -1,13 +1,13 @@
 "use client";
 
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_CHAT_MOB } from "@/app/lib/utils";
 import React from "react";
 import { BsFillChatFill as ChatIcon } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 
 const ChatButtonMob = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     return (
         <button

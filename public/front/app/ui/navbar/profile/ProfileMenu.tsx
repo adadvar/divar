@@ -16,9 +16,8 @@ import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_LOGIN } from "@/app/lib/utils";
 
 const ProfileMenu = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
     const { auth, me, setAuth, setMe } = useAuth();
-    const { setProfMenuOpen } = useTmp();
+    const { setTypeDialog, setProfMenuOpen } = useTmp();
     const isLogged = auth.token ? true : false;
 
     return (

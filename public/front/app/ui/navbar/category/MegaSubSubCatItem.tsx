@@ -1,4 +1,4 @@
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import { category } from "@/public/interfaces";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,7 +7,7 @@ const MegaSubSubCatItem = ({ category }: { category: category }) => {
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const { replace } = useRouter();
-    const { setTypeDialog } = useGlobal();
+    const { setTypeDialog } = useTmp();
     const handleClick = () => {
         const url = `/s/iran/${category.slug}${
             params.toString() && `?${params.toString()}`

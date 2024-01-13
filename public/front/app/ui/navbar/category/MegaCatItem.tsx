@@ -15,8 +15,7 @@ const MegaCatItem = ({ category }: { category: category }) => {
     const { replace } = useRouter();
     const IconComponent =
         category.icon && Icons[category.icon as keyof typeof Icons];
-    const { hoveredCatId, setHoveredCat } = useTmp();
-    const { setTypeDialog } = useGlobal();
+    const { hoveredCatId, setTypeDialog, setHoveredCat } = useTmp();
     const isHovered = hoveredCatId == category.id;
     const handleClick = () => {
         const url = `/s/iran/${category.slug}${

@@ -20,7 +20,7 @@ import CateogrySelectMobOverlay from "./navbar/category/SelectMobOverlay";
 import ProfileMobOverlay from "./navbar/profile/ProfileMobOverlay";
 import LoginMobOverlay from "./login/LoginMobOverlay";
 import RegisterMobOverlay from "./login/RegisterMobOverlay";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import RegisterVerifyMobOverlay from "./login/RegisterVerifyMobOverlay";
 import MegaMenu from "./navbar/category/MegaMenu";
 import LoginOverlay from "./login/LoginOverlay";
@@ -28,7 +28,7 @@ import RegisterOverlay from "./login/RegisterOverlay";
 import RegisterVerifyOverlay from "./login/RegisterVerifyOverlay";
 
 const Overlay = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     return (
         <>

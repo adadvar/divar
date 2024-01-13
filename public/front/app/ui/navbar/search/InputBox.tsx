@@ -2,10 +2,10 @@
 import { BiSearch as SearchIcon } from "react-icons/bi";
 import SearchItems from "./SearchItems";
 import { DIALOG_TYPE_SEARCH } from "@/app/lib/utils";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 
 const InputBox = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     return (
         <form className="relative">

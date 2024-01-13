@@ -5,9 +5,8 @@ import Link from "next/link";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { login, registerVerify } from "@/app/lib/actions";
 const RegisterVerifyOverlay = () => {
-    const { setTypeDialog } = useGlobal();
+    const { res, setTypeDialog } = useTmp();
     const { setAuth, setMe } = useAuth();
-    const { res } = useTmp();
 
     const onVerify = async (formData: FormData) => {
         const code = formData.get("code");

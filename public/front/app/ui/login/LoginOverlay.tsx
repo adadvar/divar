@@ -5,7 +5,7 @@ import { login } from "@/app/lib/actions";
 import { me } from "@/app/lib/data";
 
 const LoginOverlay = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
     const { auth, setAuth, setMe } = useAuth();
 
     const onLogin = async (formData: FormData) => {

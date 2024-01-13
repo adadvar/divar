@@ -9,8 +9,7 @@ const MegaSubCatItem = ({ category }: { category: category }) => {
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const { replace } = useRouter();
-    const { hoveredCatId, setHoveredCat } = useTmp();
-    const { setTypeDialog } = useGlobal();
+    const { hoveredCatId, setTypeDialog } = useTmp();
 
     const subCatitem = hoveredCatId ? category?.child : [];
     const handleClick = () => {

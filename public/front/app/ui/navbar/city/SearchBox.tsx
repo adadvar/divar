@@ -1,7 +1,7 @@
 import { BiSearch as SearchIcon } from "react-icons/bi";
 import { useState } from "react";
 import { city } from "@/public/interfaces";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 
 const CitySearchBox = ({
     items,
@@ -11,18 +11,18 @@ const CitySearchBox = ({
     setFilteredItems: (c: city[]) => void;
 }) => {
     const [searchQuery, setSearchQuery] = useState("");
-    const { seletedCityId } = useGlobal();
+    const { parentCityId } = useTmp();
 
     const handleSearch = (e: any) => {
         const query = e.target.value;
         setSearchQuery(query);
         let filtered = [];
-        if (seletedCityId) {
+        if (parentCityId) {
             filtered = items.filter((item) => item.name.includes(query));
         } else {
             const subCities: any =
-                seletedCityId &&
-                items.filter((c: any) => c.id === seletedCityId)[0];
+                parentCityId &&
+                items.filter((c: any) => c.id === parentCityId)[0];
             filtered = subCities.filter((item: any) =>
                 item.name.includes(query)
             );

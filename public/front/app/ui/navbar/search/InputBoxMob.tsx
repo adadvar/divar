@@ -6,11 +6,10 @@ import {
 } from "react-icons/bi";
 
 import { DIALOG_TYPE_CITY_MOB, DIALOG_TYPE_SEARCH_MOB } from "@/app/lib/utils";
-import Divider from "@/app/ui/Divider";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 
 const InputBoxMob = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     return (
         <div className="relative w-full">
@@ -21,7 +20,6 @@ const InputBoxMob = () => {
                 className="absolute inset-y-0 end-2 flex items-center"
                 onClick={() => setTypeDialog(DIALOG_TYPE_CITY_MOB)}
             >
-                <Divider direction="vertical" style="me-3 text-gray-300" />
                 <p className="text-sm me-1 text-gray-400 font-semibold">
                     تبریز
                 </p>

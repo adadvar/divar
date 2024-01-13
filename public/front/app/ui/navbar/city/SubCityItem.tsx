@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { city } from "@/public/interfaces";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 
 const SubCityItem = ({ city }: { city: city }) => {
     const [isChecked, setIsChecked] = useState(false);
-    const { selectedCities, addSeletedCities, deleteSeletedCities } =
-        useGlobal();
+    const { tmpSelectedCities, addTmpSeletedCities, deleteTmpSeletedCities } =
+        useTmp();
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
-        !isChecked ? addSeletedCities(city) : deleteSeletedCities(city);
+        !isChecked ? addTmpSeletedCities(city) : deleteTmpSeletedCities(city);
     };
-    const handleChecked = selectedCities.find((c) => c.id == city.id)
+    const handleChecked = tmpSelectedCities.find((c) => c.id == city.id)
         ? true
         : false;
 

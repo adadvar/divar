@@ -1,5 +1,5 @@
 "use client";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_CATEGORY_MEGA_MENU } from "@/app/lib/utils";
 import {
     BiChevronDown as DownIcon,
@@ -7,7 +7,7 @@ import {
 } from "react-icons/bi";
 
 const Button = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
     const handleClick = () => {
         if (typeDialog === DIALOG_TYPE_CATEGORY_MEGA_MENU) {
             setTypeDialog("");

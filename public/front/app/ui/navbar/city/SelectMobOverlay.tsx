@@ -1,8 +1,8 @@
 import MobOverlayLayout from "../../MobOverlayLayout";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 
 const SelectMobOverlay = () => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     return (
         <MobOverlayLayout title="انتخاب شهر" haveClearButton haveSearchInput>

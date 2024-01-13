@@ -4,24 +4,10 @@ import { devtools, persist } from "zustand/middleware";
 
 interface GlobalState {
 
-  // isLoading: boolean;
-  // isSuccess: boolean
-  // isError: boolean
-  // message: any;
-  typeDialog: string;
-  seletedCityId: number;
   selectedCities: city[];
   cities: city[];
   categories: category[];
-  // setIsLoading: (isLoading: boolean) => void;
-  // setIsSuccess: (isSuccess: boolean) => void;
-  // setIsError: (isError: boolean) => void;
-  // setMessage: (message: object) => void;
-  setTypeDialog: (typeDialog: string) => void;
-  setSeletedCityId: (seletedCity: number) => void;
-  clearSelectedCities: () => void;
-  addSeletedCities: (selectedCities: city) => void;
-  deleteSeletedCities: (selectedCities: city) => void;
+  setSeletedCities: (selectedCities: city[]) => void;
   setCities: (cities: city[]) => void;
   setCategories: (categories: category[]) => void;
 }
@@ -34,26 +20,46 @@ interface AuthState {
 }
 
 interface tmpState {
+  typeDialog: string;
   hoveredCatId: number;
   showProfileMenu: boolean;
   res: any;
+  parentCityId: number;
+  tmpSelectedCities: city[];
   ProfMenuOpen: boolean;
+  setTypeDialog: (typeDialog: string) => void;
   setHoveredCat: (hoveredCatId: number) => void;
   setShowProfileMenu: (showProfileMenu: boolean) => void;
   setRes: (res: any) => void;
+  setParentCityId: (parentCityId: number) => void;
+  setTmpSeletedCities: (tmpSelectedCities: city[]) => void;
+  clearTmpSelectedCities: () => void;
+  addTmpSeletedCities: (tmpSelectedCities: city) => void;
+  deleteTmpSeletedCities: (tmpSelectedCities: city) => void;
   setProfMenuOpen: (isProfileMenuOpen: boolean) => void;
 }
 
 export const useTmp = create<tmpState>()(
   devtools(
     (set) => ({
+      typeDialog: "",
       hoveredCatId: 0,
       showProfileMenu: false,
       res: {},
       ProfMenuOpen: false,
+      parentCityId: 0,
+      tmpSelectedCities: [],
+      setTypeDialog: (typeDialog: string) => set({ typeDialog }),
       setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId }),
       setShowProfileMenu: (showProfileMenu: boolean) => set({ showProfileMenu }),
       setRes: (res: any) => set({ res }),
+      setTmpSeletedCities: (tmpSelectedCities: city[]) => set({ tmpSelectedCities }),
+      clearTmpSelectedCities: () => set({ tmpSelectedCities: [] }),
+      setParentCityId: (parentCityId: number) => set({ parentCityId }),
+      addTmpSeletedCities: (city: city) => set((state) => ({ tmpSelectedCities: [...state.tmpSelectedCities, city] })),
+      deleteTmpSeletedCities: (city: city) => set((state) => ({
+        tmpSelectedCities: state.tmpSelectedCities.filter((c) => c.id !== city.id),
+      })),
       setProfMenuOpen: (ProfMenuOpen: boolean) => set({ ProfMenuOpen })
     })
   )
@@ -63,26 +69,10 @@ export const useGlobal = create<GlobalState>()(
   devtools(
     persist(
       (set) => ({
-        // isLoading: false,
-        // isSuccess: false,
-        // isError: false,
-        // message: {},
-        typeDialog: "",
-        seletedCityId: 0,
         selectedCities: [],
         cities: [],
         categories: [],
-        // setIsLoading: (isLoading: boolean) => set({ isLoading }),
-        // setIsSuccess: (isSuccess: boolean) => set({ isSuccess }),
-        // setIsError: (isError: boolean) => set({ isError }),
-        // setMessage: (message: object) => set({ message }),
-        setTypeDialog: (typeDialog: string) => set({ typeDialog }),
-        clearSelectedCities: () => set({ selectedCities: [] }),
-        setSeletedCityId: (seletedCityId: number) => set({ seletedCityId }),
-        addSeletedCities: (city: city) => set((state) => ({ selectedCities: [...state.selectedCities, city] })),
-        deleteSeletedCities: (city: city) => set((state) => ({
-          selectedCities: state.selectedCities.filter((c) => c.id !== city.id),
-        })),
+        setSeletedCities: (selectedCities: city[]) => set({ selectedCities }),
         setCities: (cities: city[]) => set({ cities }),
         setCategories: (categories: category[]) => set({ categories }),
       }),

@@ -5,7 +5,7 @@ import {
 } from "react-icons/bs";
 import CitySearchBox from "./navbar/city/SearchBox";
 import SelectedCity from "./navbar/city/SelectedCity";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import { DIALOG_TYPE_PROFILE_MOB } from "@/app/lib/utils";
 
 interface LayoutProps {
@@ -35,7 +35,7 @@ const MobOverlayLayout = ({
     whereClose = "",
     title,
 }: LayoutProps) => {
-    const { typeDialog, setTypeDialog } = useGlobal();
+    const { typeDialog, setTypeDialog } = useTmp();
 
     return (
         <div

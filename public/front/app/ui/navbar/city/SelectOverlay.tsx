@@ -3,39 +3,33 @@ import { city } from "@/public/interfaces";
 import RegularList from "../../RegularList";
 import CityItem from "./CityItem";
 import { useEffect, useState } from "react";
-import { useGlobal } from "@/app/store/global-store";
+import { useGlobal, useTmp } from "@/app/store/global-store";
 import SubCityItem from "./SubCityItem";
 import CityButton from "./CityButton";
 import Link from "next/link";
 import { appendQueryParams } from "@/app/lib/utils";
 
 export default function SelectOverlay() {
+    const { selectedCities, cities, setSeletedCities } = useGlobal();
     const {
-        typeDialog,
-        seletedCityId,
-        selectedCities,
-        cities,
-        setCities,
-        clearSelectedCities,
-        setSeletedCityId,
+        parentCityId,
+        tmpSelectedCities,
         setTypeDialog,
-    } = useGlobal();
+        clearTmpSelectedCities,
+        setParentCityId,
+        setTmpSeletedCities,
+    } = useTmp();
     const [filteredItems, setFilteredItems] = useState<city[]>([]);
-    const [data, setData] = useState<city[]>([]);
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const { replace } = useRouter();
 
     const subCities: any =
-        seletedCityId && cities.filter((c: any) => c.id === seletedCityId)[0];
+        parentCityId && cities.filter((c: any) => c.id === parentCityId)[0];
 
-    // useEffect(() => {
-    //     if (cities.length == 0) {
-    //         getCities().then((res) => {
-    //             setCities(res);
-    //         });
-    //     }
-    // }, []);
+    useEffect(() => {
+        setTmpSeletedCities(selectedCities);
+    }, []);
 
     const handleFilteredItems = (filtered: city[]) => {
         setFilteredItems(filtered);
@@ -43,19 +37,21 @@ export default function SelectOverlay() {
 
     const handleClick = () => {
         setTypeDialog("");
-        setSeletedCityId(0);
+        setParentCityId(0);
+        setSeletedCities(tmpSelectedCities);
         // clearSelectedCities();
-        if (selectedCities.length > 1)
+        console.log(tmpSelectedCities);
+        if (tmpSelectedCities.length > 1)
             params.set(
                 "cities",
-                selectedCities.map((city) => city.id).join(",")
+                tmpSelectedCities.map((city) => city.id).join(",")
             );
-        if (selectedCities.length == 1) params.delete("cities");
+        if (tmpSelectedCities.length == 1) params.delete("cities");
         const url =
-            selectedCities.length > 1
+            tmpSelectedCities.length > 1
                 ? `/s/iran`
-                : selectedCities.length === 1
-                ? `/s/${selectedCities[0].slug}`
+                : tmpSelectedCities.length === 1
+                ? `/s/${tmpSelectedCities[0].slug}`
                 : "";
 
         replace(`${url}?${params.toString()}`);
@@ -69,15 +65,15 @@ export default function SelectOverlay() {
                         <h1 className="text-gray-900 font-bold">انتخاب شهر</h1>
                         <button
                             className="text-red-700 text-sm rounded-md px-2 py-1 hover:bg-red-50"
-                            onClick={() => clearSelectedCities()}
+                            onClick={() => clearTmpSelectedCities()}
                         >
                             حذف همه
                         </button>
                     </div>
                     <div className="flex overflow-x-auto h-10 pb-2 pr-4 scrollbar-thin scrollbar-track-gray-100/20 scrollbar-thumb-gray-400/20">
-                        {selectedCities.length ? (
+                        {tmpSelectedCities.length ? (
                             <RegularList
-                                items={selectedCities}
+                                items={tmpSelectedCities}
                                 resourceName="city"
                                 ItemComponent={CityButton}
                             />
@@ -95,15 +91,15 @@ export default function SelectOverlay() {
                     <button
                         className="flex justify-between items-center w-full text-gray-800 border-b border-gray-200 font-bold py-2"
                         onClick={() => {
-                            clearSelectedCities();
+                            clearTmpSelectedCities();
                             replace("/s/iran");
                             setTypeDialog("");
-                            setSeletedCityId(0);
+                            setParentCityId(0);
                         }}
                     >
                         همه شهرهای ایران
                     </button>
-                    {!seletedCityId ? (
+                    {!parentCityId ? (
                         <RegularList
                             items={cities}
                             resourceName="city"
@@ -122,7 +118,7 @@ export default function SelectOverlay() {
                         className="btn btn-ghost border text-gray-500 border-gray-600 w-[45%]"
                         onClick={() => {
                             setTypeDialog("");
-                            setSeletedCityId(0);
+                            setParentCityId(0);
                             // clearSelectedCities();
                         }}
                     >
@@ -131,11 +127,11 @@ export default function SelectOverlay() {
                     <button
                         onClick={() => handleClick()}
                         className={`btn btn-ghost ${
-                            selectedCities.length === 0
+                            tmpSelectedCities.length === 0
                                 ? "bg-gray-200 text-gray-400 "
                                 : "bg-red-800 text-white"
                         } w-[45%]`}
-                        aria-disabled={selectedCities.length === 0}
+                        disabled={tmpSelectedCities.length === 0}
                     >
                         تایید
                     </button>

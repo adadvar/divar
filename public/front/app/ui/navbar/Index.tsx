@@ -1,6 +1,5 @@
 import React from "react";
 import Logo from "./Logo";
-import Divider from "../Divider";
 import CityButton from "./city/Button";
 import CategoryButton from "./category/Button";
 import ProfileButton from "./profile/ProfileButton";
@@ -16,7 +15,7 @@ const Index = () => {
             <div className="flex justify-between w-full 2xl:container 2xl:px-16 px-5 mx-auto">
                 <div className="hidden lg:flex items-center space-x-3">
                     <Logo size={50} />
-                    <Divider direction="vertical" style="" />
+                    <div className="divider divider-horizontal mx-0"></div>
                     <CityButton />
                     <CategoryButton />
                     <div className="llg:w-[25rem] lg:w-[12rem]">
