@@ -7,23 +7,35 @@ import LoadMoreAdvert from "@/app/ui/home/LoadMoreAdvert";
 import SideCatItem from "@/app/ui/home/SideCatItem";
 import MobCatItem from "@/app/ui/home/MobCatItem";
 import AdvertItem from "@/app/ui/home/AdvertItem";
-import SideSubCatItem from "./home/SideSubCatItem";
-import { findCategory } from "@/app/lib/utils";
+import { findCategory, findParentCategoryBySlug } from "@/app/lib/utils";
 import Link from "next/link";
 import { BsArrowRightShort as BackIcon } from "react-icons/bs";
+import SideCat from "./home/SideCat";
 
 type Props = {
     adverts: any;
     categories: any;
-    queryParams: { [key: string]: string | string[] | undefined };
+    searchParams: { [key: string]: string | string[] | undefined };
     slug: string[];
 };
 
-const HomeContent = ({ adverts, categories, queryParams, slug }: Props) => {
+const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
     const isDataLoaded = adverts && categories ? true : false;
 
-    const subCategory =
-        slug && slug[1] && findCategory(categories, "slug", slug[1])?.child;
+    const category =
+        slug && slug[1] && findCategory(categories, "slug", slug[1]);
+
+    const parentCategory =
+        slug && slug[1] && findParentCategoryBySlug(categories, slug[1]);
+
+    let witchViewCategory = "";
+    if (!parentCategory) {
+        witchViewCategory = "sub";
+    }
+    if (category && parentCategory) {
+        witchViewCategory = "subsub";
+    }
+    console.log(witchViewCategory);
 
     return (
         <div className="">
@@ -54,11 +66,28 @@ const HomeContent = ({ adverts, categories, queryParams, slug }: Props) => {
                         </Link>
                     ) : null}
 
+                    {parentCategory && (
+                        <SideCat
+                            category={parentCategory}
+                            slug={slug}
+                            searchParams={searchParams}
+                        />
+                    )}
+                    {category && (
+                        <SideCat
+                            category={category}
+                            slug={slug}
+                            searchParams={searchParams}
+                            marginStart={
+                                witchViewCategory == "subsub" ? "ms-10" : ""
+                            }
+                        />
+                    )}
                     <RegularList
-                        items={categories}
+                        items={category ? category?.child : categories}
                         resourceName="category"
                         ItemComponent={SideCatItem}
-                        itemProps={{ slug, queryParams, parentId: null }}
+                        itemProps={{ slug, searchParams, witchViewCategory }}
                     />
                     <hr />
                     <SidePriceFilter />
@@ -86,7 +115,7 @@ const HomeContent = ({ adverts, categories, queryParams, slug }: Props) => {
                     {isDataLoaded && (
                         <LoadMoreAdvert
                             last_page={adverts.last_page}
-                            queryParams={queryParams}
+                            searchParams={searchParams}
                             slug={slug}
                         />
                     )}

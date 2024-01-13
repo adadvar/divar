@@ -27,6 +27,16 @@ export const findCategory = (arr: category[], searchKey: 'id' | 'slug', searchVa
         return null;
     }, null);
 
+export const findParentCategoryBySlug = (
+    categories: category[],
+    slug: string
+): category | null => {
+    const category = findCategory(categories, 'slug', slug);
+    if (category?.parent_id) {
+        return findCategory(categories, 'id', category.parent_id)
+    }
+    return null
+};
 
 export const findCategoryPath = (categories: category[], childId: number, path: category[] = []): category[] | null => {
     for (const category of categories) {

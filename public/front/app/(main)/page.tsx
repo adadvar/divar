@@ -8,14 +8,7 @@ export default async function Home({
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-    const queryParams: {
-        [key: string]: string | string[] | undefined;
-    } = {
-        ...searchParams,
-        slug: [],
-    };
-
-    const adverts = await listAdverts({ page: 1, ...queryParams });
+    const adverts = await listAdverts({ page: 1, slug: [], ...searchParams });
     const cities: city[] = await getCities();
 
     const categories = await listCategories();
@@ -26,7 +19,7 @@ export default async function Home({
             <HomeContent
                 adverts={adverts}
                 categories={categories}
-                queryParams={queryParams}
+                searchParams={searchParams}
                 slug={[]}
             />
         </>

@@ -6,7 +6,6 @@ use App\Models\Advert;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -33,7 +32,7 @@ class AdvertsTableSeeder extends Seeder
             $cityId = $cityIds[array_rand($cityIds)];
             $price = rand(10, 1000) / 10; // Random price between 1 and 100
 
-            $title = fake()->name();
+            $title = 'محصول تستی شماره' . $i;
             $advertData = [
                 'category_id' => $categoryId,
                 'user_id' => $userId,

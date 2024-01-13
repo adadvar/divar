@@ -3,27 +3,20 @@ import Link from "next/link";
 import * as Icons from "react-icons/bi";
 import RegularList from "../RegularList";
 
-const SideCatItem = ({
+const SideCat = ({
     category,
     slug = [],
     searchParams,
-    witchViewCategory,
+    marginStart,
 }: {
     category: category;
     slug: string[];
     searchParams: { [key: string]: string | string[] | undefined };
-    witchViewCategory: string;
+    marginStart?: string;
 }) => {
     const IconComponent =
         category.icon && Icons[category.icon as keyof typeof Icons];
 
-    let space = "";
-    if (witchViewCategory == "sub") space = "ms-10";
-    if (witchViewCategory == "subsub") space = "ms-14";
-    const border =
-        witchViewCategory == "subsub"
-            ? "border-s-[1px] border-gray-400 ps-3"
-            : "";
     const city = slug.length && slug[0] ? slug[0] : "iran";
     return (
         <>
@@ -39,7 +32,7 @@ const SideCatItem = ({
                     {category.icon && <IconComponent />}
                 </div>
 
-                <p className={`text-sm my-1 font-bold ${border} ${space}`}>
+                <p className={`text-sm my-1 font-bold ${marginStart}`}>
                     {category.title}
                 </p>
             </Link>
@@ -47,4 +40,4 @@ const SideCatItem = ({
     );
 };
 
-export default SideCatItem;
+export default SideCat;

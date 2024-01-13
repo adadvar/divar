@@ -40,7 +40,6 @@ export default function SelectOverlay() {
         setParentCityId(0);
         setSeletedCities(tmpSelectedCities);
         // clearSelectedCities();
-        console.log(tmpSelectedCities);
         if (tmpSelectedCities.length > 1)
             params.set(
                 "cities",
