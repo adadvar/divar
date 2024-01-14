@@ -1,8 +1,4 @@
-import {
-    listAdminAdverts,
-    listAdminCategories,
-    listCategories,
-} from "@/app/lib/data";
+import { listAdminCategories } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import Image from "next/image";
@@ -12,16 +8,16 @@ import { MdPerson } from "react-icons/md";
 const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    const adverts: any = await listAdminCategories({ q, page });
-    const count = adverts.total;
-    const per_page = adverts.per_page;
+    const categories: any = await listAdminCategories({ q, page });
+    const count = categories.total;
+    const per_page = categories.per_page;
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
-    const image_url = BASE_URL + "adverts/";
+    const image_url = BASE_URL + "categories/";
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
-                <Search placeholder="Search for a advert..." />
-                <Link href="/admin/dashboard/adverts/add">
+                <Search placeholder="Search for a category..." />
+                <Link href="/admin/dashboard/categories/add">
                     <button className="p-3 bg-[#5d57c9] text-text border-none rounded cursor-pointer">
                         Add New
                     </button>
@@ -32,22 +28,21 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                     <tr>
                         <td className="p-3">Photo</td>
                         <td className="p-3">Title</td>
-                        <td className="p-3">Category</td>
                         <td className="p-3">Created At</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {adverts.data.map((advert: any) => (
-                        <tr key={advert.id}>
+                    {categories.data.map((category: any) => (
+                        <tr key={category.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">
-                                    {advert.images && advert.images[0] ? (
+                                    {category.icon ? (
                                         <Image
                                             src={
                                                 image_url +
-                                                advert.user_id +
+                                                category.user_id +
                                                 "/" +
-                                                advert.images[0]
+                                                category.icon
                                             }
                                             alt=""
                                             width={40}
@@ -60,15 +55,14 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                                     )}
                                 </div>
                             </td>
-                            <td className="p-3">{advert.title}</td>
-                            <td className="p-3">{advert.category.title}</td>
+                            <td className="p-3">{category.title}</td>
                             <td className="p-3">
-                                {advert.created_at?.toString().slice(0, 10)}
+                                {category.created_at?.toString().slice(0, 10)}
                             </td>
                             <td className="p-3">
                                 <div className="flex gap-3">
                                     <Link
-                                        href={`/admin/dashboard/adverts/${advert.id}`}
+                                        href={`/admin/dashboard/categories/${category.id}`}
                                     >
                                         <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
                                             View
@@ -78,7 +72,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                                         <input
                                             type="hidden"
                                             name="id"
-                                            value={advert.id}
+                                            value={category.id}
                                         />
                                         <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-rose-600">
                                             Delete

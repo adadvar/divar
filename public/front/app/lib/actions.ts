@@ -2,6 +2,7 @@
 const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
 
 import { revalidatePath } from "next/cache"
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
 
 
@@ -115,7 +116,12 @@ export const login = async (formData: FormData) => {
     // @ts-ignore
     const response = await fetch(`${HOST_URL}/login`, config);
     const data = await response.json();
-
+    cookies().delete("token");
+    cookies().delete("me");
+    console.log(data);
+    cookies().set("token", JSON.stringify(data.token));
+    cookies().set("me", JSON.stringify(data.user));
+    // redirect("/admin/dashboard");
     return data
   } catch (err) {
     console.log(err)

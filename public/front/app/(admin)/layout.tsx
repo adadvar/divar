@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import Hydrations from "../ui/Hydration";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
     title: "داشبورد",
@@ -20,6 +21,7 @@ export default function RootLayout({
             <body>
                 <Hydrations />
                 {children}
+                <Toaster position="top-right" />
             </body>
         </html>
     );
