@@ -3,23 +3,18 @@ import MobOverlayLayout from "../MobOverlayLayout";
 import { useAuth, useGlobal, useTmp } from "@/app/store/global-store";
 import { login } from "@/app/lib/actions";
 import { me } from "@/app/lib/data";
+import toast from "react-hot-toast";
 
 const LoginMobOverlay = () => {
     const { typeDialog, setTypeDialog } = useTmp();
 
-    const { auth, setAuth, setMe } = useAuth();
-
     const onLogin = async (formData: FormData) => {
-        const username = formData.get("username");
-        const password = formData.get("password");
-
-        const data1 = await login({ username, password });
-        if (data1) {
-            setAuth(data1);
-            setTypeDialog("");
-            const data2 = await me(data1.token);
-            setMe(data2);
+        const result = await login(formData);
+        if (result?.message) {
+            toast.error(result.message);
         } else {
+            toast.success("با موفقیت وارد شدید.");
+            setTypeDialog("");
         }
     };
 

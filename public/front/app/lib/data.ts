@@ -1,7 +1,13 @@
 'use server';
+
+import { cookies } from "next/headers";
+
 const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
 // const HOST_URL = process.env.NEXT_PUBLIC_CLIENT_API_URL;
-export const me = async (token: string) => {
+const cookie: any = cookies().get("token");
+const token = cookie && JSON.parse(cookie.value);
+
+export const me = async () => {
   try {
     const config = {
       method: "GET",
@@ -223,7 +229,7 @@ export const listAdminCategories = async ({ q = '', page = '1' }: { q?: string, 
 //////////////////////////////////////user//////////////////////////////////////////
 
 
-export const listUsers = async ({ q = '', page = '1', token }: { q?: string, page?: string, token: string }) => {
+export const listUsers = async ({ q = '', page = '1' }: { q?: string, page?: string }) => {
   console.log(token)
   const regex = q
   try {
@@ -244,7 +250,7 @@ export const listUsers = async ({ q = '', page = '1', token }: { q?: string, pag
   }
 };
 
-export const fetchUser = async ({ id, token }: { id: number, token: string }) => {
+export const fetchUser = async ({ id }: { id: number }) => {
   try {
     const config = {
       method: "GET",

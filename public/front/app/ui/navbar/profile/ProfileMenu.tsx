@@ -18,7 +18,7 @@ import { DIALOG_TYPE_LOGIN } from "@/app/lib/utils";
 const ProfileMenu = () => {
     const { auth, me, setAuth, setMe } = useAuth();
     const { setTypeDialog, setProfMenuOpen } = useTmp();
-    const isLogged = auth.token ? true : false;
+    const isLogged = auth ? true : false;
 
     return (
         <div className="flex flex-col absolute p-2 w-60 right-0 shadow-md bg-white rounded">

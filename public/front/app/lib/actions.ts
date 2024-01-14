@@ -5,11 +5,12 @@ import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
 
-
+const cookie: any = cookies().get("token");
+const token = cookie && JSON.parse(cookie.value);
 
 ///////////////////////////////////////////{{{{user}}}}///////////////////////////////////////////////////
 
-export const addUser = async ({ formData, token }: { formData: FormData, token: string }) => {
+export const addUser = async ({ formData }: { formData: FormData }) => {
   const { name, email, password, mobile, type, website, city_id, is_active } = Object.fromEntries(formData)
   try {
     const bcrypt = require('bcrypt')
@@ -41,7 +42,7 @@ export const addUser = async ({ formData, token }: { formData: FormData, token: 
   redirect('/admin/dashboard/users')
 }
 
-export const updateUser = async ({ formData, token }: { formData: FormData, token: string }) => {
+export const updateUser = async ({ formData }: { formData: FormData }) => {
   const { id, name, email, mobile, type, avatar, website, city_id, is_active } = Object.fromEntries(formData)
   try {
     const updateFields: any = { name, email, mobile, type, avatar, website, city_id, is_active }
@@ -118,10 +119,8 @@ export const login = async (formData: FormData) => {
     const data = await response.json();
     cookies().delete("token");
     cookies().delete("me");
-    console.log(data);
     cookies().set("token", JSON.stringify(data.token));
     cookies().set("me", JSON.stringify(data.user));
-    // redirect("/admin/dashboard");
     return data
   } catch (err) {
     console.log(err)
@@ -131,7 +130,7 @@ export const login = async (formData: FormData) => {
 };
 
 //Logout user
-export const logout = async (token: string) => {
+export const logout = async () => {
   try {
     const config = {
       method: "POST",
@@ -211,7 +210,7 @@ export const resendVerificationCode = async (params: object) => {
 };
 
 //Change email user
-export const changeEmail = async (params: object, token: string) => {
+export const changeEmail = async (params: object) => {
   try {
     const config = {
       body: JSON.stringify(params),
@@ -231,7 +230,7 @@ export const changeEmail = async (params: object, token: string) => {
 };
 
 //Change password user
-export const changePassword = async (params: object, token: string) => {
+export const changePassword = async (params: object) => {
   try {
     const config = {
       body: JSON.stringify(params),
@@ -250,7 +249,7 @@ export const changePassword = async (params: object, token: string) => {
 };
 
 //Change email submit user
-export const changeEmailSubmit = async (params: object, token: string) => {
+export const changeEmailSubmit = async (params: object) => {
   try {
     const config = {
       body: JSON.stringify(params),

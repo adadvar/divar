@@ -9,7 +9,7 @@ const AddUserPage = () => {
         "use server";
         let cookie: any = cookies().get("token");
         const token = cookie && JSON.parse(cookie.value);
-        await addUser({ formData: e, token: token });
+        await addUser({ formData: e });
         revalidatePath("/admin/dashboard/users");
         redirect("/admin/dashboard/users");
     };
