@@ -9,10 +9,7 @@ const LoginOverlay = () => {
     const { auth, setAuth, setMe } = useAuth();
 
     const onLogin = async (formData: FormData) => {
-        const username = formData.get("username");
-        const password = formData.get("password");
-
-        const data1 = await login({ username, password });
+        const data1 = await login(formData);
         if (data1) {
             setAuth(data1);
             setTypeDialog("");

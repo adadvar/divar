@@ -1,6 +1,7 @@
 import Sidebar from "@/app/ui/admin/dashboard/sidebar";
 import Navbar from "@/app/ui/admin/dashboard/navbar";
 import Footer from "@/app/ui/admin/dashboard/footer";
+import ToastContainerWrapper from "@/app/ui/ToastContainerWrapper";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -13,6 +14,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 {children}
                 <Footer />
             </div>
+            <ToastContainerWrapper />
         </div>
     );
 };

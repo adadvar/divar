@@ -4,6 +4,8 @@ const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+
+
 ///////////////////////////////////////////{{{{user}}}}///////////////////////////////////////////////////
 
 export const addUser = async ({ formData, token }: { formData: FormData, token: string }) => {
@@ -91,7 +93,9 @@ export const loginWithGoogle = async (params: object) => {
 };
 
 //Login user
-export const login = async (params: object) => {
+export const login = async (formData: FormData) => {
+  const { username, password } = Object.fromEntries(formData)
+  const params = { username, password }
   try {
     const config = {
       method: "POST",
@@ -115,7 +119,8 @@ export const login = async (params: object) => {
     return data
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to login!")
+    // throw new Error("Failed to login!")
+    return err;
   }
 };
 

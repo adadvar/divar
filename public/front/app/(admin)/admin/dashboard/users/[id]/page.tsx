@@ -10,11 +10,11 @@ const SingleUserPage = async ({ params }: { params: { id: number } }) => {
     const { id } = params;
     let cookie: any = cookies().get("token");
     const token = cookie && JSON.parse(cookie.value);
-    const user = await fetchUser({ token: token.token, id });
+    const user = await fetchUser({ token: token, id });
 
     const handleUpdate = async (e: FormData) => {
         "use server";
-        await updateUser({ formData: e, token: token.token });
+        await updateUser({ formData: e, token: token });
         revalidatePath("/admin/dashboard/users");
         redirect("/admin/dashboard/users");
     };

@@ -29,12 +29,13 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
         slug && slug[1] && findParentCategoryBySlug(categories, slug[1]);
 
     let witchViewCategory = "";
-    if (!parentCategory) {
+    if (!parentCategory && category) {
         witchViewCategory = "sub";
     }
     if (category && parentCategory) {
         witchViewCategory = "subsub";
     }
+    console.log(witchViewCategory);
 
     return (
         <div className="">

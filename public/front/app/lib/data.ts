@@ -224,6 +224,7 @@ export const listAdminCategories = async ({ q = '', page = '1' }: { q?: string, 
 
 
 export const listUsers = async ({ q = '', page = '1', token }: { q?: string, page?: string, token: string }) => {
+  console.log(token)
   const regex = q
   try {
     const config = {

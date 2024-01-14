@@ -110,7 +110,7 @@ const sidebar = () => {
             <form
                 action={async () => {
                     "use server";
-                    await logout(token.token);
+                    await logout(token);
                     cookies().delete("token");
                     cookies().delete("me");
                     // revalidatePath("/admin/dashboard");

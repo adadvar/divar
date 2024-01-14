@@ -124,7 +124,7 @@
 //     const data = await response.json();
 
 //     if (data) {
-//         const meSt = JSON.parse(localStorage.getItem("me") || "{}");
+//         const meSt = (localStorage.getItem("me") || "{}");
 //         const newStorage = { ...meSt, email: data.email };
 //         localStorage.setItem("me", JSON.stringify(newStorage));
 //     }

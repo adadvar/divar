@@ -2,26 +2,20 @@ import { login } from "@/app/lib/actions";
 import { me } from "@/app/lib/data";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+// import { toast } from "react-toastify";
 const LoginPage = () => {
-    // const { auth, setAuth, setMe } = useAuth();
-    // const { push } = useRouter();
+    // const notify = (msg: string) => toast(msg);
     const onLogin = async (formData: FormData) => {
         "use server";
-        const username = formData.get("username");
-        const password = formData.get("password");
-        const data1 = await login({ username, password });
-        // if (data1) {
-        // setAuth(data1);
-        // setMe(data2);
-        // push("/admin/dashboard");
+
+        const data = await login(formData);
+        // notify(data1);
         cookies().delete("token");
         cookies().delete("me");
-        cookies().set("token", JSON.stringify(data1));
-        const data2 = await me(data1.token);
-        cookies().set("me", JSON.stringify(data2));
+        console.log(data);
+        cookies().set("token", JSON.stringify(data.token));
+        cookies().set("me", JSON.stringify(data.user));
         redirect("/admin/dashboard");
-        // } else {
-        // }
     };
     return (
         <div className="w-full h-screen flex items-center justify-center">
