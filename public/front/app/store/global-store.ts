@@ -1,6 +1,7 @@
 import { auth, category, city, me } from "@/public/interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import { FormElementInstance } from "../ui/admin/dashboard/formElements";
 
 interface GlobalState {
 
@@ -27,6 +28,7 @@ interface tmpState {
   parentCityId: number;
   tmpSelectedCities: city[];
   ProfMenuOpen: boolean;
+  designerElements: FormElementInstance[];
   setTypeDialog: (typeDialog: string) => void;
   setHoveredCat: (hoveredCatId: number) => void;
   setShowProfileMenu: (showProfileMenu: boolean) => void;
@@ -37,6 +39,8 @@ interface tmpState {
   addTmpSeletedCities: (tmpSelectedCities: city) => void;
   deleteTmpSeletedCities: (tmpSelectedCities: city) => void;
   setProfMenuOpen: (isProfileMenuOpen: boolean) => void;
+  addDesignerElement: (element: FormElementInstance) => void;
+  removeDesignerElement: (id: string) => void;
 }
 
 export const useTmp = create<tmpState>()(
@@ -49,6 +53,7 @@ export const useTmp = create<tmpState>()(
       ProfMenuOpen: false,
       parentCityId: 0,
       tmpSelectedCities: [],
+      designerElements: [],
       setTypeDialog: (typeDialog: string) => set({ typeDialog }),
       setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId }),
       setShowProfileMenu: (showProfileMenu: boolean) => set({ showProfileMenu }),
@@ -60,7 +65,12 @@ export const useTmp = create<tmpState>()(
       deleteTmpSeletedCities: (city: city) => set((state) => ({
         tmpSelectedCities: state.tmpSelectedCities.filter((c) => c.id !== city.id),
       })),
-      setProfMenuOpen: (ProfMenuOpen: boolean) => set({ ProfMenuOpen })
+      setProfMenuOpen: (ProfMenuOpen: boolean) => set({ ProfMenuOpen }),
+      addDesignerElement: (element: FormElementInstance) => set((state) => ({ designerElements: [...state.designerElements, element] })),
+      removeDesignerElement: (id: string) => set((state) => ({
+        designerElements: state.designerElements.filter((c) => c.id !== id),
+      }))
+
     })
   )
 )

@@ -35,7 +35,6 @@ const HomeContent = ({ adverts, categories, searchParams, slug }: Props) => {
     if (category && parentCategory) {
         witchViewCategory = "subsub";
     }
-    console.log(witchViewCategory);
 
     return (
         <div className="">

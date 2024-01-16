@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.0.8",
     "@types/node": "20.5.1",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",

@@ -122,3 +122,8 @@ export function appendQueryParams(url = window.location.href, queryParams: { [ke
 
     return `${url}${separator}${queryString}`;
 }
+
+
+export function idGenerator(): string {
+    return Math.floor(Math.random() * 10001).toString()
+}

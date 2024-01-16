@@ -5,12 +5,13 @@ import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
 
-const cookie: any = cookies().get("token");
-const token = cookie && JSON.parse(cookie.value);
+
 
 ///////////////////////////////////////////{{{{user}}}}///////////////////////////////////////////////////
 
 export const addUser = async ({ formData }: { formData: FormData }) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
   const { name, email, password, mobile, type, website, city_id, is_active } = Object.fromEntries(formData)
   try {
     const bcrypt = require('bcrypt')
@@ -43,6 +44,8 @@ export const addUser = async ({ formData }: { formData: FormData }) => {
 }
 
 export const updateUser = async ({ formData }: { formData: FormData }) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
   const { id, name, email, mobile, type, avatar, website, city_id, is_active } = Object.fromEntries(formData)
   try {
     const updateFields: any = { name, email, mobile, type, avatar, website, city_id, is_active }
@@ -131,6 +134,8 @@ export const login = async (formData: FormData) => {
 
 //Logout user
 export const logout = async () => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
   try {
     const config = {
       method: "POST",
@@ -211,6 +216,8 @@ export const resendVerificationCode = async (params: object) => {
 
 //Change email user
 export const changeEmail = async (params: object) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
   try {
     const config = {
       body: JSON.stringify(params),
@@ -231,6 +238,8 @@ export const changeEmail = async (params: object) => {
 
 //Change password user
 export const changePassword = async (params: object) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
   try {
     const config = {
       body: JSON.stringify(params),
@@ -250,6 +259,8 @@ export const changePassword = async (params: object) => {
 
 //Change email submit user
 export const changeEmailSubmit = async (params: object) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
   try {
     const config = {
       body: JSON.stringify(params),

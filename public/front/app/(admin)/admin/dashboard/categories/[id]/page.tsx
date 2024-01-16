@@ -3,7 +3,7 @@ import Slider from "@/app/ui/Slider";
 import { cookies } from "next/headers";
 import { MdPerson } from "react-icons/md";
 
-const SigleAdvertPage = async ({ params }: { params: { id: number } }) => {
+const SingleCategoryPage = async ({ params }: { params: { id: number } }) => {
     let cookie: any = cookies().get("token");
     const token = cookie && JSON.parse(cookie.value);
     const { id } = params;
@@ -85,4 +85,4 @@ const SigleAdvertPage = async ({ params }: { params: { id: number } }) => {
     );
 };
 
-export default SigleAdvertPage;
+export default SingleCategoryPage;
