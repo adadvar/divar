@@ -7,7 +7,7 @@ const SiderbarBtnElement = ({ formElement }: { formElement: FormElement }) => {
         id: `designer-btn-${formElement.type}`,
         data: {
             type: formElement.type,
-            isDesingerBtnElement: true,
+            isDesignerBtnElement: true,
         },
     });
 

@@ -39,7 +39,7 @@ interface tmpState {
   ProfMenuOpen: boolean;
   setProfMenuOpen: (isProfileMenuOpen: boolean) => void;
   designerElements: FormElementInstance[];
-  addDesignerElement: (element: FormElementInstance) => void;
+  addDesignerElement: (index: number, element: FormElementInstance) => void;
   removeDesignerElement: (id: string) => void;
   selectedDesignerElements: FormElementInstance | null;
   setSelectedDesignerElements: (selectedDesignerElements: FormElementInstance | null) => void;
@@ -69,7 +69,11 @@ export const useTmp = create<tmpState>()(
         tmpSelectedCities: state.tmpSelectedCities.filter((c) => c.id !== city.id),
       })),
       designerElements: [],
-      addDesignerElement: (element: FormElementInstance) => set((state) => ({ designerElements: [...state.designerElements, element] })),
+      addDesignerElement: (index: number, element: FormElementInstance) => set((state) => {
+        const designerElements = [...state.designerElements];
+        designerElements.splice(index, 0, element);
+        return { designerElements };
+      }),
       removeDesignerElement: (id: string) => set((state) => ({
         designerElements: state.designerElements.filter((c) => c.id !== id),
       })),

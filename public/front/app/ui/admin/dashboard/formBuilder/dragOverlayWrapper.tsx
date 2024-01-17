@@ -23,7 +23,7 @@ const DragOverlayWrapper = () => {
 
     let node = <div>No drag overlay</div>;
     const isSidebarBtnElement =
-        draggedItem?.data?.current?.isDesingerBtnElement;
+        draggedItem?.data?.current?.isDesignerBtnElement;
 
     if (isSidebarBtnElement) {
         const type = draggedItem.data?.current?.type as ElementsType;

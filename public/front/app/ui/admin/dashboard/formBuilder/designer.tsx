@@ -21,6 +21,7 @@ const Designer = () => {
     const {
         designerElements,
         addDesignerElement,
+        removeDesignerElement,
         selectedDesignerElements,
         setSelectedDesignerElements,
     } = useTmp();
@@ -36,14 +37,94 @@ const Designer = () => {
             const { active, over } = event;
             if (!active || !over) return;
 
-            const isDesingerBtnElement =
-                active.data?.current?.isDesingerBtnElement;
-            if (isDesingerBtnElement) {
+            const isDesignerBtnElement =
+                active.data?.current?.isDesignerBtnElement;
+            const isDroppingOverDesignerDropArea =
+                over.data?.current?.isDesignerDropArea;
+            const droppingSidebarBtnOverDesignerDropArea =
+                isDesignerBtnElement && isDroppingOverDesignerDropArea;
+            // First scenario
+            if (droppingSidebarBtnOverDesignerDropArea) {
                 const type = active.data?.current?.type;
                 const newElement = FormElements[type as ElementsType].construct(
                     idGenerator()
                 );
-                addDesignerElement(newElement);
+                addDesignerElement(designerElements.length, newElement);
+                return;
+            }
+
+            const isDroppingOverDesignerElementTopHalf =
+                over.data?.current?.isTopHalfDesignerElement;
+
+            const isDroppingOverDesignerElementBottomHalf =
+                over.data?.current?.isBottomHalfDesignerElement;
+
+            const isDroppingOverDesignerElement =
+                isDroppingOverDesignerElementTopHalf ||
+                isDroppingOverDesignerElementBottomHalf;
+
+            const droppingSidebarBtnOverDesignerElement =
+                isDesignerBtnElement && isDroppingOverDesignerElement;
+
+            // Second scenario
+            if (droppingSidebarBtnOverDesignerElement) {
+                const type = active.data?.current?.type;
+                const newElement = FormElements[type as ElementsType].construct(
+                    idGenerator()
+                );
+
+                const overId = over.data?.current?.elementId;
+
+                const overElementIndex = designerElements.findIndex(
+                    (el) => el.id === overId
+                );
+                if (overElementIndex === -1) {
+                    throw new Error("element not found");
+                }
+
+                let indexForNewElement = overElementIndex; // i assume i'm on top-half
+                if (isDroppingOverDesignerElementBottomHalf) {
+                    indexForNewElement = overElementIndex + 1;
+                }
+
+                addDesignerElement(indexForNewElement, newElement);
+                return;
+            }
+
+            // Third scenario
+            const isDraggingDesignerElement =
+                active.data?.current?.isDesignerElement;
+
+            const draggingDesignerElementOverAnotherDesignerElement =
+                isDroppingOverDesignerElement && isDraggingDesignerElement;
+
+            if (draggingDesignerElementOverAnotherDesignerElement) {
+                const activeId = active.data?.current?.elementId;
+                const overId = over.data?.current?.elementId;
+
+                const activeElementIndex = designerElements.findIndex(
+                    (el) => el.id === activeId
+                );
+
+                const overElementIndex = designerElements.findIndex(
+                    (el) => el.id === overId
+                );
+
+                if (activeElementIndex === -1 || overElementIndex === -1) {
+                    throw new Error("element not found");
+                }
+
+                const activeElement = {
+                    ...designerElements[activeElementIndex],
+                };
+                removeDesignerElement(activeId);
+
+                let indexForNewElement = overElementIndex; // i assume i'm on top-half
+                if (isDroppingOverDesignerElementBottomHalf) {
+                    indexForNewElement = overElementIndex + 1;
+                }
+
+                addDesignerElement(indexForNewElement, activeElement);
             }
         },
     });
@@ -98,16 +179,16 @@ function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
         id: el.id + "-top",
         data: {
             type: el.type,
-            elmenetId: el.id,
-            idTopHalfDesignerElement: true,
+            elementId: el.id,
+            isTopHalfDesignerElement: true,
         },
     });
     const bottomHalf = useDroppable({
         id: el.id + "-bottom",
         data: {
             type: el.type,
-            elmenetId: el.id,
-            idBottomHalfDesignerElement: true,
+            elementId: el.id,
+            isBottomHalfDesignerElement: true,
         },
     });
 
