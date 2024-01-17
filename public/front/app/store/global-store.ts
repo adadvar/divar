@@ -1,75 +1,89 @@
 import { auth, category, city, me } from "@/public/interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { FormElementInstance } from "../ui/admin/dashboard/formElements";
+import { FormElementInstance } from "../ui/admin/dashboard/formBuilder/formElements";
 
 interface GlobalState {
 
   selectedCities: city[];
-  cities: city[];
-  categories: category[];
   setSeletedCities: (selectedCities: city[]) => void;
+  cities: city[];
   setCities: (cities: city[]) => void;
+  categories: category[];
   setCategories: (categories: category[]) => void;
 }
 
 interface AuthState {
   auth: any;
-  me: any;
   setAuth: (auth: any) => void;
+  me: any;
   setMe: (me: me) => void;
 }
 
 interface tmpState {
   typeDialog: string;
-  hoveredCatId: number;
-  showProfileMenu: boolean;
-  res: any;
-  parentCityId: number;
-  tmpSelectedCities: city[];
-  ProfMenuOpen: boolean;
-  designerElements: FormElementInstance[];
   setTypeDialog: (typeDialog: string) => void;
+  hoveredCatId: number;
   setHoveredCat: (hoveredCatId: number) => void;
+  showProfileMenu: boolean;
   setShowProfileMenu: (showProfileMenu: boolean) => void;
+  res: any;
   setRes: (res: any) => void;
+  parentCityId: number;
   setParentCityId: (parentCityId: number) => void;
+  tmpSelectedCities: city[];
   setTmpSeletedCities: (tmpSelectedCities: city[]) => void;
   clearTmpSelectedCities: () => void;
   addTmpSeletedCities: (tmpSelectedCities: city) => void;
   deleteTmpSeletedCities: (tmpSelectedCities: city) => void;
+  ProfMenuOpen: boolean;
   setProfMenuOpen: (isProfileMenuOpen: boolean) => void;
+  designerElements: FormElementInstance[];
   addDesignerElement: (element: FormElementInstance) => void;
   removeDesignerElement: (id: string) => void;
+  selectedDesignerElements: FormElementInstance | null;
+  setSelectedDesignerElements: (selectedDesignerElements: FormElementInstance | null) => void;
+  updateDesingerElement: (id: string, element: FormElementInstance) => void;
 }
 
 export const useTmp = create<tmpState>()(
   devtools(
     (set) => ({
       typeDialog: "",
-      hoveredCatId: 0,
-      showProfileMenu: false,
-      res: {},
-      ProfMenuOpen: false,
-      parentCityId: 0,
-      tmpSelectedCities: [],
-      designerElements: [],
       setTypeDialog: (typeDialog: string) => set({ typeDialog }),
+      hoveredCatId: 0,
       setHoveredCat: (hoveredCatId: number) => set({ hoveredCatId }),
+      showProfileMenu: false,
       setShowProfileMenu: (showProfileMenu: boolean) => set({ showProfileMenu }),
+      res: {},
       setRes: (res: any) => set({ res }),
+      ProfMenuOpen: false,
+      setProfMenuOpen: (ProfMenuOpen: boolean) => set({ ProfMenuOpen }),
+      parentCityId: 0,
+      setParentCityId: (parentCityId: number) => set({ parentCityId }),
+      tmpSelectedCities: [],
       setTmpSeletedCities: (tmpSelectedCities: city[]) => set({ tmpSelectedCities }),
       clearTmpSelectedCities: () => set({ tmpSelectedCities: [] }),
-      setParentCityId: (parentCityId: number) => set({ parentCityId }),
       addTmpSeletedCities: (city: city) => set((state) => ({ tmpSelectedCities: [...state.tmpSelectedCities, city] })),
       deleteTmpSeletedCities: (city: city) => set((state) => ({
         tmpSelectedCities: state.tmpSelectedCities.filter((c) => c.id !== city.id),
       })),
-      setProfMenuOpen: (ProfMenuOpen: boolean) => set({ ProfMenuOpen }),
+      designerElements: [],
       addDesignerElement: (element: FormElementInstance) => set((state) => ({ designerElements: [...state.designerElements, element] })),
       removeDesignerElement: (id: string) => set((state) => ({
         designerElements: state.designerElements.filter((c) => c.id !== id),
-      }))
+      })),
+      selectedDesignerElements: null,
+      setSelectedDesignerElements: (selectedDesignerElements: FormElementInstance | null) => set({ selectedDesignerElements }),
+      updateDesingerElement: (id: string, element: FormElementInstance) => set((state) => ({
+        designerElements: state.designerElements.map((el) => {
+          if (el.id === id) {
+            return { ...el, ...element };
+          }
+          return el;
+        }),
+      })),
+
 
     })
   )
@@ -80,10 +94,10 @@ export const useGlobal = create<GlobalState>()(
     persist(
       (set) => ({
         selectedCities: [],
-        cities: [],
-        categories: [],
         setSeletedCities: (selectedCities: city[]) => set({ selectedCities }),
+        cities: [],
         setCities: (cities: city[]) => set({ cities }),
+        categories: [],
         setCategories: (categories: category[]) => set({ categories }),
       }),
       {
@@ -100,8 +114,8 @@ export const useAuth = create<AuthState>()(
     persist(
       (set) => ({
         auth: {},
-        me: {},
         setAuth: (auth: any) => set({ auth }),
+        me: {},
         setMe: (me: any) => set({ me }),
       }),
       {

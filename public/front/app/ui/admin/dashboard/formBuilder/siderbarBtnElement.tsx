@@ -14,7 +14,7 @@ const SiderbarBtnElement = ({ formElement }: { formElement: FormElement }) => {
     return (
         <button
             ref={draggable.setNodeRef}
-            className={`flex flex-col justify-center items-center gap-2 h-[90px] w-[90px] cursor-grab ${
+            className={`flex flex-col justify-center items-center ring-1 ring-gray-800 gap-2 h-[90px] w-[90px] cursor-grab ${
                 draggable.isDragging && "ring-2 ring-primary/20"
             }`}
             {...draggable.listeners}
@@ -34,7 +34,7 @@ export const SiderbarBtnElementDragOverlay = ({
     const { label, icon: Icon } = formElement.designerBtnElement;
 
     return (
-        <button className="flex flex-col gap-2 h-[120px] w-[120px] cursor-grab">
+        <button className="flex flex-col justify-center items-center bg-bgSoft gap-2 h-[90px] w-[90px] cursor-grab">
             <Icon className="h-8 w-8 text-primary cursor-grab" />
             <p className="text-xs">{label}</p>
         </button>

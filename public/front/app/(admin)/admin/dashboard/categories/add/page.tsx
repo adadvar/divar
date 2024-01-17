@@ -1,6 +1,6 @@
 "use client";
 
-import FormBuilder from "@/app/ui/admin/dashboard/formBuilder";
+import FormBuilder from "@/app/ui/admin/dashboard/formBuilder/formBuilder";
 
 const AddCategoryPage = () => {
     return (

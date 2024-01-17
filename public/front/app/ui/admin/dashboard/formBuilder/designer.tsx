@@ -18,7 +18,12 @@ import { useState } from "react";
 import { BiSolidTrash } from "react-icons/bi";
 
 const Designer = () => {
-    const { designerElements, addDesignerElement } = useTmp();
+    const {
+        designerElements,
+        addDesignerElement,
+        selectedDesignerElements,
+        setSelectedDesignerElements,
+    } = useTmp();
     const droppable = useDroppable({
         id: "desinger-drop-area",
         data: {
@@ -44,7 +49,13 @@ const Designer = () => {
     });
     return (
         <div className="flex w-full h-full">
-            <div className="p-4 w-full">
+            <div
+                className="p-4 w-full"
+                onClick={() => {
+                    if (selectedDesignerElements)
+                        setSelectedDesignerElements(null);
+                }}
+            >
                 <div
                     ref={droppable.setNodeRef}
                     className={`bg-bg max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-y-auto ${
@@ -58,7 +69,7 @@ const Designer = () => {
                     )}
                     {droppable.isOver && designerElements.length === 0 && (
                         <div className="p-4 w-full">
-                            <div className="h-[50px] rounded-r-md bg-gray-300/20"></div>
+                            <div className="h-[120px] rounded-r-md bg-gray-300/20"></div>
                         </div>
                     )}
                     {designerElements.length > 0 && (
@@ -76,7 +87,11 @@ const Designer = () => {
 };
 
 function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
-    const { removeDesignerElement } = useTmp();
+    const {
+        removeDesignerElement,
+        selectedDesignerElements,
+        setSelectedDesignerElements,
+    } = useTmp();
 
     const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
     const topHalf = useDroppable({
@@ -105,6 +120,7 @@ function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
         },
     });
 
+    if (draggable.isDragging) return null;
     const DesignerElement = FormElements[el.type].desingerComponent;
     return (
         <div
@@ -114,6 +130,10 @@ function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
             className="relative h-[120px] flex flex-col hover:cursor-pointer rounded-md ring-1 ring-bgSoft ring-inset"
             onMouseEnter={() => setMouseIsOver(true)}
             onMouseLeave={() => setMouseIsOver(false)}
+            onClick={(e) => {
+                e.stopPropagation();
+                setSelectedDesignerElements(el);
+            }}
         >
             <div
                 ref={topHalf.setNodeRef}
@@ -128,7 +148,8 @@ function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
                     <div className="absolute right-0 h-full">
                         <button
                             className="flex justify-center items-center h-full border rounded-md rounded-s-none bg-red-500 p-2"
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 removeDesignerElement(el.id);
                             }}
                         >
@@ -142,6 +163,9 @@ function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
                     </div>
                 </>
             )}
+            {topHalf.isOver && (
+                <div className="absolute top-0 w-full rounded-md h-2 bg-text rounded-b-none"></div>
+            )}
             <div
                 className={`flex w-full h-[120px] items-center rounded-md bg-bg/40 px-4 py-2 pointer-events-none opacity-100 ${
                     mouseIsOver && "opacity-30"
@@ -149,6 +173,9 @@ function DesignerElementWrapper({ el }: { el: FormElementInstance }) {
             >
                 <DesignerElement elementInstance={el} />
             </div>
+            {bottomHalf.isOver && (
+                <div className="absolute bottom-0 w-full rounded-md h-2 bg-text rounded-t-none"></div>
+            )}
         </div>
     );
 }

@@ -1,14 +1,33 @@
 "use client";
 
-import { DndContext } from "@dnd-kit/core";
+import {
+    DndContext,
+    MouseSensor,
+    TouchSensor,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
 import Designer from "./designer";
 import DragOverlayWrapper from "./dragOverlayWrapper";
 import { useId } from "react";
 
 const FormBuilder = () => {
     const id = useId();
+    const mouseSensor = useSensor(MouseSensor, {
+        activationConstraint: {
+            distance: 10, // 10px
+        },
+    });
+
+    const touchSensor = useSensor(TouchSensor, {
+        activationConstraint: {
+            delay: 300,
+            tolerance: 5,
+        },
+    });
+    const sensors = useSensors(mouseSensor, touchSensor);
     return (
-        <DndContext id={id}>
+        <DndContext id={id} sensors={sensors}>
             <main className="flex flex-col w-full h-full">
                 <nav className="flex justify-between border-b-2 p-4 gap-3 items-center">
                     <input
