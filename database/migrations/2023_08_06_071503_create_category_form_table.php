@@ -11,24 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('category_forms', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('type_id');
-            $table->string('label');
-            $table->boolean('required')->default(false);
+            $table->text('description')->default('')->nullable();
+            $table->text('content')->default('[]')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('type_id')
-                ->references('id')
-                ->on('property_types')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

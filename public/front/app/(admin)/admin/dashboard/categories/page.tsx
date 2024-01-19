@@ -73,7 +73,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                                         </Link>
                                     ) : (
                                         <Link
-                                            href={`/admin/dashboard/categories/${category.id}`}
+                                            href={`/admin/dashboard/categories/${category.slug}`}
                                         >
                                             <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
                                                 Add Form

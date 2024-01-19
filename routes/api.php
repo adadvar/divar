@@ -147,6 +147,10 @@ Route::group(['prefix' => 'category'], function ($router) {
         $router->delete('/{id}', [
             CategoryController::class, 'delete'
         ])->name('category.delete');
+
+        $router->Post('/form/{category?}', [
+            CategoryController::class, 'createForm'
+        ])->name('category.create.form');
     });
 });
 

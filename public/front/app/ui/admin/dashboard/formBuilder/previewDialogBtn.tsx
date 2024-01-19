@@ -8,7 +8,7 @@ const PreviewDialogBtn = () => {
     return (
         <>
             <button
-                className="flex items-center justify-center btn btn-accent min-h-[5rem] gap-2"
+                className="flex items-center justify-center btn btn-accent gap-2"
                 onClick={() => {
                     // @ts-ignore
                     document.getElementById("preview_modal").showModal();

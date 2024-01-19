@@ -12,14 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('advert_answers', function (Blueprint $table) {
+        Schema::create('category_answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('advert_id');
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('property_id');
-            $table->unsignedBigInteger('answer_id')->nullable();
-            $table->string('text');
+            $table->unsignedBigInteger('category_form_id');
+            $table->text('content')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -36,21 +34,9 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('category_id')
+            $table->foreign('category_form_id')
                 ->references('id')
-                ->on('categories')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('property_id')
-                ->references('id')
-                ->on('properties')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('answer_id')
-                ->references('id')
-                ->on('ready_answers')
+                ->on('category_forms')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

@@ -11,6 +11,7 @@ import Designer from "./designer";
 import DragOverlayWrapper from "./dragOverlayWrapper";
 import { useId } from "react";
 import PreviewDialogBtn from "./previewDialogBtn";
+import { useTmp } from "@/app/store/global-store";
 
 const FormBuilder = () => {
     const id = useId();
@@ -27,26 +28,14 @@ const FormBuilder = () => {
         },
     });
     const sensors = useSensors(mouseSensor, touchSensor);
+    const { designerElements } = useTmp();
+    const handleSave = () => {};
     return (
         <DndContext id={id} sensors={sensors}>
             <main className="flex flex-col w-full h-full">
                 <nav className="flex justify-between border-b-2 p-4 gap-3 items-center">
-                    <input
-                        className="p-7 w-[40%] bg-bg text-text border-solid border-2 border-[#2e374a] rounded "
-                        type="text"
-                        placeholder="title"
-                        name="title"
-                        required
-                    />
-                    <div className="flex items-center gap-2">
-                        <button
-                            className="p-7 text-text border-none rounded-md bg-teal-500"
-                            type="submit"
-                        >
-                            Submit
-                        </button>
-                    </div>
                     <PreviewDialogBtn />
+                    <button onClick={handleSave}>Save</button>
                 </nav>
                 <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto">
                     <Designer />

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AdvertAnswer extends Model
+class CategoryAnswer extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $table = 'advert_answers';
-    protected $fillable = ['user_id','advert_id','category_id','property_id','answer_id','text'];
+    protected $table = 'category_answers';
+    protected $fillable = ['user_id', 'advert_id', 'category_form_id', 'content'];
 
     public function user()
     {
@@ -28,13 +28,8 @@ class AdvertAnswer extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function property()
+    public function form()
     {
-        return $this->belongsToMany(Property::class);
-    }
-
-    public function readyAnswer()
-    {
-        return $this->belongsToMany(ReadyAnswer::class, 'answer_id', 'id');
+        return $this->belongsToMany(CategoryForm::class, 'category_form_id', 'id');
     }
 }

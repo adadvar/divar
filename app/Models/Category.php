@@ -10,8 +10,7 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'categories';
-    protected $fillable = ['parent_id', 'user_id', 'title', 'slug', 'xml', 'json', 'html', 'icon', 'banner'];
-    // public static $selectedCity="";
+    protected $fillable = ['parent_id', 'user_id', 'title', 'slug', 'icon', 'banner'];
 
     public function getRouteKeyName()
     {
@@ -34,9 +33,9 @@ class Category extends Model
         return $this->hasMany(Advert::class);
     }
 
-    public function properties()
+    public function form()
     {
-        return $this->hasMany(Property::class);
+        return $this->hasOne(CategoryForm::class);
     }
 
     public function parent()

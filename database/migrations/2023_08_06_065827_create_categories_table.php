@@ -17,11 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('title', 100)->nullable();
             $table->string('slug', 100)->nullable();
-            $table->text('xml')->nullable();
-            $table->text('json')->nullable();
-            $table->text('html')->nullable();
             $table->string('icon', 100)->nullable();
-            $table->string('banner',100)->nullable();
+            $table->string('banner', 100)->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -81,9 +81,14 @@ class User extends Authenticatable
         return $this->hasMany(Advert::class)->withTrashed();
     }
 
+    public function forms()
+    {
+        return $this->hasMany(CategoryForm::class);
+    }
+
     public function answers()
     {
-        return $this->hasMany(AdvertAnswer::class);
+        return $this->hasMany(CategoryAnswer::class);
     }
 
     public function categories()
