@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $table = 'categories';
-    protected $fillable = ['parent_id','user_id','title','slug','xml','json','html','icon','banner'];
+    protected $fillable = ['parent_id', 'user_id', 'title', 'slug', 'xml', 'json', 'html', 'icon', 'banner'];
     // public static $selectedCity="";
 
     public function getRouteKeyName()
@@ -18,8 +18,9 @@ class Category extends Model
         return 'slug';
     }
 
-    public function setSlugAttribute($value){
-        $slug = str_replace(" ","-",$value);
+    public function setSlugAttribute($value)
+    {
+        $slug = str_replace(" ", "-", $value);
         $this->attributes['slug'] = $slug;
     }
 
@@ -57,7 +58,8 @@ class Category extends Model
         });
     }
 
-    static function extractChildrenIds($category){
+    static function extractChildrenIds($category)
+    {
         $categoryIds = [$category->id];
 
         if ($category->child) {

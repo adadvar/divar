@@ -53,7 +53,8 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    private function registerModelBindings(){
+    private function registerModelBindings()
+    {
         Route::model('user', User::class);
         Route::model('category', Category::class);
         Route::model('advert', Advert::class);

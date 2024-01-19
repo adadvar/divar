@@ -28,7 +28,7 @@ export const TextFielsFormElement: FormElement = {
         label: "Text Field",
     },
     desingerComponent: DesignerComponent,
-    formComponent: () => <div>Form component</div>,
+    formComponent: FormComponent,
     propertiesComponent: PropertiesComponent,
 };
 
@@ -144,6 +144,30 @@ function DesignerComponent({
                 type="text"
                 readOnly
                 disabled
+                placeholder={placeholder}
+            />
+            {helperText && <p className="text-[0.8rem]">{helperText}</p>}
+        </div>
+    );
+}
+
+function FormComponent({
+    elementInstance,
+}: {
+    elementInstance: FormElementInstance;
+}) {
+    const element = elementInstance as CustomInstance;
+    const { label, required, placeholder, helperText } =
+        element.extraAttributes;
+    return (
+        <div className="flex flex-col gap-2 w-full">
+            <label htmlFor="">
+                {label}
+                {required && "*"}
+            </label>
+            <input
+                className="bg-transparent ring-1 ring-bgSoft border border-bg me-7"
+                type="text"
                 placeholder={placeholder}
             />
             {helperText && <p className="text-[0.8rem]">{helperText}</p>}

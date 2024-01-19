@@ -140,7 +140,7 @@ const Designer = () => {
                 <div
                     ref={droppable.setNodeRef}
                     className={`bg-bg max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-y-auto ${
-                        droppable.isOver && "ring-2 ring-primary/20"
+                        droppable.isOver && "ring-2 ring-inset ring-primary/20"
                     }`}
                 >
                     {!droppable.isOver && designerElements.length == 0 && (

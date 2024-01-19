@@ -1,4 +1,6 @@
-import { listAdminCategories } from "@/app/lib/data";
+import { listAdminCategories, showCategory } from "@/app/lib/data";
+import { findCategory } from "@/app/lib/utils";
+import AddCategoryDialogBtn from "@/app/ui/admin/dashboard/addCategoryDialogBtn";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import Image from "next/image";
@@ -8,7 +10,11 @@ import { MdPerson } from "react-icons/md";
 const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    const categories: any = await listAdminCategories({ q, page });
+    const slug = searchParams?.slug || "";
+
+    const categories: any = slug
+        ? await showCategory({ q, page, slug })
+        : await listAdminCategories({ q, page });
     const count = categories.total;
     const per_page = categories.per_page;
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
@@ -17,11 +23,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
                 <Search placeholder="Search for a category..." />
-                <Link href="/admin/dashboard/categories/add">
-                    <button className="p-3 bg-[#5d57c9] text-text border-none rounded cursor-pointer">
-                        Add New
-                    </button>
-                </Link>
+                <AddCategoryDialogBtn />
             </div>
             <table className="w-full">
                 <thead>
@@ -61,13 +63,24 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                             </td>
                             <td className="p-3">
                                 <div className="flex gap-3">
-                                    <Link
-                                        href={`/admin/dashboard/categories/${category.id}`}
-                                    >
-                                        <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
-                                            View
-                                        </button>
-                                    </Link>
+                                    {category.child.length > 0 ? (
+                                        <Link
+                                            href={`/admin/dashboard/categories?slug=${category.slug}`}
+                                        >
+                                            <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
+                                                View Child
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            href={`/admin/dashboard/categories/${category.id}`}
+                                        >
+                                            <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
+                                                Add Form
+                                            </button>
+                                        </Link>
+                                    )}
+
                                     <form action={""}>
                                         <input
                                             type="hidden"

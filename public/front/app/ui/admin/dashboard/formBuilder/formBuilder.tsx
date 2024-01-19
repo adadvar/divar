@@ -10,6 +10,7 @@ import {
 import Designer from "./designer";
 import DragOverlayWrapper from "./dragOverlayWrapper";
 import { useId } from "react";
+import PreviewDialogBtn from "./previewDialogBtn";
 
 const FormBuilder = () => {
     const id = useId();
@@ -45,6 +46,7 @@ const FormBuilder = () => {
                             Submit
                         </button>
                     </div>
+                    <PreviewDialogBtn />
                 </nav>
                 <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto">
                     <Designer />

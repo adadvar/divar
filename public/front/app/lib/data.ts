@@ -229,6 +229,24 @@ export const listAdminCategories = async ({ q = '', page = '1' }: { q?: string, 
   }
 };
 
+export const showCategory = async ({ q = '', page = '1', slug }: { q?: string, page?: string, slug: string }) => {
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await fetch(`${HOST_URL}/category/show/${slug}?q=${q}&page=${page}`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch admin categories!")
+  }
+};
+
 //////////////////////////////////////user//////////////////////////////////////////
 
 

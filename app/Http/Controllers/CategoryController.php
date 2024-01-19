@@ -29,24 +29,19 @@ class CategoryController extends Controller
             $query->where('name', 'LIKE', '%' . $r->q . '%');
         }
         $query->where('parent_id', null)->with('child')->get();
+
         return $query->paginate($r->per_page ?? 10);
     }
 
     public function show(CategoryShowRequest $r)
     {
-        $city = $r->city;
-        $cookie = cookie('city', $city);
-        $conditions = [];
-        $conditions['city'] = $city;
-        if ($r->price) {
-            $prices = explode('-', $r->price);
-            if ($prices[0]) $conditions[] = ['price', '>=', $prices[0]];
-            if ($prices[1]) $conditions[] = ['price', '<=', $prices[1]];
-        }
-        $conditions['state'] = 'accepted';
+        $query = $r->category->child();
 
-        $category = $r->category->load(['adverts' => fn ($q) => $q->where($conditions), 'child', 'child.adverts' => fn ($q) => $q->where($conditions)]);
-        return response(compact('category'))->cookie($cookie);
+        if ($r->q) {
+            $query->where('title', 'LIKE', '%' . $r->q . '%');
+        }
+
+        return $query->paginate($r->per_page ?? 10);
     }
 
     public function menu(CategoryListRequest $r)
