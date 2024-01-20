@@ -1,9 +1,9 @@
 import FormBuilder from "@/app/ui/admin/dashboard/formBuilder/formBuilder";
 
-const SingleCategoryPage = async () => {
+const SingleCategoryPage = ({ params }: { params: { id: string } }) => {
     return (
         <div className="w-full h-full bg-bgSoft p-5 rounded-lg mt-5">
-            <FormBuilder />
+            <FormBuilder slug={params.id.toString()} />
         </div>
     );
 };

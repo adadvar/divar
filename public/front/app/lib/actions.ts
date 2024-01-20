@@ -75,6 +75,32 @@ export const updateUser = async ({ formData }: { formData: FormData }) => {
   }
 }
 
+////////////////////////////////////////////form category/////////////////////////////////////////////////
+export const createForm = async (params: any) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  const { content, description, slug } = params
+  const formData = { content, description };
+  try {
+    const config = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+      body: JSON.stringify(formData)
+    };
+    // @ts-ignore
+    const response = await fetch(`${HOST_URL}/category/form/${slug}`, config);
+    const data = await response.json();
+    return data
+  } catch (err) {
+    console.log(err)
+    // throw new Error("Failed to login!")
+    return err;
+  }
+};
 ////////////////////////////////////////////auth/////////////////////////////////////////////////
 
 //Login user with google
@@ -109,12 +135,7 @@ export const login = async (formData: FormData) => {
       },
       cache: 'no-cache',
       body: JSON.stringify(
-        {
-          ...params,
-          grant_type: 'password',
-          client_id: 2,
-          client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET
-        }
+        params,
       ),
     };
     // @ts-ignore
@@ -146,7 +167,8 @@ export const logout = async () => {
     };
     const response = await fetch(`${HOST_URL}/logout`, config);
     const data = await response.json();
-
+    cookies().delete("token");
+    cookies().delete("me");
     return data;
   } catch (err) {
     console.log(err)

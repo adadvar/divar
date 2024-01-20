@@ -25,7 +25,7 @@ class CategoryCreateFormRequest extends FormRequest
     {
         return [
             'description' => 'nullable|string',
-            'content' => 'nullable|string',
+            'content' => 'nullable|array',
         ];
     }
 }

@@ -13,6 +13,10 @@ class CategoryForm extends Model
     protected $table = 'category_forms';
     protected $fillable = ['user_id', 'category_id', 'description', 'content'];
 
+    protected $casts = [
+        'content' => 'array',
+    ];
+
     public function user()
     {
         return $this->belongsToMany(User::class);

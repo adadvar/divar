@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->text('description')->default('')->nullable();
-            $table->text('content')->default('[]')->nullable();
+            $table->json('content')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

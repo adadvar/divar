@@ -111,8 +111,6 @@ const sidebar = () => {
                 action={async () => {
                     "use server";
                     await logout();
-                    cookies().delete("token");
-                    cookies().delete("me");
                     // revalidatePath("/admin/dashboard");
                     redirect("/admin/dashboard");
                 }}

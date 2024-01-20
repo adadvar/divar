@@ -155,7 +155,6 @@ export const listAdminAdverts = async (params: {
       //   revalidate: 20,
       // },
     };
-    console.log('params', params)
 
     let url = `${HOST_URL}/advert/list`;
     if (params.slug) {
