@@ -43,6 +43,7 @@ interface tmpState {
   removeDesignerElement: (id: string) => void;
   selectedDesignerElements: FormElementInstance | null;
   setSelectedDesignerElements: (selectedDesignerElements: FormElementInstance | null) => void;
+  setDesignerElements: (designerElements: FormElementInstance[]) => void;
   updateDesingerElement: (id: string, element: FormElementInstance) => void;
 }
 
@@ -79,6 +80,7 @@ export const useTmp = create<tmpState>()(
       })),
       selectedDesignerElements: null,
       setSelectedDesignerElements: (selectedDesignerElements: FormElementInstance | null) => set({ selectedDesignerElements }),
+      setDesignerElements: (designerElements: FormElementInstance[]) => set({ designerElements }),
       updateDesingerElement: (id: string, element: FormElementInstance) => set((state) => ({
         designerElements: state.designerElements.map((el) => {
           if (el.id === id) {

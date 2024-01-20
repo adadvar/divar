@@ -189,6 +189,29 @@ export const listAdminAdverts = async (params: {
   }
 };
 
+//////////////////////////////////////form//////////////////////////////////////////
+
+export const getForm = async (slug: string) => {
+  const cookie: any = cookies()?.get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(`${HOST_URL}/category/form/${slug}`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch cities!")
+  }
+};
+
 //////////////////////////////////////category//////////////////////////////////////////
 
 

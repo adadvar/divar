@@ -9,13 +9,12 @@ import {
 } from "@dnd-kit/core";
 import Designer from "./designer";
 import DragOverlayWrapper from "./dragOverlayWrapper";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import PreviewDialogBtn from "./previewDialogBtn";
 import { useTmp } from "@/app/store/global-store";
-import { MdSave } from "react-icons/md";
-import { createForm } from "@/app/lib/actions";
+import SaveForm from "@/app/ui/form/saveForm";
 
-const FormBuilder = ({ slug }: { slug: string }) => {
+const FormBuilder = ({ slug, form }: { slug: string; form: object }) => {
     const id = useId();
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
@@ -30,27 +29,18 @@ const FormBuilder = ({ slug }: { slug: string }) => {
         },
     });
     const sensors = useSensors(mouseSensor, touchSensor);
-    const { designerElements } = useTmp();
+    const { setDesignerElements } = useTmp();
+    useEffect(() => {
+        //@ts-ignore
+        setDesignerElements(form);
+    }, [form, setDesignerElements]);
 
     return (
         <DndContext id={id} sensors={sensors}>
             <main className="flex flex-col w-full h-full">
                 <nav className="flex justify-between border-b-2 p-4 gap-3 items-center">
                     <PreviewDialogBtn />
-                    <form
-                        action={async () => {
-                            await createForm({
-                                content: designerElements,
-                                description: "this is form data",
-                                slug,
-                            });
-                        }}
-                    >
-                        <button className="flex items-center justify-center btn btn-accent gap-2">
-                            <MdSave />
-                            Save
-                        </button>
-                    </form>
+                    <SaveForm slug={slug} />
                 </nav>
                 <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto">
                     <Designer />

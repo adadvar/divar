@@ -116,11 +116,19 @@ class CategoryController extends Controller
             );
 
             // DB::commit();
+
             return response($categoryForm, 200);
         } catch (Exception $e) {
             // DB::rollBack();
             Log::error($e);
             return response(['message' => 'خطایی رخ داده است!'], 500);
         }
+    }
+
+    public function getForm(Request $r)
+    {
+        $form = $r->category->form;
+        if ($form) return $form->content;
+        // return [];
     }
 }
