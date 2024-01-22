@@ -129,6 +129,6 @@ class CategoryController extends Controller
     {
         $form = $r->category->form;
         if ($form) return $form->content;
-        // return [];
+        return [];
     }
 }

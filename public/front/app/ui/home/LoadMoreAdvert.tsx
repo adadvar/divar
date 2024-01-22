@@ -6,6 +6,7 @@ import { advert, data } from "@/public/interfaces";
 import RegularList from "../RegularList";
 import AdvertItem from "./AdvertItem";
 import { listAdverts } from "@/app/lib/data";
+import { ImSpinner2 } from "react-icons/im";
 
 let page = 2;
 const LoadMoreAdvert = ({
@@ -43,11 +44,17 @@ const LoadMoreAdvert = ({
                     ItemComponent={AdvertItem}
                 />
             </div>
-            <div ref={ref} className="text-center">
-                {page <= last_page && <SpinnerSvg />}
+            <div
+                ref={ref}
+                className="flex items-center justify-center text-center"
+            >
+                {page <= last_page && (
+                    <ImSpinner2 className="animate-spin h-12 w-12" />
+                )}
             </div>
         </>
     );
 };
 
 export default LoadMoreAdvert;
+<SpinnerSvg />;

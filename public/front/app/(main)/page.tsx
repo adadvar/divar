@@ -9,7 +9,11 @@ export default async function Home({
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-    const adverts = await listAdverts({ page: 1, slug: [], ...searchParams });
+    const adverts: any = await listAdverts({
+        page: 1,
+        slug: [],
+        ...searchParams,
+    });
     const cities: city[] = await getCities();
 
     const categories = await listCategories();
@@ -17,6 +21,7 @@ export default async function Home({
     const token = cookie && JSON.parse(cookie.value);
     cookie = cookies().get("me");
     const me = cookie && JSON.parse(cookie.value);
+    console.log(adverts);
     return (
         <>
             <SetData

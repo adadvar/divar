@@ -90,7 +90,7 @@ export const showAdminAdvert = async (params: any) => {
     throw new Error("Failed to fetch advert!")
   }
 };
-
+//-----------
 export const listAdverts = async (params: {
   page?: number;
   slug?: string[];
@@ -102,9 +102,9 @@ export const listAdverts = async (params: {
       headers: {
         "Content-Type": "application/json",
       },
-      // next: {
-      //   revalidate: 20,
-      // },
+      next: {
+        revalidate: 20,
+      },
     };
 
     let url = `${HOST_URL}/advert/list`;
@@ -151,9 +151,9 @@ export const listAdminAdverts = async (params: {
       headers: {
         "Content-Type": "application/json",
       },
-      // next: {
-      //   revalidate: 20,
-      // },
+      next: {
+        revalidate: 20,
+      },
     };
 
     let url = `${HOST_URL}/advert/list`;
@@ -201,14 +201,17 @@ export const getForm = async (slug: string) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
+      cache: 'no-cache',
     };
+    console.log('url', `${HOST_URL}/category/form/${slug}`)
+    //@ts-ignore
     const response = await fetch(`${HOST_URL}/category/form/${slug}`, config);
     const data = await response.json();
 
     return data;
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to fetch cities!")
+    throw new Error("Failed to fetch form!")
   }
 };
 
