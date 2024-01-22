@@ -121,10 +121,6 @@ Route::group(['prefix' => 'category'], function ($router) {
         CategoryController::class, 'list'
     ])->name('category.list');
 
-    $router->get('/admin', [
-        CategoryController::class, 'listAdmin'
-    ])->name('category.list.admin');
-
     $router->get('/show/{category}', [
         CategoryController::class, 'show'
     ])->name('category.show');

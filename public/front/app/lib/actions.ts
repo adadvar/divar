@@ -79,8 +79,12 @@ export const updateUser = async ({ formData }: { formData: FormData }) => {
 export const createForm = async (params: any) => {
   const cookie: any = cookies().get("token");
   const token = cookie && JSON.parse(cookie.value);
-  const { content, description, slug } = params
-  const formData = { content, description };
+  const { content, description, published, slug } = params
+  const formData: any = { content, description, published };
+  Object.keys(formData).forEach(
+    (key) =>
+      (formData[key] === "" || formData[key] == undefined) && delete formData[key]
+  );
   try {
     const config = {
       method: "POST",

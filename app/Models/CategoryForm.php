@@ -11,7 +11,7 @@ class CategoryForm extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'category_forms';
-    protected $fillable = ['user_id', 'category_id', 'description', 'content'];
+    protected $fillable = ['user_id', 'category_id', 'description', 'content', 'published'];
 
     protected $casts = [
         'content' => 'array',

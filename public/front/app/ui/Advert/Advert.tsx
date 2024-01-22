@@ -8,7 +8,7 @@ import { listCategories, showAdvert } from "@/app/lib/data";
 
 const Advert = async ({ slug_url }: { slug_url: string }) => {
     const advert: advert = await showAdvert({ slug_url });
-    const categories: category[] = await listCategories();
+    const categories: category[] = await listCategories({});
 
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
     const image_url = BASE_URL + "adverts/" + advert.user_id + "/";

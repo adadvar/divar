@@ -19,7 +19,7 @@ export default async function Home({
 
     const cities: city[] = await getCities();
 
-    const categories: category[] = await listCategories();
+    const categories: category[] = await listCategories({});
     let cookie: any = cookies().get("token");
     const token = cookie && JSON.parse(cookie.value);
     cookie = cookies().get("me");

@@ -1,4 +1,4 @@
-import { listAdminCategories, showCategory } from "@/app/lib/data";
+import { listCategories, showCategory } from "@/app/lib/data";
 import { findCategory } from "@/app/lib/utils";
 import AddCategoryDialogBtn from "@/app/ui/admin/dashboard/addCategoryDialogBtn";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
@@ -14,7 +14,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
 
     const categories: any = slug
         ? await showCategory({ q, page, slug })
-        : await listAdminCategories({ q, page });
+        : await listCategories({ q, page });
     const count = categories.total;
     const per_page = categories.per_page;
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;

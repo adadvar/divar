@@ -26,7 +26,7 @@ return new class extends Migration
             $table->float('price')->nullable();
             $table->text('images')->nullable();
             $table->timestamp('publish_at')->nullable();
-            $table->enum('state' , Advert::STATE)->default(Advert::STATE_PENDING);
+            $table->enum('state', Advert::STATE)->default(Advert::STATE_ACCEPTED);
             // $table->foreignId('city_id')->nullable()->references('id')->on('cities')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
@@ -49,7 +49,6 @@ return new class extends Migration
                 ->on('cities')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                
         });
     }
 

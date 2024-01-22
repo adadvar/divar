@@ -16,12 +16,11 @@ export default async function Home({
     });
     const cities: city[] = await getCities();
 
-    const categories = await listCategories();
+    const categories = await listCategories({});
     let cookie: any = cookies().get("token");
     const token = cookie && JSON.parse(cookie.value);
     cookie = cookies().get("me");
     const me = cookie && JSON.parse(cookie.value);
-    console.log(adverts);
     return (
         <>
             <SetData

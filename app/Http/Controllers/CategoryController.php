@@ -21,20 +21,16 @@ class CategoryController extends Controller
 {
     public function list(CategoryListRequest $r)
     {
-        $categories = Category::where('parent_id', null)->with('child')->get();
-        return $categories;
-    }
-
-    public function listAdmin(CategoryListRequest $r)
-    {
         $query = Category::query();
         if ($r->q) {
             $query->where('name', 'LIKE', '%' . $r->q . '%');
         }
         $query->where('parent_id', null)->with('child')->get();
-
-        return $query->paginate($r->per_page ?? 10);
+        if ($r->page)
+            return $query->paginate($r->per_page ?? 10);
+        return $query->get();
     }
+
 
     public function show(CategoryShowRequest $r)
     {
@@ -43,8 +39,10 @@ class CategoryController extends Controller
         if ($r->q) {
             $query->where('title', 'LIKE', '%' . $r->q . '%');
         }
+        if ($r->page)
+            return $query->paginate($r->per_page ?? 10);
 
-        return $query->paginate($r->per_page ?? 10);
+        return $query->get();
     }
 
     public function menu(CategoryListRequest $r)
@@ -111,7 +109,7 @@ class CategoryController extends Controller
             $data['category_id'] = $r->category->id;
 
             $categoryForm = $user->forms()->updateOrCreate(
-                ['user_id' => $user->id, 'category_id' => $r->category->id],
+                ['category_id' => $r->category->id],
                 $data
             );
 
@@ -128,7 +126,7 @@ class CategoryController extends Controller
     public function getForm(Request $r)
     {
         $form = $r->category->form;
-        if ($form) return $form->content;
+        if ($form) return $form;
         return [];
     }
 }

@@ -25,7 +25,7 @@ const SaveForm = ({ slug }: { slug: string }) => {
             }}
         >
             <button
-                className="flex items-center justify-center btn btn-accent gap-2"
+                className="flex items-center justify-center btn btn-primary gap-2"
                 // disabled={state}
             >
                 <MdSave className="h-4 w-4" />

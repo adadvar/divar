@@ -9,13 +9,25 @@ import {
 } from "@dnd-kit/core";
 import Designer from "./designer";
 import DragOverlayWrapper from "./dragOverlayWrapper";
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
 import PreviewDialogBtn from "./previewDialogBtn";
 import { useTmp } from "@/app/store/global-store";
 import SaveForm from "@/app/ui/form/saveForm";
+import { ImSpinner2 } from "react-icons/im";
+import IsPublishedBtn from "./isPublishedBtn";
 
-const FormBuilder = ({ slug, form }: { slug: string; form: object }) => {
+const FormBuilder = ({ slug, form }: { slug: string; form: any }) => {
     const id = useId();
+    const { setDesignerElements } = useTmp();
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        if (isReady) return;
+        //@ts-ignore
+        setDesignerElements(form.content);
+        setIsReady(true);
+    }, [form, setDesignerElements]);
+
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
             distance: 10, // 10px
@@ -29,18 +41,25 @@ const FormBuilder = ({ slug, form }: { slug: string; form: object }) => {
         },
     });
     const sensors = useSensors(mouseSensor, touchSensor);
-    const { setDesignerElements } = useTmp();
-    useEffect(() => {
-        //@ts-ignore
-        setDesignerElements(form);
-    }, [form, setDesignerElements]);
+
+    if (!isReady)
+        return (
+            <div className="flex fixed top-60 w-full h-full">
+                <ImSpinner2 className="animate-spin h-12 w-12" />
+            </div>
+        );
 
     return (
         <DndContext id={id} sensors={sensors}>
             <main className="flex flex-col w-full h-full">
-                <nav className="flex justify-between border-b-2 p-4 gap-3 items-center">
+                <nav className="flex justify-end border-b-2 p-4 gap-3 items-center">
                     <PreviewDialogBtn />
-                    <SaveForm slug={slug} />
+                    {!form.published && (
+                        <>
+                            <IsPublishedBtn slug={slug} />
+                            <SaveForm slug={slug} />
+                        </>
+                    )}
                 </nav>
                 <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto">
                     <Designer />

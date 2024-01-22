@@ -15,7 +15,6 @@ import RegularList from "../../RegularList";
 import menuLink from "./menuLink";
 import { cookies } from "next/headers";
 import { logout } from "@/app/lib/actions";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const menuItems = [

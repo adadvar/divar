@@ -203,7 +203,6 @@ export const getForm = async (slug: string) => {
       },
       cache: 'no-cache',
     };
-    console.log('url', `${HOST_URL}/category/form/${slug}`)
     //@ts-ignore
     const response = await fetch(`${HOST_URL}/category/form/${slug}`, config);
     const data = await response.json();
@@ -218,25 +217,8 @@ export const getForm = async (slug: string) => {
 //////////////////////////////////////category//////////////////////////////////////////
 
 
-export const listCategories = async () => {
-  try {
-    const config = {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    };
-    const response = await fetch(`${HOST_URL}/category`, config);
-    const data = await response.json();
 
-    return data;
-  } catch (err) {
-    console.log(err)
-    throw new Error("Failed to fetch cities!")
-  }
-};
-
-export const listAdminCategories = async ({ q = '', page = '1' }: { q?: string, page?: string }) => {
+export const listCategories = async ({ q = '', page }: { q?: string, page?: string }) => {
   try {
     const config = {
       method: "GET",
@@ -244,17 +226,18 @@ export const listAdminCategories = async ({ q = '', page = '1' }: { q?: string, 
         'Content-Type': 'application/json',
       },
     };
-    const response = await fetch(`${HOST_URL}/category/admin?q=${q}&page=${page}`, config);
+
+    const response = await fetch(`${HOST_URL}/category?q=${q}${page ? '&page=' + page : ''}`, config);
     const data = await response.json();
 
     return data;
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to fetch admin categories!")
+    throw new Error("Failed to fetch categories!")
   }
 };
 
-export const showCategory = async ({ q = '', page = '1', slug }: { q?: string, page?: string, slug: string }) => {
+export const showCategory = async ({ q = '', page, slug }: { q?: string, page?: string, slug: string }) => {
   try {
     const config = {
       method: "GET",
@@ -262,7 +245,7 @@ export const showCategory = async ({ q = '', page = '1', slug }: { q?: string, p
         'Content-Type': 'application/json',
       },
     };
-    const response = await fetch(`${HOST_URL}/category/show/${slug}?q=${q}&page=${page}`, config);
+    const response = await fetch(`${HOST_URL}/category/show/${slug}?q=${q}${page ? '&page=' + page : ''}`, config);
     const data = await response.json();
 
     return data;

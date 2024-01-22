@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->text('description')->default('')->nullable();
             $table->json('content')->nullable();
+            $table->boolean('published')->default(false)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

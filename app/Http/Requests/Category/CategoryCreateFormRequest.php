@@ -27,6 +27,7 @@ class CategoryCreateFormRequest extends FormRequest
         return [
             'description' => 'nullable|string',
             'content' => 'nullable|array',
+            'published' => 'nullable|boolean'
         ];
     }
 }
