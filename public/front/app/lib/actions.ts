@@ -105,6 +105,32 @@ export const createForm = async (params: any) => {
     return err;
   }
 };
+
+export const SubmitForm = async (params: any) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  const { slug, content } = params;
+  const formData = { content }
+  try {
+    const config = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+      body: JSON.stringify(formData)
+    };
+    // @ts-ignore
+    const response = await fetch(`${HOST_URL}/category/answer/${slug}`, config);
+    const data = await response.json();
+    return data
+  } catch (err) {
+    console.log(err)
+    // throw new Error("Failed to login!")
+    return err;
+  }
+};
 ////////////////////////////////////////////auth/////////////////////////////////////////////////
 
 //Login user with google

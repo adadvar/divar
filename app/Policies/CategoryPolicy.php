@@ -24,4 +24,9 @@ class CategoryPolicy
     {
         return $user->isAdmin();
     }
+
+    public function answerForm(User $user, Category $category)
+    {
+        return $user->isAdmin();
+    }
 }

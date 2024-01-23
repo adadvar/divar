@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTmp } from "@/app/store/global-store";
 import { MdTextFields } from "react-icons/md";
 import {
     ElementsType,
     FormElement,
     FormElementInstance,
+    SubmitFunction,
 } from "../formElements";
 
 const type: ElementsType = "TextField";
@@ -30,6 +31,18 @@ export const TextFielsFormElement: FormElement = {
     desingerComponent: DesignerComponent,
     formComponent: FormComponent,
     propertiesComponent: PropertiesComponent,
+
+    validate: (
+        formElement: FormElementInstance,
+        currentValue: string
+    ): boolean => {
+        const element = formElement as CustomInstance;
+        if (element.extraAttributes.required) {
+            return currentValue.length > 0;
+        }
+
+        return true;
+    },
 };
 
 type CustomInstance = FormElementInstance & {
@@ -153,24 +166,65 @@ function DesignerComponent({
 
 function FormComponent({
     elementInstance,
+    submitValue,
+    isInvalid,
+    defaultValue,
 }: {
     elementInstance: FormElementInstance;
+    submitValue?: SubmitFunction;
+    isInvalid?: boolean;
+    defaultValue?: string;
 }) {
     const element = elementInstance as CustomInstance;
+    const [value, setValue] = useState(defaultValue || "");
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        setError(isInvalid == true);
+    }, [isInvalid]);
+
     const { label, required, placeholder, helperText } =
         element.extraAttributes;
     return (
-        <div className="flex flex-col gap-2 w-full">
-            <label htmlFor="">
+        <div className="flex flex-col w-full my-8">
+            <label
+                htmlFor=""
+                className={`text-lg font-bold text-black mb-4 ${
+                    error && "text-red-600"
+                }`}
+            >
                 {label}
                 {required && "*"}
             </label>
             <input
-                className="bg-transparent ring-1 ring-bgSoft border border-bg me-7"
+                className={`bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4 ${
+                    error && "border-red-600"
+                }`}
                 type="text"
                 placeholder={placeholder}
+                name={`${element.id}`}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onBlur={(e) => {
+                    if (!submitValue) return;
+                    submitValue(element.id, e.target.value);
+                    const valid = TextFielsFormElement.validate(
+                        element,
+                        e.target.value
+                    );
+                    setError(!valid);
+                    if (!valid) return;
+                }}
             />
-            {helperText && <p className="text-[0.8rem]">{helperText}</p>}
+            {helperText && (
+                <p
+                    className={`text-sm font-bold text-gray-500 ${
+                        error && "text-red-600"
+                    }`}
+                >
+                    {helperText}
+                </p>
+            )}
         </div>
     );
 }

@@ -32,8 +32,8 @@ class CategoryForm extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function answers()
+    public function answer()
     {
-        return $this->hasMany(CategoryAnswer::class, 'category_form_id', 'id');
+        return $this->hasOne(CategoryAnswer::class, 'category_form_id', 'id');
     }
 }

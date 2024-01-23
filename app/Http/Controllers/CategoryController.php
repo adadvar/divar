@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\CategoryAnswerFormRequest;
 use App\Http\Requests\Category\CategoryCreateFormRequest;
 use App\Http\Requests\Category\CategoryCreateRequest;
 use App\Http\Requests\Category\CategoryDeleteRequest;
@@ -102,8 +103,6 @@ class CategoryController extends Controller
     public function createForm(CategoryCreateFormRequest $r)
     {
         try {
-            // DB::beginTransaction();
-
             $user = auth()->user();
             $data = $r->validated();
             $data['category_id'] = $r->category->id;
@@ -112,12 +111,24 @@ class CategoryController extends Controller
                 ['category_id' => $r->category->id],
                 $data
             );
-
-            // DB::commit();
-
             return response($categoryForm, 200);
         } catch (Exception $e) {
-            // DB::rollBack();
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است!'], 500);
+        }
+    }
+
+    public function answerForm(CategoryAnswerFormRequest $r)
+    {
+        try {
+            $user = auth()->user();
+            $data = $r->validated();
+            $data['user_id'] = $user->id;
+
+            $answer = $r->category->form->answer()->updateOrCreate([], $data);
+
+            return response($answer, 200);
+        } catch (Exception $e) {
             Log::error($e);
             return response(['message' => 'خطایی رخ داده است!'], 500);
         }

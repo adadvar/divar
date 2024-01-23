@@ -11,11 +11,11 @@ const page = async ({ searchParams }: { searchParams: any }) => {
     const categories: any = slug
         ? await showCategory({ q, slug })
         : await listCategories({ q });
-    const form = slug && getForm(slug);
-    console.log(form);
+    const form: any = categories.length == 0 && (await getForm(slug));
+
     return (
         <main className="flex justify-center items-center h-full w-full">
-            <div className="flex flex-col gap-2 m-auto w-1/3 min-h-[80%] max-h-[80%] mt-10">
+            <div className="flex flex-col gap-2 m-auto lg:w-2/5 md:w-4/5 lg:mx-0 mx-10 w-full min-h-[80%] max-h-[80%] mt-10">
                 {categories.length > 0 ? (
                     <>
                         <p className="text-gray-700 text-lg">ثبت آگهی</p>
@@ -37,7 +37,7 @@ const page = async ({ searchParams }: { searchParams: any }) => {
                         />
                     </>
                 ) : (
-                    <FormCateory content={form.content} slug={slug} />
+                    <FormCateory content={form && form.content} slug={slug} />
                 )}
             </div>
         </main>

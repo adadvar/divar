@@ -6,6 +6,7 @@ import Navbar from "@/app/ui/navbar/Index";
 import ButtomNavbar from "@/app/ui/navbar/IndexBottom";
 import StoreInitializer from "../ui/StoreInitializer";
 import Hydrations from "../ui/Hydration";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -26,6 +27,7 @@ export default function RootLayout({
                 <main className="max-w-screen-xl mx-auto py-20 px-2">
                     <Overlay />
                     {children}
+                    <Toaster position="top-right" />
                     <ButtomNavbar />
                     <Navbar />
                 </main>

@@ -17,16 +17,19 @@ import { ImSpinner2 } from "react-icons/im";
 import IsPublishedBtn from "./isPublishedBtn";
 
 const FormBuilder = ({ slug, form }: { slug: string; form: any }) => {
+    const { setDesignerElements, setSelectedDesignerElements } = useTmp();
     const id = useId();
-    const { setDesignerElements } = useTmp();
-    const [isReady, setIsReady] = useState(false);
 
+    const [isReady, setIsReady] = useState(false);
     useEffect(() => {
         if (isReady) return;
         //@ts-ignore
-        setDesignerElements(form.content);
+        setDesignerElements(form.content ? form.content : []);
         setIsReady(true);
-    }, [form, setDesignerElements]);
+        setSelectedDesignerElements(null);
+        const readyTimeout = setTimeout(() => setIsReady(true), 500);
+        return () => clearTimeout(readyTimeout);
+    }, [form, setDesignerElements, isReady]);
 
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {

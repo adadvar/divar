@@ -129,6 +129,10 @@ Route::group(['prefix' => 'category'], function ($router) {
         CategoryController::class, 'menu'
     ])->name('category.menu');
 
+    $router->get('/form/{category?}', [
+        CategoryController::class, 'getForm'
+    ])->name('category.get.form');
+
 
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
@@ -144,13 +148,13 @@ Route::group(['prefix' => 'category'], function ($router) {
             CategoryController::class, 'delete'
         ])->name('category.delete');
 
-        $router->get('/form/{category?}', [
-            CategoryController::class, 'getForm'
-        ])->name('category.get.form');
-
         $router->Post('/form/{category?}', [
             CategoryController::class, 'createForm'
         ])->name('category.create.form');
+
+        $router->Post('/answer/{category?}', [
+            CategoryController::class, 'answerForm'
+        ])->name('category.answer.form');
     });
 });
 

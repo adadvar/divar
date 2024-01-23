@@ -11,25 +11,28 @@ class CategoryAnswer extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'category_answers';
-    protected $fillable = ['user_id', 'advert_id', 'category_form_id', 'content'];
+    protected $fillable = ['user_id', 'category_form_id', 'content'];
 
+    protected $casts = [
+        'content' => 'array',
+    ];
     public function user()
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function advert()
-    {
-        return $this->belongsToMany(Advert::class);
-    }
+    // public function advert()
+    // {
+    //     return $this->belongsToMany(Advert::class);
+    // }
 
     public function category()
     {
         return $this->belongsToMany(Category::class);
     }
 
-    public function form()
+    public function answerform()
     {
-        return $this->belongsToMany(CategoryForm::class, 'category_form_id', 'id');
+        return $this->belongsTo(CategoryForm::class, 'category_form_id', 'id');
     }
 }

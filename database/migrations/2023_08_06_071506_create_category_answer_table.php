@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('category_answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('advert_id');
+            // $table->unsignedBigInteger('advert_id');
             $table->unsignedBigInteger('category_form_id');
             $table->text('content')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -28,11 +28,11 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('advert_id')
-                ->references('id')
-                ->on('adverts')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            // $table->foreign('advert_id')
+            //     ->references('id')
+            //     ->on('adverts')
+            //     ->onDelete('cascade')
+            //     ->onUpdate('cascade');
 
             $table->foreign('category_form_id')
                 ->references('id')
