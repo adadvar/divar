@@ -3,7 +3,7 @@ import RegularList from "@/app/ui/RegularList";
 import CatItem from "@/app/ui/new/CatItem";
 import Link from "next/link";
 import { BsArrowRightShort as BackIcon } from "react-icons/bs";
-import FormCateory from "./formCateory";
+import FormCategory from "./formCategory";
 
 const page = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
@@ -37,7 +37,7 @@ const page = async ({ searchParams }: { searchParams: any }) => {
                         />
                     </>
                 ) : (
-                    <FormCateory content={form && form.content} slug={slug} />
+                    <FormCategory content={form && form.content} slug={slug} />
                 )}
             </div>
         </main>

@@ -11,7 +11,6 @@ const LoginOverlay = () => {
     const onLogin = async (formData: FormData) => {
         const data1 = await login(formData);
         if (data1) {
-            setAuth(data1);
             setTypeDialog("");
             setMe(data1.user);
         } else {

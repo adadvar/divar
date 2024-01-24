@@ -4,7 +4,7 @@ import { BsPerson as PersonIcon } from "react-icons/bs";
 import ProfileMenu from "./ProfileMenu";
 import { useTmp } from "@/app/store/global-store";
 
-const ProfileButton = () => {
+const ProfileButton = ({ isLogged }: { isLogged: boolean }) => {
     const { ProfMenuOpen, setProfMenuOpen } = useTmp();
 
     return (
@@ -18,7 +18,7 @@ const ProfileButton = () => {
                 </div>
                 <span className="text-xs">دیوارمن</span>
             </button>
-            {ProfMenuOpen && <ProfileMenu />}
+            {ProfMenuOpen && <ProfileMenu isLogged={isLogged} />}
         </div>
     );
 };

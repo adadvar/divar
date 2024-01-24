@@ -8,7 +8,7 @@ import {
 import React, { useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-const FormCateory = ({
+const FormCategory = ({
     slug,
     content,
 }: {
@@ -88,4 +88,4 @@ const FormCateory = ({
     );
 };
 
-export default FormCateory;
+export default FormCategory;
