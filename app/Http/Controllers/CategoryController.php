@@ -125,9 +125,12 @@ class CategoryController extends Controller
             $data = $r->validated();
             $data['user_id'] = $user->id;
 
-            $answer = $r->category->form->answer()->updateOrCreate([], $data);
-
-            return response($answer, 200);
+            $form = $r->category->form()->where('published', true)->first();
+            if ($form) {
+                $answer = $form->answer()->updateOrCreate([], $data);
+                return response($answer, 200);
+            }
+            return response(['message' => 'فرم موجود نمی باشد!'], 404);
         } catch (Exception $e) {
             Log::error($e);
             return response(['message' => 'خطایی رخ داده است!'], 500);
@@ -137,7 +140,11 @@ class CategoryController extends Controller
     public function getForm(Request $r)
     {
         $form = $r->category->form;
-        if ($form) return $form;
+        $user = auth()->user();
+        if (($user->isUser() && $form && $form->published) || ($user->isAdmin() && $form)) {
+            return $form;
+        }
+
         return [];
     }
 }

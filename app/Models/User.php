@@ -71,7 +71,7 @@ class User extends Authenticatable
         return $this->type === User::TYPE_ADMIN;
     }
 
-    public function isBaseUser()
+    public function isUser()
     {
         return $this->type === User::TYPE_USER;
     }
