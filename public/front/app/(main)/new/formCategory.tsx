@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitForm } from "@/app/lib/actions";
+import { createAnswer } from "@/app/lib/actions";
 import {
     FormElementInstance,
     FormElements,
@@ -48,7 +48,10 @@ const FormCategory = ({
             toast.error("please check the form for errors");
             return;
         }
-        const result = await SubmitForm({ slug, content: formValues.current });
+        const result = await createAnswer({
+            slug,
+            content: formValues.current,
+        });
         if (result?.message) {
             toast.error(result.message);
         } else {

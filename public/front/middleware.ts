@@ -2,23 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from 'next/headers'
 
 export function middleware(request: NextRequest) {
-  const cookieStore = cookies()
-  const cookie: any = cookieStore.get('token')
-  const token = cookie && JSON.parse(cookie.value)
-  const isAuthenticated = !!token
+  // const cookieStore = cookies()
+  // const cookie: any = cookieStore.get('token')
+  // const token = cookie && JSON.parse(cookie.value)
+  // const isAuthenticated = !!token
+  const isAuthenticated = request.cookies.has('token')
   const { pathname } = request.nextUrl;
 
-  if (isAuthenticated && pathname === '/admin/login') {
-    const redirectUrl = new URL('/admin/dashboard', request.nextUrl.origin).toString();
-    return NextResponse.redirect(redirectUrl);
+  if (isAuthenticated && pathname.startsWith('/admin/login')) {
+    return NextResponse.rewrite(new URL('/admin/dashboard', request.url))
   }
   if (!isAuthenticated) {
-    if (pathname === '/new') {
-      const redirectUrl = new URL('/', request.nextUrl.origin).toString();
-      return NextResponse.redirect(redirectUrl);
+    if (pathname.startsWith('/new')) {
+      return NextResponse.rewrite(new URL('/', request.url))
+
     }
-    const redirectUrl = new URL('/admin/login', request.nextUrl.origin).toString();
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.rewrite(new URL('/admin/login', request.url))
+
   }
 
   return NextResponse.next()

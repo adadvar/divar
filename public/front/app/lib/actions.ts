@@ -106,7 +106,7 @@ export const createForm = async (params: any) => {
   }
 };
 
-export const SubmitForm = async (params: any) => {
+export const createAnswer = async (params: any) => {
   const cookie: any = cookies().get("token");
   const token = cookie && JSON.parse(cookie.value);
   const { slug, content } = params;

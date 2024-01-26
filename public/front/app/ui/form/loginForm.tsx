@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const LoginForm = () => {
-    const { replace } = useRouter();
+    const { replace, refresh } = useRouter();
     const onLogin = async (formData: FormData) => {
         const result = await login(formData);
         if (result?.message) {
@@ -13,6 +13,7 @@ const LoginForm = () => {
         } else {
             toast.success("با موفقیت وارد شدید.");
             replace("/admin/dashboard");
+            // refresh();
         }
     };
     return (

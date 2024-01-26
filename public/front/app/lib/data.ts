@@ -8,7 +8,7 @@ const HOST_URL = process.env.NEXT_PUBLIC_SERVER_API_URL;
 
 export const me = async () => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
     const config = {
       method: "GET",
@@ -71,7 +71,7 @@ export const showAdvert = async (params: any) => {
 
 export const showAdminAdvert = async (params: any) => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
     const config = {
       method: "GET",
@@ -193,7 +193,7 @@ export const listAdminAdverts = async (params: {
 
 export const getForm = async (slug: string) => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
     const config = {
       method: "GET",
@@ -216,7 +216,7 @@ export const getForm = async (slug: string) => {
 
 export const listAnswers = async () => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
     const config = {
       method: "GET",
@@ -239,7 +239,7 @@ export const listAnswers = async () => {
 
 export const getAnswers = async (slug: string) => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
     const config = {
       method: "GET",
@@ -306,7 +306,7 @@ export const showCategory = async ({ q = '', page, slug }: { q?: string, page?: 
 
 export const listUsers = async ({ q = '', page = '1' }: { q?: string, page?: string }) => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   const regex = q
   try {
     const config = {
@@ -328,7 +328,7 @@ export const listUsers = async ({ q = '', page = '1' }: { q?: string, page?: str
 
 export const fetchUser = async ({ id }: { id: number }) => {
   const cookie: any = cookies()?.get("token");
-  const token = cookie && JSON.parse(cookie.value);
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
     const config = {
       method: "GET",

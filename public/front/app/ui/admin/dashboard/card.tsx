@@ -1,9 +1,6 @@
 import { listUsers } from "@/app/lib/data";
-import { cookies } from "next/headers";
 import { MdSupervisedUserCircle } from "react-icons/md";
 const card = async () => {
-    let cookie: any = cookies().get("token");
-    const token = cookie && JSON.parse(cookie.value);
     const users = await listUsers({});
     const count = users.total;
     return (
