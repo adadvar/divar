@@ -227,7 +227,7 @@ export const listAnswers = async () => {
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/form/list-answer`, config);
+    const response = await fetch(`${HOST_URL}/form/user/answer`, config);
     const data = await response.json();
 
     return data;
@@ -237,7 +237,7 @@ export const listAnswers = async () => {
   }
 };
 
-export const getAnswers = async (slug: string) => {
+export const listAdminAnswers = async (slug: string) => {
   const cookie: any = cookies()?.get("token");
   const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
@@ -250,13 +250,13 @@ export const getAnswers = async (slug: string) => {
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/form/get-answer/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/form/admin/answer/${slug}`, config);
     const data = await response.json();
 
     return data;
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to fetch form!")
+    throw new Error("Failed to fetch list answer!")
   }
 };
 

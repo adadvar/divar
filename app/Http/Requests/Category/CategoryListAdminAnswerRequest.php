@@ -5,7 +5,7 @@ namespace App\Http\Requests\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class CategoryCreateAnswerRequest extends FormRequest
+class CategoryListAdminAnswerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class CategoryCreateAnswerRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('list-admin-answer', $this->category);
     }
 
     /**
@@ -24,8 +24,6 @@ class CategoryCreateAnswerRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'content' => 'nullable|array',
-        ];
+        return [];
     }
 }

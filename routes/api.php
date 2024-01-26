@@ -150,27 +150,27 @@ Route::group(['prefix' => 'form'], function ($router) {
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
         $router->get('/{category?}', [
             FormController::class, 'getForm'
-        ])->name('category.get.form');
+        ])->name('form.get');
 
-        $router->get('/get-answer/{category?}', [
-            FormController::class, 'getAnswers'
-        ])->name('category.get.form');
+        $router->get('/admin/answer/{category}', [
+            FormController::class, 'listAdminAnswers'
+        ])->name('form.admin.answer');
 
-        $router->get('/list-answer/{category?}', [
+        $router->get('/user/answer', [
             FormController::class, 'listAnswers'
-        ])->name('category.list.form');
+        ])->name('form.answer');
 
-        $router->post('/{category?}', [
+        $router->post('/{category}', [
             FormController::class, 'createForm'
-        ])->name('category.create.form');
+        ])->name('form.create');
 
-        $router->post('/answer/{category?}', [
+        $router->post('/answer/{category}', [
             FormController::class, 'createAnswer'
-        ])->name('category.create.answer');
+        ])->name('form.create.answer');
 
-        $router->put('/answer/{category?}', [
+        $router->put('/answer/{id}', [
             FormController::class, 'updateAnswer'
-        ])->name('category.update.answer');
+        ])->name('form.update.answer');
     });
 });
 

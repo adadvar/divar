@@ -1,4 +1,4 @@
-import { listAnswers } from "@/app/lib/data";
+import { listAdminAnswers, listAnswers } from "@/app/lib/data";
 import AddCategoryDialogBtn from "@/app/ui/admin/dashboard/addCategoryDialogBtn";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
@@ -9,9 +9,11 @@ import { MdPerson } from "react-icons/md";
 const AnswersPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    const categories = await listAnswers();
-    const count = categories.total;
-    const per_page = categories.per_page;
+    const slug = searchParams?.slug || "";
+    const answers = await listAdminAnswers(slug);
+    console.log(answers);
+    const count = answers.total;
+    const per_page = answers.per_page;
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
     const image_url = BASE_URL + "categories/";
     return (
@@ -29,7 +31,7 @@ const AnswersPage = async ({ searchParams }: { searchParams: any }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.data.map((category: any) => (
+                    {answers.data.map((category: any) => (
                         <tr key={category.id}>
                             <td className="p-3">
                                 <div className="flex items-center gap-3">

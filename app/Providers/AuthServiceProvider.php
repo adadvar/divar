@@ -6,8 +6,10 @@ namespace App\Providers;
 
 use App\Models\Advert;
 use App\Models\Category;
+use App\Models\CategoryAnswer;
 use App\Models\User;
 use App\Policies\AdvertPolicy;
+use App\Policies\CategoryAnswerPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

@@ -72,13 +72,22 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                                             </button>
                                         </Link>
                                     ) : (
-                                        <Link
-                                            href={`/admin/dashboard/categories/${category.slug}`}
-                                        >
-                                            <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
-                                                Add Form
-                                            </button>
-                                        </Link>
+                                        <>
+                                            <Link
+                                                href={`/admin/dashboard/categories/${category.slug}`}
+                                            >
+                                                <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
+                                                    Add Form
+                                                </button>
+                                            </Link>
+                                            <Link
+                                                href={`/admin/dashboard/answers/${category.slug}`}
+                                            >
+                                                <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
+                                                    View Answers
+                                                </button>
+                                            </Link>
+                                        </>
                                     )}
 
                                     <form action={""}>
