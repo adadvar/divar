@@ -31,8 +31,8 @@ class CategoryAnswer extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function answerform()
+    public function form()
     {
-        return $this->belongsTo(CategoryForm::class, 'category_form_id', 'id');
+        return $this->belongsToMany(CategoryForm::class, 'category_form_id', 'id');
     }
 }

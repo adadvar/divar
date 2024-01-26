@@ -204,7 +204,53 @@ export const getForm = async (slug: string) => {
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/category/form/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/form/${slug}`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch form!")
+  }
+};
+
+export const listAnswers = async () => {
+  const cookie: any = cookies()?.get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+    };
+    //@ts-ignore
+    const response = await fetch(`${HOST_URL}/form/list-answer`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to fetch list answer!")
+  }
+};
+
+export const getAnswers = async (slug: string) => {
+  const cookie: any = cookies()?.get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  try {
+    const config = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+    };
+    //@ts-ignore
+    const response = await fetch(`${HOST_URL}/form/get-answer/${slug}`, config);
     const data = await response.json();
 
     return data;

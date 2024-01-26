@@ -75,7 +75,7 @@ export const updateUser = async ({ formData }: { formData: FormData }) => {
   }
 }
 
-////////////////////////////////////////////form category/////////////////////////////////////////////////
+////////////////////////////////////////////form/////////////////////////////////////////////////
 export const createForm = async (params: any) => {
   const cookie: any = cookies().get("token");
   const token = cookie && JSON.parse(cookie.value);
@@ -96,7 +96,7 @@ export const createForm = async (params: any) => {
       body: JSON.stringify(formData)
     };
     // @ts-ignore
-    const response = await fetch(`${HOST_URL}/category/form/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/form/${slug}`, config);
     const data = await response.json();
     return data
   } catch (err) {
@@ -122,7 +122,7 @@ export const SubmitForm = async (params: any) => {
       body: JSON.stringify(formData)
     };
     // @ts-ignore
-    const response = await fetch(`${HOST_URL}/category/answer/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/form/answer/${slug}`, config);
     const data = await response.json();
     return data
   } catch (err) {

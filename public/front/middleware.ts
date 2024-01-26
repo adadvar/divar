@@ -8,6 +8,10 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = !!token
   const { pathname } = request.nextUrl;
 
+  if (isAuthenticated && pathname === '/admin/login') {
+    const redirectUrl = new URL('/admin/dashboard', request.nextUrl.origin).toString();
+    return NextResponse.redirect(redirectUrl);
+  }
   if (!isAuthenticated) {
     if (pathname === '/new') {
       const redirectUrl = new URL('/', request.nextUrl.origin).toString();

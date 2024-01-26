@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryUpdateRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CategoryUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('update-answer', $this->category);
     }
 
     /**

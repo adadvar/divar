@@ -17,11 +17,11 @@ import { DIALOG_TYPE_LOGIN } from "@/app/lib/utils";
 import { logout } from "@/app/lib/actions";
 import { useRouter } from "next/navigation";
 
-const ProfileMenu = ({ isLogged }: { isLogged: boolean }) => {
-    const { me, setAuth } = useAuth();
+const ProfileMenu = () => {
+    const { auth, me, setAuth, setMe } = useAuth();
     const { setTypeDialog, setProfMenuOpen } = useTmp();
+    const isLogged = !!auth;
     const router = useRouter();
-
     return (
         <div className="flex flex-col absolute p-2 w-60 right-0 shadow-md bg-white rounded">
             {isLogged ? (
@@ -78,6 +78,9 @@ const ProfileMenu = ({ isLogged }: { isLogged: boolean }) => {
                         title="خروج"
                         onClick={async () => {
                             await logout();
+                            setAuth("");
+                            setMe({});
+                            localStorage.removeItem("auth");
                             setTypeDialog("");
                             setProfMenuOpen(false);
                             router.refresh();

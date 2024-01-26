@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
@@ -142,20 +143,37 @@ Route::group(['prefix' => 'category'], function ($router) {
         $router->delete('/{id}', [
             CategoryController::class, 'delete'
         ])->name('category.delete');
-
-        $router->get('/form/{category?}', [
-            CategoryController::class, 'getForm'
-        ])->name('category.get.form');
-
-        $router->Post('/form/{category?}', [
-            CategoryController::class, 'createForm'
-        ])->name('category.create.form');
-
-        $router->Post('/answer/{category?}', [
-            CategoryController::class, 'answerForm'
-        ])->name('category.answer.form');
     });
 });
+Route::group(['prefix' => 'form'], function ($router) {
+
+    Route::group(['middleware' => ['auth:sanctum']], function ($router) {
+        $router->get('/{category?}', [
+            FormController::class, 'getForm'
+        ])->name('category.get.form');
+
+        $router->get('/get-answer/{category?}', [
+            FormController::class, 'getAnswers'
+        ])->name('category.get.form');
+
+        $router->get('/list-answer/{category?}', [
+            FormController::class, 'listAnswers'
+        ])->name('category.list.form');
+
+        $router->post('/{category?}', [
+            FormController::class, 'createForm'
+        ])->name('category.create.form');
+
+        $router->post('/answer/{category?}', [
+            FormController::class, 'createAnswer'
+        ])->name('category.create.answer');
+
+        $router->put('/answer/{category?}', [
+            FormController::class, 'updateAnswer'
+        ])->name('category.update.answer');
+    });
+});
+
 
 Route::group(['prefix' => 'advert'], function ($router) {
 

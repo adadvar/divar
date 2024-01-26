@@ -17,7 +17,7 @@ interface AuthState {
   auth: any;
   setAuth: (auth: any) => void;
   me: any;
-  setMe: (me: me) => void;
+  setMe: (me: any) => void;
 }
 
 interface tmpState {

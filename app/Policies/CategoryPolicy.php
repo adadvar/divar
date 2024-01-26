@@ -29,4 +29,9 @@ class CategoryPolicy
     {
         return $user->isAdmin();
     }
+
+    public function updateAnswer(User $user, User $user2, Category $category)
+    {
+        return ($user->isAdmin() || ($user->id == $user2->id));
+    }
 }

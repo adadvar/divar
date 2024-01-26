@@ -8,12 +8,8 @@ import SupportButton from "./SupportButton";
 import RegisterAdvertButton from "./RegisterAdvertButton";
 import SearchBox from "./search/InputBox";
 import HomeSearchMob from "./home-search-mob";
-import { cookies } from "next/headers";
 
 const Index = () => {
-    const cookie: any = cookies().get("token");
-    const token = cookie && JSON.parse(cookie.value);
-    const isLogged = !!token;
     return (
         <div className="shadow-sm fixed flex items-center h-16 inset-x-0 top-0 bg-white z-40">
             <div className="flex justify-between w-full 2xl:container 2xl:px-16 px-5 mx-auto">
@@ -28,7 +24,7 @@ const Index = () => {
                 </div>
 
                 <div className="hidden lg:flex items-center space-x-3">
-                    <ProfileButton isLogged={isLogged} />
+                    <ProfileButton />
                     <ChatButton />
                     <SupportButton />
                     <RegisterAdvertButton />

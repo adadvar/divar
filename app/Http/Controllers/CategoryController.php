@@ -2,21 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category\CategoryAnswerFormRequest;
-use App\Http\Requests\Category\CategoryCreateFormRequest;
 use App\Http\Requests\Category\CategoryCreateRequest;
 use App\Http\Requests\Category\CategoryDeleteRequest;
 use App\Http\Requests\Category\CategoryListRequest;
 use App\Http\Requests\Category\CategoryShowRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
-use App\Models\CategoryForm;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -98,53 +92,5 @@ class CategoryController extends Controller
             Log::error($e);
             return response(['message' => 'خطایی رخ داده است !'], 500);
         }
-    }
-
-    public function createForm(CategoryCreateFormRequest $r)
-    {
-        try {
-            $user = auth()->user();
-            $data = $r->validated();
-            $data['category_id'] = $r->category->id;
-
-            $categoryForm = $user->forms()->updateOrCreate(
-                ['category_id' => $r->category->id],
-                $data
-            );
-            return response($categoryForm, 200);
-        } catch (Exception $e) {
-            Log::error($e);
-            return response(['message' => 'خطایی رخ داده است!'], 500);
-        }
-    }
-
-    public function answerForm(CategoryAnswerFormRequest $r)
-    {
-        try {
-            $user = auth()->user();
-            $data = $r->validated();
-            $data['user_id'] = $user->id;
-
-            $form = $r->category->form()->where('published', true)->first();
-            if ($form) {
-                $answer = $form->answer()->updateOrCreate([], $data);
-                return response($answer, 200);
-            }
-            return response(['message' => 'فرم موجود نمی باشد!'], 404);
-        } catch (Exception $e) {
-            Log::error($e);
-            return response(['message' => 'خطایی رخ داده است!'], 500);
-        }
-    }
-
-    public function getForm(Request $r)
-    {
-        $form = $r->category->form;
-        $user = auth()->user();
-        if (($user->isUser() && $form && $form->published) || ($user->isAdmin() && $form)) {
-            return $form;
-        }
-
-        return [];
     }
 }
