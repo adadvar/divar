@@ -14,7 +14,7 @@ const SiderbarBtnElement = ({ formElement }: { formElement: FormElement }) => {
     return (
         <button
             ref={draggable.setNodeRef}
-            className={`flex flex-col justify-center items-center ring-1 ring-gray-800 gap-2 h-[90px] w-[90px] cursor-grab ${
+            className={`flex flex-col justify-center items-center ring-1 ring-gray-800 gap-2 h-[90px] w-[90px] cursor-grab m-0 ${
                 draggable.isDragging && "ring-2 ring-primary/20"
             }`}
             {...draggable.listeners}

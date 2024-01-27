@@ -1,23 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { useTmp } from "@/app/store/global-store";
-import { MdTextFields } from "react-icons/md";
 import {
     ElementsType,
     FormElement,
     FormElementInstance,
     SubmitFunction,
 } from "../formElements";
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import { format } from "date-fns-jalali";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "DateField";
 
 const extraAttributes = {
-    label: "Text field",
-    helperText: "Helper text",
+    label: "Date field",
+    helperText: "Pick a date",
     required: false,
-    placeholder: "Value here ...",
 };
 
-export const TextFielsFormElement: FormElement = {
+export const DateFieldFormElement: FormElement = {
     type,
     construct: (id: string) => ({
         id,
@@ -25,8 +25,8 @@ export const TextFielsFormElement: FormElement = {
         extraAttributes,
     }),
     designerBtnElement: {
-        icon: MdTextFields,
-        label: "Text Field",
+        icon: BsFillCalendarDateFill,
+        label: "Date Field",
     },
     desingerComponent: DesignerComponent,
     formComponent: FormComponent,
@@ -64,7 +64,6 @@ function PropertiesComponent({
             form.reset();
             // Set form fields' values to match the current element's extraAttributes
             form.label.value = element.extraAttributes.label;
-            form.placeholder.value = element.extraAttributes.placeholder;
             form.helperText.value = element.extraAttributes.helperText;
             form.required.checked = element.extraAttributes.required;
         }
@@ -74,7 +73,6 @@ function PropertiesComponent({
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const label = formData.get("label") as string;
-        const placeholder = formData.get("placeholder") as string;
         const helperText = formData.get("helperText") as string;
         const required = formData.get("required") === "on";
 
@@ -82,7 +80,6 @@ function PropertiesComponent({
             ...element,
             extraAttributes: {
                 label,
-                placeholder,
                 helperText,
                 required,
             },
@@ -105,16 +102,7 @@ function PropertiesComponent({
                 }}
                 className="bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
             />
-            <label htmlFor="placeholder">Placeholder</label>
-            <input
-                type="text"
-                name="placeholder"
-                defaultValue={element.extraAttributes.placeholder}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                }}
-                className="bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
-            />
+
             <label htmlFor="helperText">Helper text</label>
             <input
                 type="text"
@@ -152,13 +140,10 @@ function DesignerComponent({
                 {label}
                 {required && "*"}
             </label>
-            <input
-                className="bg-transparent ring-1 ring-bgSoft border border-bg me-7"
-                type="text"
-                readOnly
-                disabled
-                placeholder={placeholder}
-            />
+            <button className="btn bg-transparent w-full justify-start text-left font-normal">
+                <BsFillCalendarDateFill className="ms-2 h-4 w-4" />
+                <span>Pick a date</span>
+            </button>
             {helperText && <p className="text-[0.8rem]">{helperText}</p>}
         </div>
     );
@@ -176,7 +161,9 @@ function FormComponent({
     defaultValue?: string;
 }) {
     const element = elementInstance as CustomInstance;
-    const [value, setValue] = useState(defaultValue || "");
+    const [date, setDate] = useState<Date | undefined>(
+        defaultValue ? new Date(defaultValue) : undefined
+    );
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -196,26 +183,16 @@ function FormComponent({
                 {label}
                 {required && "*"}
             </label>
-            <input
-                className={`bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4 ${
-                    error && "border-red-600"
-                }`}
-                type="text"
-                placeholder={placeholder}
-                name={`${element.id}`}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                onBlur={(e) => {
-                    if (!submitValue) return;
-                    submitValue(element.id, e.target.value);
-                    const valid = TextFielsFormElement.validate(
-                        element,
-                        e.target.value
-                    );
-                    setError(!valid);
-                    if (!valid) return;
-                }}
-            />
+            <button
+                className={`w-full justify-start text-start font-normal ${
+                    !date && "text-black"
+                } ${error && "border-red-600"}`}
+            >
+                <BsFillCalendarDateFill className="ms-2 h-4 w-4" />
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                <input type="date" />
+            </button>
+
             {helperText && (
                 <p
                     className={`text-sm font-bold text-gray-500 ${
