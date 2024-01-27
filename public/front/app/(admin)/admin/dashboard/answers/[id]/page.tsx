@@ -1,11 +1,15 @@
 import { listAdminAnswers } from "@/app/lib/data";
+import { ReactNode } from "react";
+import {
+    ElementsType,
+    FormElementInstance,
+} from "@/app/ui/admin/dashboard/formBuilder/formElements";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
-import Image from "next/image";
-import Link from "next/link";
-import { MdPerson } from "react-icons/md";
 
-const SingleCategoryPage = async ({
+type Row = { [key: string]: string } & { createdAt: Date };
+
+const SingleAnswerPage = async ({
     params,
     searchParams,
 }: {
@@ -15,11 +19,41 @@ const SingleCategoryPage = async ({
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
     const slug = params.id;
-    const form = await listAdminAnswers(slug);
-    const count = form.answers.total;
-    const per_page = form.answers.per_page;
+    const result = await listAdminAnswers({ slug, page });
+    const formElements = result.form.content as FormElementInstance[];
+    const columns: {
+        id: string;
+        label: string;
+        required: boolean;
+        type: ElementsType;
+    }[] = [];
+    formElements.forEach((element) => {
+        switch (element.type) {
+            case "TextField":
+                columns.push({
+                    id: element.id,
+                    label: element.extraAttributes?.label,
+                    required: element.extraAttributes?.required,
+                    type: element.type,
+                });
+                break;
+            default:
+                break;
+        }
+    });
+    const rows: Row[] = [];
+    result.answers.data.forEach((ans: any) => {
+        const content = ans.content;
+        rows.push({
+            ...content,
+            createdAt: ans.created_at,
+        });
+    });
+    const count = result.answers.total;
+    const per_page = result.answers.per_page;
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
     const image_url = BASE_URL + "categories/";
+
     return (
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <div className="flex items-center justify-between">
@@ -28,70 +62,29 @@ const SingleCategoryPage = async ({
             <table className="w-full">
                 <thead>
                     <tr>
-                        <td className="p-3">Photo</td>
-                        <td className="p-3">Title</td>
-                        <td className="p-3">Created At</td>
+                        {columns.map((column) => (
+                            <td
+                                key={column.id}
+                                className="p-3 text-center uppercase"
+                            >
+                                {column.label}
+                            </td>
+                        ))}
+                        <td className="p-3 text-right uppercase">Created at</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {form.answers.data.map((category: any) => (
-                        <tr key={category.id}>
-                            <td className="p-3">
-                                <div className="flex items-center gap-3">
-                                    {category.icon ? (
-                                        <Image
-                                            src={
-                                                image_url +
-                                                category.user_id +
-                                                "/" +
-                                                category.icon
-                                            }
-                                            alt=""
-                                            width={40}
-                                            height={40}
-                                            className="object-cover rounded-full"
-                                            unoptimized={true}
-                                        />
-                                    ) : (
-                                        <MdPerson size={50} />
-                                    )}
-                                </div>
-                            </td>
-                            <td className="p-3">{category.title}</td>
-                            <td className="p-3">
-                                {category.created_at?.toString().slice(0, 10)}
-                            </td>
-                            <td className="p-3">
-                                <div className="flex gap-3">
-                                    {category.child.length > 0 ? (
-                                        <Link
-                                            href={`/admin/dashboard/categories?slug=${category.slug}`}
-                                        >
-                                            <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
-                                                View Child
-                                            </button>
-                                        </Link>
-                                    ) : (
-                                        <Link
-                                            href={`/admin/dashboard/categories/${category.slug}`}
-                                        >
-                                            <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
-                                                Add Form
-                                            </button>
-                                        </Link>
-                                    )}
-
-                                    <form action={""}>
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            value={category.id}
-                                        />
-                                        <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-rose-600">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
+                    {rows.map((row, index) => (
+                        <tr key={index} className="hover:bg-bg">
+                            {columns.map((column) => (
+                                <RowCell
+                                    key={column.id}
+                                    type={column.type}
+                                    value={row[column.id]}
+                                />
+                            ))}
+                            <td className="p-6 text-right">
+                                {row.createdAt.toString()}
                             </td>
                         </tr>
                     ))}
@@ -102,4 +95,9 @@ const SingleCategoryPage = async ({
     );
 };
 
-export default SingleCategoryPage;
+export default SingleAnswerPage;
+
+function RowCell({ type, value }: { type: ElementsType; value: string }) {
+    let node: ReactNode = value;
+    return <td className="p-6 text-center">{node}</td>;
+}

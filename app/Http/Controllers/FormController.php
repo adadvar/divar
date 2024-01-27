@@ -88,7 +88,7 @@ class FormController extends Controller
         $user = auth()->user();
         $form = $r->category->form;
         if ($form) {
-            $answers = $r->category->form->answers()->paginate(10);
+            $answers = $r->category->form->answers()->paginate($r->per_page ?? 10);
             return  response(['form' => $form, 'answers' => $answers], 200);
         }
     }

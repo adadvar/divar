@@ -237,7 +237,7 @@ export const listAnswers = async () => {
   }
 };
 
-export const listAdminAnswers = async (slug: string) => {
+export const listAdminAnswers = async ({ slug, page }: { slug: string, page?: string }) => {
   const cookie: any = cookies()?.get("token");
   const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
@@ -250,7 +250,7 @@ export const listAdminAnswers = async (slug: string) => {
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/form/admin/answer/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/form/admin/answer/${slug}?page=${page}`, config);
     const data = await response.json();
 
     return data;

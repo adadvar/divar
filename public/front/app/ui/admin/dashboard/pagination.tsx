@@ -17,7 +17,7 @@ const Pagination = ({
     const params = new URLSearchParams(searchParams);
 
     const hasPrev = per_page * (parseInt(page) - 1) > 0;
-    const hasNext = per_page * (parseInt(page) + 1) + per_page < count;
+    const hasNext = per_page * (parseInt(page) - 1) + per_page < count;
 
     const handleChangePage = (type: string) => {
         type === "prev"
