@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { useTmp } from "@/app/store/global-store";
-import { MdTextFields } from "react-icons/md";
+import { RxDropdownMenu } from "react-icons/rx";
 import {
     ElementsType,
     FormElement,
     FormElementInstance,
     SubmitFunction,
 } from "../formElements";
+import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
+import toast from "react-hot-toast";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "SelectField";
 
 const extraAttributes = {
-    label: "Text field",
+    label: "select field",
     helperText: "Helper text",
     required: false,
     placeholder: "Value here ...",
+    options: [],
 };
 
-export const TextFieldFormElement: FormElement = {
+export const SelectFieldFormElement: FormElement = {
     type,
     construct: (id: string) => ({
         id,
@@ -25,8 +28,8 @@ export const TextFieldFormElement: FormElement = {
         extraAttributes,
     }),
     designerBtnElement: {
-        icon: MdTextFields,
-        label: "Text Field",
+        icon: RxDropdownMenu,
+        label: "Select Field",
     },
     desingerComponent: DesignerComponent,
     formComponent: FormComponent,
@@ -54,9 +57,12 @@ function PropertiesComponent({
 }: {
     elementInstance: FormElementInstance;
 }) {
-    const { updateDesingerElement } = useTmp();
+    const { updateDesingerElement, setSelectedDesignerElements } = useTmp();
     const element = elementInstance as CustomInstance;
     const formRef = useRef<HTMLFormElement>(null);
+    const [options, setOptions] = useState<string[]>(
+        element.extraAttributes.options
+    );
 
     useEffect(() => {
         const form = formRef.current;
@@ -85,16 +91,26 @@ function PropertiesComponent({
                 placeholder,
                 helperText,
                 required,
+                options,
             },
         });
+        toast.success("Propserties saved successfully");
+        setSelectedDesignerElements(null);
+    }
+
+    function handleAddOption(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        setOptions([...options, "New option"]);
+    }
+
+    function handleOptionChange(index: number, value: string) {
+        const updatedOptions = [...options];
+        updatedOptions[index] = value;
+        setOptions(updatedOptions);
     }
 
     return (
-        <form
-            ref={formRef}
-            onBlur={applyChange}
-            onSubmit={(e) => e.preventDefault()}
-        >
+        <form ref={formRef} onSubmit={applyChange}>
             <label htmlFor="label">Label</label>
             <input
                 type="text"
@@ -103,7 +119,7 @@ function PropertiesComponent({
                 onKeyDown={(e) => {
                     if (e.key === "Enter") e.currentTarget.blur();
                 }}
-                className="input bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
+                className="bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
             />
             <label htmlFor="placeholder">Placeholder</label>
             <input
@@ -125,15 +141,56 @@ function PropertiesComponent({
                 }}
                 className="bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
             />
+            <hr />
+            <div className="flex justify-between items-center my-3">
+                <label htmlFor="options">Options</label>
+                <button className="btn flex gap-2" onClick={handleAddOption}>
+                    <AiOutlinePlus />
+                    Add
+                </button>
+            </div>
+            <div className="flex flex-col gap-2">
+                {options.map((option, index) => (
+                    <div
+                        key={index}
+                        className="flex items-center justify-between gap-1"
+                    >
+                        <input
+                            type="text"
+                            placeholder=""
+                            value={option}
+                            className="bg-bg p-1 rounded-md outline-none"
+                            onChange={(e) =>
+                                handleOptionChange(index, e.target.value)
+                            }
+                        />
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const newOptions = [...options];
+                                newOptions.splice(index, 1);
+                                setOptions(newOptions);
+                            }}
+                        >
+                            <AiOutlineClose />
+                        </button>
+                    </div>
+                ))}
+            </div>
+            <hr />
             <div>
                 <input
                     type="checkbox"
                     id="required"
                     name="required"
+                    className="my-4"
                     defaultChecked={element.extraAttributes.required}
                 />
                 <label htmlFor="required">Required</label>
             </div>
+            <button className="btn btn-info w-full" type="submit">
+                Save
+            </button>
         </form>
     );
 }
@@ -152,13 +209,9 @@ function DesignerComponent({
                 {label}
                 {required && "*"}
             </label>
-            <input
-                className="bg-transparent ring-1 ring-bgSoft border border-bg me-7"
-                type="text"
-                readOnly
-                disabled
-                placeholder={placeholder}
-            />
+            <select className="bg-transparent ring-1 ring-bgSoft border border-bg me-7">
+                <option value="">{placeholder}</option>
+            </select>
             {helperText && <p className="text-[0.8rem]">{helperText}</p>}
         </div>
     );
@@ -180,46 +233,54 @@ function FormComponent({
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        setError(isInvalid == true);
+        setError(isInvalid === true);
     }, [isInvalid]);
 
-    const { label, required, placeholder, helperText } =
+    const { label, required, placeholder, helperText, options } =
         element.extraAttributes;
+
+    const handleValueChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = event.target.value;
+        setValue(selectedValue);
+        if (submitValue) {
+            const valid = SelectFieldFormElement.validate(
+                element,
+                selectedValue
+            );
+            setError(!valid);
+            submitValue(element.id, selectedValue);
+        }
+    };
+
     return (
         <div className="flex flex-col w-full my-8">
             <label
                 htmlFor=""
                 className={`text-lg font-bold text-black mb-4 ${
-                    error && "text-red-600"
+                    error ? "text-red-600" : ""
                 }`}
             >
                 {label}
                 {required && "*"}
             </label>
-            <input
-                className={`bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4 ${
-                    error && "border-red-600"
+            <select
+                className={`bg-transparent input w-full text-black border-gray-400 focus:border-red-800 mb-4 ${
+                    error ? "border-red-600" : ""
                 }`}
-                type="text"
-                placeholder={placeholder}
-                name={`${element.id}`}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                onBlur={(e) => {
-                    if (!submitValue) return;
-                    submitValue(element.id, e.target.value);
-                    const valid = TextFieldFormElement.validate(
-                        element,
-                        e.target.value
-                    );
-                    setError(!valid);
-                    if (!valid) return;
-                }}
-            />
+                defaultValue={value}
+                onChange={handleValueChange}
+            >
+                <option value="">{placeholder}</option>
+                {options.map((option) => (
+                    <option key={option} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
             {helperText && (
                 <p
                     className={`text-sm font-bold text-gray-500 ${
-                        error && "text-red-600"
+                        error ? "text-red-600" : ""
                     }`}
                 >
                     {helperText}

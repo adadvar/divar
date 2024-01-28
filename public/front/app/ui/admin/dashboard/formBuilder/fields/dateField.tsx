@@ -132,8 +132,7 @@ function DesignerComponent({
     elementInstance: FormElementInstance;
 }) {
     const element = elementInstance as CustomInstance;
-    const { label, required, placeholder, helperText } =
-        element.extraAttributes;
+    const { label, required, helperText } = element.extraAttributes;
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor="">
@@ -161,17 +160,23 @@ function FormComponent({
     defaultValue?: string;
 }) {
     const element = elementInstance as CustomInstance;
-    const [date, setDate] = useState<Date | undefined>(
-        defaultValue ? new Date(defaultValue) : undefined
-    );
+    const [date, setDate] = useState<string | undefined>(defaultValue);
     const [error, setError] = useState(false);
 
     useEffect(() => {
         setError(isInvalid == true);
     }, [isInvalid]);
 
-    const { label, required, placeholder, helperText } =
-        element.extraAttributes;
+    const { label, required, helperText } = element.extraAttributes;
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedDate = event.target.value;
+        setDate(selectedDate);
+        if (submitValue) {
+            const valid = DateFieldFormElement.validate(element, selectedDate);
+            setError(!valid);
+            submitValue(element.id, selectedDate);
+        }
+    };
     return (
         <div className="flex flex-col w-full my-8">
             <label
@@ -183,16 +188,22 @@ function FormComponent({
                 {label}
                 {required && "*"}
             </label>
-            <button
-                className={`w-full justify-start text-start font-normal ${
-                    !date && "text-black"
-                } ${error && "border-red-600"}`}
-            >
-                <BsFillCalendarDateFill className="ms-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-                <input type="date" />
-            </button>
 
+            {/* <BsFillCalendarDateFill className="ms-2 h-4 w-4" /> */}
+            {/* {date ? date : <span>Pick a date</span>} */}
+            <div className="relative">
+                <input
+                    type="date"
+                    className={`bg-transparent input w-full text-black border-gray-400 focus:border-red-800 mb-4 ${
+                        !date && "text-black"
+                    } ${error && "border-red-600"}`}
+                    value={date || ""}
+                    onChange={handleDateChange}
+                />
+                <button className="absolute top-3 start-0 flex items-center justify-center px-2 pointer-events-none">
+                    <BsFillCalendarDateFill className="h-5 w-5" />
+                </button>
+            </div>
             {helperText && (
                 <p
                     className={`text-sm font-bold text-gray-500 ${

@@ -30,6 +30,11 @@ const SingleAnswerPage = async ({
     formElements.forEach((element) => {
         switch (element.type) {
             case "TextField":
+            case "NumberField":
+            case "TextAreaField":
+            case "DateField":
+            case "SelectField":
+            case "CheckboxField":
                 columns.push({
                     id: element.id,
                     label: element.extraAttributes?.label,
@@ -99,5 +104,18 @@ export default SingleAnswerPage;
 
 function RowCell({ type, value }: { type: ElementsType; value: string }) {
     let node: ReactNode = value;
+
+    switch (type) {
+        case "DateField":
+            if (!value) break;
+            const date = new Date(value);
+            node = <p>{date}</p>;
+            break;
+        case "CheckboxField":
+            const checked = value === "true";
+            node = <input type="checkbox" checked={checked} disabled />;
+            break;
+    }
+
     return <td className="p-6 text-center">{node}</td>;
 }
