@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { useTmp } from "@/app/store/global-store";
-import { MdTextFields } from "react-icons/md";
 import {
     ElementsType,
     FormElement,
     FormElementInstance,
     SubmitFunction,
 } from "../formElements";
+import { FaImage } from "react-icons/fa";
+import Image from "next/image";
+import { AiOutlinePlus } from "react-icons/ai";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "ImageField";
 
 const extraAttributes = {
-    label: "Text field",
+    label: "Image field",
     helperText: "Helper text",
     required: false,
-    placeholder: "Value here ...",
 };
 
-export const TextFieldFormElement: FormElement = {
+export const ImageFieldFormElement: FormElement = {
     type,
     construct: (id: string) => ({
         id,
@@ -25,8 +26,8 @@ export const TextFieldFormElement: FormElement = {
         extraAttributes,
     }),
     designerBtnElement: {
-        icon: MdTextFields,
-        label: "Text Field",
+        icon: FaImage,
+        label: "Image Field",
     },
     desingerComponent: DesignerComponent,
     formComponent: FormComponent,
@@ -64,7 +65,6 @@ function PropertiesComponent({
             form.reset();
             // Set form fields' values to match the current element's extraAttributes
             form.label.value = element.extraAttributes.label;
-            form.placeholder.value = element.extraAttributes.placeholder;
             form.helperText.value = element.extraAttributes.helperText;
             form.required.checked = element.extraAttributes.required;
         }
@@ -74,7 +74,6 @@ function PropertiesComponent({
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const label = formData.get("label") as string;
-        const placeholder = formData.get("placeholder") as string;
         const helperText = formData.get("helperText") as string;
         const required = formData.get("required") === "on";
 
@@ -82,7 +81,6 @@ function PropertiesComponent({
             ...element,
             extraAttributes: {
                 label,
-                placeholder,
                 helperText,
                 required,
             },
@@ -105,16 +103,7 @@ function PropertiesComponent({
                 }}
                 className="bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
             />
-            <label htmlFor="placeholder">Placeholder</label>
-            <input
-                type="text"
-                name="placeholder"
-                defaultValue={element.extraAttributes.placeholder}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
-                }}
-                className="bg-bg p-1 mb-3 mt-1 rounded-md outline-none"
-            />
+
             <label htmlFor="helperText">Helper text</label>
             <input
                 type="text"
@@ -144,8 +133,7 @@ function DesignerComponent({
     elementInstance: FormElementInstance;
 }) {
     const element = elementInstance as CustomInstance;
-    const { label, required, placeholder, helperText } =
-        element.extraAttributes;
+    const { label, required, helperText } = element.extraAttributes;
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor="">
@@ -157,7 +145,6 @@ function DesignerComponent({
                 type="text"
                 readOnly
                 disabled
-                placeholder={placeholder}
             />
             {helperText && <p className="text-[0.8rem]">{helperText}</p>}
         </div>
@@ -176,55 +163,89 @@ function FormComponent({
     defaultValue?: string;
 }) {
     const element = elementInstance as CustomInstance;
-    const [value, setValue] = useState(defaultValue || "");
+    const [values, setValues] = useState<string[]>(
+        defaultValue ? [defaultValue] : []
+    );
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        setError(isInvalid == true);
+        setError(!!isInvalid);
     }, [isInvalid]);
 
-    const { label, required, placeholder, helperText } =
-        element.extraAttributes;
+    const { label, required, helperText } = element.extraAttributes;
+
+    const handleFileChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        index: number
+    ) => {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const newValues = [...values];
+                newValues[index] = e.target?.result as string;
+                setValues(newValues);
+                if (submitValue) {
+                    submitValue(element.id, e.target?.result as string);
+                }
+                console.log(newValues);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const addInput = () => {
+        setValues([...values, ""]);
+    };
+
     return (
         <div className="flex flex-col w-full my-8">
             <label
                 htmlFor=""
                 className={`text-lg font-bold text-black mb-4 ${
-                    error && "text-red-600"
+                    error ? "text-red-600" : ""
                 }`}
             >
                 {label}
                 {required && "*"}
             </label>
-            <input
-                className={`bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4 ${
-                    error && "border-red-600"
-                }`}
-                type="text"
-                placeholder={placeholder}
-                name={`${element.id}`}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                onBlur={(e) => {
-                    if (!submitValue) return;
-                    submitValue(element.id, e.target.value);
-                    const valid = TextFieldFormElement.validate(
-                        element,
-                        e.target.value
-                    );
-                    setError(!valid);
-                    if (!valid) return;
-                }}
-            />
+            {values.map((value, index) => (
+                <div key={index}>
+                    {value && (
+                        <div className="mb-4">
+                            <Image
+                                src={value}
+                                alt={`Image preview ${index}`}
+                                width={100}
+                                height={100}
+                            />
+                        </div>
+                    )}
+                    <div className="flex items-center mb-4">
+                        <input
+                            className={`bg-transparent w-full text-black border-gray-400 focus:border-red-800 ${
+                                error ? "border-red-600" : ""
+                            }`}
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, index)}
+                        />
+                    </div>
+                </div>
+            ))}
             {helperText && (
                 <p
                     className={`text-sm font-bold text-gray-500 ${
-                        error && "text-red-600"
+                        error ? "text-red-600" : ""
                     }`}
                 >
                     {helperText}
                 </p>
             )}
+            <AiOutlinePlus
+                className="w-6 h-6 text-gray-600 ml-3 cursor-pointer"
+                onClick={addInput}
+            />
         </div>
     );
 }

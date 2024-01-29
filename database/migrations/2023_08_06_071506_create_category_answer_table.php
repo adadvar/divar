@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CategoryAnswer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,19 @@ return new class extends Migration
         Schema::create('category_answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            // $table->unsignedBigInteger('advert_id');
             $table->unsignedBigInteger('category_form_id');
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->string('title', 100)->nullable();
+            $table->string('slug', 10)->nullable();
+            $table->string('slug_url', 100)->nullable();
+            $table->text('images')->nullable();
+            $table->float('price')->nullable();
+            $table->string('lat', 100)->nullable();
+            $table->string('long', 100)->nullable();
+            $table->text('info')->nullable();
             $table->text('content')->nullable();
+            $table->enum('state', CategoryAnswer::STATE)->default(CategoryAnswer::STATE_PENDING);
+            $table->timestamp('publish_at')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -28,11 +39,11 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // $table->foreign('advert_id')
-            //     ->references('id')
-            //     ->on('adverts')
-            //     ->onDelete('cascade')
-            //     ->onUpdate('cascade');
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreign('category_form_id')
                 ->references('id')

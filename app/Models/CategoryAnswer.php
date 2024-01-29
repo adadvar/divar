@@ -10,11 +10,18 @@ class CategoryAnswer extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const STATE_PENDING = 'pending';
+    const STATE_ACCEPTED = 'accepted';
+    const STATE_BLOCKED = 'blocked';
+    const STATE = [self::STATE_PENDING, self::STATE_ACCEPTED, self::STATE_BLOCKED];
+
+
     protected $table = 'category_answers';
-    protected $fillable = ['user_id', 'category_form_id', 'content'];
+    protected $fillable = ['user_id', 'category_form_id', 'content', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price', 'images', 'publish_at', 'state'];
 
     protected $casts = [
         'content' => 'array',
+        'images' => 'array',
     ];
     public function user()
     {
@@ -34,5 +41,48 @@ class CategoryAnswer extends Model
     public function form()
     {
         return $this->belongsToMany(CategoryForm::class, 'category_form_id', 'id');
+    }
+
+    public function viewers()
+    {
+        return $this
+            ->belongsToMany(User::class, 'advert_views')
+            ->withTimestamps();
+    }
+
+    public function photos()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function isInState($state)
+    {
+        return $this->state == $state;
+    }
+
+    public function isPending()
+    {
+        return $this->isInState(self::STATE_PENDING);
+    }
+
+    public function isAccepted()
+    {
+        return $this->isInState(self::STATE_ACCEPTED);
+    }
+
+    public function isBlocked()
+    {
+        return $this->isInState(self::STATE_BLOCKED);
+    }
+
+    public static function views($userId)
+    {
+        return static::where('category_answers.user_id', $userId)
+            ->join('advert_views', 'category_answers.id', '=', 'advert_views.advert_id');
     }
 }

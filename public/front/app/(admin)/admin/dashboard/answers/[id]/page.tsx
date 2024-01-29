@@ -106,11 +106,11 @@ function RowCell({ type, value }: { type: ElementsType; value: string }) {
     let node: ReactNode = value;
 
     switch (type) {
-        case "DateField":
-            if (!value) break;
-            const date = new Date(value);
-            node = <p>{date}</p>;
-            break;
+        // case "DateField":
+        //     if (!value) break;
+        //     const date = new Date(value);
+        //     node = <p>{date}</p>;
+        //     break;
         case "CheckboxField":
             const checked = value === "true";
             node = <input type="checkbox" checked={checked} disabled />;
