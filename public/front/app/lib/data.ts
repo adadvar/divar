@@ -227,7 +227,7 @@ export const listAnswers = async () => {
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/form/user/answer`, config);
+    const response = await fetch(`${HOST_URL}/answer/user`, config);
     const data = await response.json();
 
     return data;
@@ -250,7 +250,7 @@ export const listAdminAnswers = async ({ slug, page }: { slug: string, page?: st
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/form/admin/answer/${slug}?page=${page}`, config);
+    const response = await fetch(`${HOST_URL}/answer/admin/${slug}?page=${page}`, config);
     const data = await response.json();
 
     return data;

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\CategoryAnswer;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class CategoryAnswerCreateRequest extends FormRequest
+class CategoryAnswerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,7 @@ class CategoryAnswerCreateRequest extends FormRequest
     public function authorize()
     {
         //TODO محدودیت ایجاد که اگهی برای خود یوز یا ادمین باشد.
-        return true;
+        return Gate::allows('update', $this->categoryAnswer);
     }
 
     /**

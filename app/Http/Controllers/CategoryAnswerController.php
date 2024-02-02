@@ -2,26 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category\CategoryAnswerCreateRequest;
-use App\Http\Requests\Category\CategoryCreateFormRequest;
-use App\Http\Requests\Category\CategoryListAdminAnswerRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerCreateRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerUpdateRequest;
+use App\Http\Requests\CategoryAnswer\CategoryListAdminAnswerRequest;
 use App\Models\CategoryAnswer;
+use App\Models\City;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class FormController extends Controller
+class CategoryAnswerController extends Controller
 {
-
-
-    public function createAnswer(CategoryAnswerCreateRequest $r)
+    public function create(CategoryAnswerCreateRequest $r)
     {
         try {
             $user = auth()->user();
             $data = $r->validated();
             $data['user_id'] = $user->id;
-
             $imageArr = [];
             if (!empty($r->file('images'))) {
                 foreach ($r->file('images') as $file) {
@@ -52,45 +50,45 @@ class FormController extends Controller
         }
     }
 
-    public function updateAnswer(Request $r)
+    public function update(CategoryAnswerUpdateRequest $r)
     {
-        $user = auth()->user();
-        $answer = CategoryAnswer::find($r->id);
-        if ($user->isAdmin() || $answer->user_id == $user->id) {
 
-            try {
+        try {
+            $user = auth()->user();
+            $answer = $r->categoryAnswer;
+            $data = $r->validated();
+            $data['user_id'] = $user->id;
 
-                $data = $r->all();
-                $data['user_id'] = $user->id;
-
-                $imageArr = [];
-                if (!empty($r->file('images'))) {
-                    foreach ($r->file('images') as $file) {
-                        $image = $file;
-                        $imageName = time() . bin2hex(random_bytes(5)) . '-image';
-                        Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
-                        $imageArr[] = $imageName;
-                    }
+            $imageArr = [];
+            if (!empty($r->file('images'))) {
+                foreach ($r->file('images') as $file) {
+                    $image = $file;
+                    $imageName = time() . bin2hex(random_bytes(5)) . '-image';
+                    Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
+                    $imageArr[] = $imageName;
                 }
-                $data['images'] = ($imageArr);
+            }
+            $data['images'] = ($imageArr);
+
+            if (isset($r->title) && isset($r->city_id)) {
                 $cat_title = $r->category->title;
-                $city = isset($r->city) ? $r->city : '';
+                $city = City::find($r->city_id);
                 $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
                 $slug = bin2hex(random_bytes(5));
                 $data['slug'] = $slug;
                 $data['slug_url'] = $slug_url;
-
-                tap($answer)->update($data);
-                return response($answer, 200);
-            } catch (Exception $e) {
-                Log::error($e);
-                return response(['message' => 'خطایی رخ داده است!'], 500);
             }
+
+
+            tap($answer)->update($data);
+            return response($answer, 200);
+        } catch (Exception $e) {
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است!'], 500);
         }
-        return response([], 401);
     }
 
-    public function listAdminAnswers(CategoryListAdminAnswerRequest $r)
+    public function listAdmin(CategoryListAdminAnswerRequest $r)
     {
         $user = auth()->user();
         $form = $r->category->form;
@@ -100,7 +98,7 @@ class FormController extends Controller
         }
     }
 
-    public function listAnswers(Request $r)
+    public function list(Request $r)
     {
         $user = auth()->user();
         return CategoryAnswer::where('user_id', $user->id)->get();

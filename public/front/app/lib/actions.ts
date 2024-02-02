@@ -109,26 +109,21 @@ export const createForm = async (params: any) => {
 export const createAnswer = async (params: any) => {
   const cookie: any = cookies().get("token");
   const token = cookie && JSON.parse(cookie.value);
-  const { slug, content, formData } = params;
-  const { city_id, images } = Object.fromEntries(formData)
-  const updateFields: any = { content, city_id, images }
-  console.log(updateFields)
-  Object.keys(updateFields).forEach(
-    (key) =>
-      (updateFields[key] === "" || updateFields[key] == undefined) && delete updateFields[key]
-  );
+  const { slug, formData } = params;
+  console.log(formData)
   try {
     const config = {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`,
       },
       cache: 'no-cache',
-      body: JSON.stringify(updateFields)
+      body: formData
     };
     // @ts-ignore
-    const response = await fetch(`${HOST_URL}/form/answer/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/answer/${slug}`, config);
     const data = await response.json();
     return data
   } catch (err) {

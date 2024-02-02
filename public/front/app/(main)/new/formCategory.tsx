@@ -6,7 +6,6 @@ import {
     FormElementInstance,
     FormElements,
 } from "@/app/ui/admin/dashboard/formBuilder/formElements";
-import { city } from "@/public/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -28,11 +27,11 @@ const FormCategory = ({
         parentCityId && cities.filter((c: any) => c.id === parentCityId)[0];
     const [images, setImages] = useState<File[]>([]);
     let fileSelectRef = null;
+    const [isReady, setIsReady] = useState(false);
 
-    const [citiesSt, setCitiesSt] = useState<city[]>([]);
     useEffect(() => {
-        setCitiesSt(cities);
-    }, [cities]);
+        setIsReady(true);
+    }, [isReady]);
 
     const submitValue = useCallback((key: string, value: string) => {
         formValues.current[key] = value;
@@ -63,10 +62,19 @@ const FormCategory = ({
             toast.error("please check the form for errors");
             return;
         }
-        formData.append("images", images[0]);
+        for (const image of images) {
+            formData.append("images[]", image);
+        }
+        // console.log(formData.getAll("images[]"));
+        for (let [key, value] of Object.entries(formValues.current)) {
+            formData.append(`content[${key}]`, value);
+            console.log(key, value);
+        }
+
+        // removeEntriesWithFourDigitKeys(formData);
+
         const result = await createAnswer({
             slug,
-            content: formValues.current,
             formData,
         });
         if (result?.message) {
@@ -76,10 +84,20 @@ const FormCategory = ({
         }
     };
 
+    const removeEntriesWithFourDigitKeys = (formData: any) => {
+        const keysToDelete = [];
+        for (const key of formData.keys()) {
+            if (/\b\d{4}\b/.test(key)) {
+                keysToDelete.push(key);
+            }
+        }
+        keysToDelete.forEach((key) => formData.delete(key));
+    };
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const selectedImages = Array.from(e.target.files);
-            setImages([...images, ...selectedImages]);
+            setImages((prevImages) => [...prevImages, ...selectedImages]);
         }
     };
 
@@ -88,7 +106,9 @@ const FormCategory = ({
         newImages.splice(index, 1);
         setImages(newImages);
     };
-    console.log(images);
+
+    if (!isReady) return;
+
     return (
         <div className="" key={renderKey}>
             <p className="">ثبت آگهی</p>
@@ -110,7 +130,7 @@ const FormCategory = ({
                     onChange={(e) => setParentCityId(Number(e.target.value))}
                 >
                     <option value=""></option>
-                    {citiesSt.map((city) => (
+                    {cities.map((city) => (
                         <option key={city.id} value={city.id}>
                             {city.name}
                         </option>
@@ -138,9 +158,9 @@ const FormCategory = ({
                 <label htmlFor="" className="text-lg font-bold text-black mb-4">
                     عکس آگهی
                 </label>
-                <div className="flex w-full">
+                <div className="flex w-full gap-2 flex-wrap">
                     <button
-                        className="flex items-center w-[100px] h-[100px]  border-dashed bordered"
+                        className="flex justify-center items-center w-[100px] h-[100px] border border-gray-400 border-dashed bordered"
                         onClick={(e) => {
                             e.preventDefault();
                             fileSelectRef?.click();
@@ -150,30 +170,28 @@ const FormCategory = ({
                     </button>
                     <input
                         type="file"
-                        className="hidden"
                         onChange={handleImageChange}
+                        hidden
                         multiple
                         ref={(el) => (fileSelectRef = el)}
                     />
                     {images.map((file, index) => (
-                        <div className="flex" key={index}>
-                            <div className="relative">
-                                <Image
-                                    src={URL.createObjectURL(file)}
-                                    alt={`Image-${index}`}
-                                    width={100}
-                                    height={100}
-                                    unoptimized={true}
-                                    className="object-cover w-[100px] h-[100px]"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => removeImage(index)}
-                                    className="absolute top-0 left-0 bg-gray-400 p-1 m-1 rounded-sm"
-                                >
-                                    <BiTrash className="text-white" />
-                                </button>
-                            </div>
+                        <div className="flex relative" key={index}>
+                            <Image
+                                src={URL.createObjectURL(file)}
+                                alt={`Image-${index}`}
+                                width={100}
+                                height={100}
+                                unoptimized={true}
+                                className="object-cover w-[100px] h-[100px]"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => removeImage(index)}
+                                className="absolute top-0 left-0 bg-gray-400 p-1 m-1 rounded-sm"
+                            >
+                                <BiTrash className="text-white" />
+                            </button>
                         </div>
                     ))}
                 </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\CategoryAnswer;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
@@ -14,7 +14,8 @@ class CategoryListAdminAnswerRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('list-admin-answer', $this->category);
+        $answer = $this->category->form->answers()->first();
+        return Gate::allows('list-admin', $answer);
     }
 
     /**

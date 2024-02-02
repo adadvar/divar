@@ -47,7 +47,7 @@ const FormBuilder = ({ slug, form }: { slug: string; form: any }) => {
 
     if (!isReady)
         return (
-            <div className="flex fixed top-60 w-full h-full">
+            <div className="flex absolute top-60 w-full h-full">
                 <ImSpinner2 className="animate-spin h-12 w-12" />
             </div>
         );

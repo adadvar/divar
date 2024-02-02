@@ -173,7 +173,7 @@ class AdvertController extends Controller
             DB::beginTransaction();
             $data = $r->validated();
             $user = auth()->user();
-            dd($r->file('images'));
+
             $imageArr = [];
             if (!empty($r->file('images'))) {
                 foreach ($r->file('images') as $image) {

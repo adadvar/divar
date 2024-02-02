@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryAnswerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryFormController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
@@ -145,32 +147,38 @@ Route::group(['prefix' => 'category'], function ($router) {
         ])->name('category.delete');
     });
 });
+
+Route::group(['prefix' => 'answer'], function ($router) {
+    Route::group(['middleware' => ['auth:sanctum']], function ($router) {
+        $router->get('/admin/{category}', [
+            CategoryAnswerController::class, 'listAdmin'
+        ])->name('answer.admin.list');
+
+        $router->get('/user', [
+            CategoryAnswerController::class, 'list'
+        ])->name('answer.user.list');
+
+        $router->post('/{category}', [
+            CategoryAnswerController::class, 'create'
+        ])->name('answer.create');
+
+        $router->post('/update/{categoryAnswer}', [
+            CategoryAnswerController::class, 'update'
+        ])->name('answer.update');
+    });
+});
+
+
 Route::group(['prefix' => 'form'], function ($router) {
 
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
-        $router->get('/{category?}', [
-            FormController::class, 'getForm'
-        ])->name('form.get');
+        $router->get('/{category}', [
+            CategoryFormController::class, 'show'
+        ])->name('form.show');
 
-        $router->get('/admin/answer/{category}', [
-            FormController::class, 'listAdminAnswers'
-        ])->name('form.admin.answer');
-
-        $router->get('/user/answer', [
-            FormController::class, 'listAnswers'
-        ])->name('form.answer');
-
-        $router->post('/{category}', [
-            FormController::class, 'createForm'
+        $router->post('/{category?}', [
+            CategoryFormController::class, 'create'
         ])->name('form.create');
-
-        $router->post('/answer/{category}', [
-            FormController::class, 'createAnswer'
-        ])->name('form.create.answer');
-
-        $router->put('/answer/{id}', [
-            FormController::class, 'updateAnswer'
-        ])->name('form.update.answer');
     });
 });
 

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
             $table->text('info')->nullable();
-            $table->text('content')->nullable();
+            $table->json('content')->nullable();
             $table->enum('state', CategoryAnswer::STATE)->default(CategoryAnswer::STATE_PENDING);
             $table->timestamp('publish_at')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
