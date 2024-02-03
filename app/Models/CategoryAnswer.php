@@ -19,19 +19,16 @@ class CategoryAnswer extends Model
     protected $table = 'category_answers';
     protected $fillable = ['user_id', 'category_id', 'category_form_id', 'content', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price', 'images', 'publish_at', 'state'];
 
+    protected $appends = ['age'];
+
     protected $casts = [
         'content' => 'array',
         'images' => 'array',
     ];
     public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
-
-    // public function advert()
-    // {
-    //     return $this->belongsToMany(Advert::class);
-    // }
 
     public function category()
     {
@@ -84,5 +81,11 @@ class CategoryAnswer extends Model
     {
         return static::where('category_answers.user_id', $userId)
             ->join('advert_views', 'category_answers.id', '=', 'advert_views.advert_id');
+    }
+
+    public function getAgeAttribute()
+    {
+        $diff = $this->created_at->diffForHumans(null, true, true, 2);
+        return $diff;
     }
 }

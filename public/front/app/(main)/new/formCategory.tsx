@@ -111,8 +111,7 @@ const FormCategory = ({
 
     return (
         <div className="" key={renderKey}>
-            <p className="">ثبت آگهی</p>
-            <p className="">عکس آگهی</p>
+            <p className="text-lg font-bold text-black mb-4">ثبت آگهی</p>
             <form
                 action={onSubmit}
                 // encType="multipart/form-data"
@@ -120,7 +119,7 @@ const FormCategory = ({
             >
                 <label
                     htmlFor="city"
-                    className="text-lg font-bold text-black mb-4"
+                    className="text-base font-bold text-black mb-4"
                 >
                     استان
                 </label>
@@ -139,7 +138,7 @@ const FormCategory = ({
 
                 <label
                     htmlFor="city_id"
-                    className="text-lg font-bold text-black mb-4"
+                    className="text-base font-bold text-black mb-4"
                 >
                     شهر
                 </label>
@@ -155,7 +154,10 @@ const FormCategory = ({
                         ))}
                 </select>
 
-                <label htmlFor="" className="text-lg font-bold text-black mb-4">
+                <label
+                    htmlFor=""
+                    className="text-base font-bold text-black mb-4"
+                >
                     عکس آگهی
                 </label>
                 <div className="flex w-full gap-2 flex-wrap">
@@ -209,6 +211,43 @@ const FormCategory = ({
                             />
                         );
                     })}
+
+                <label
+                    htmlFor="price"
+                    className="text-base font-bold text-black mb-4"
+                >
+                    قیمت
+                </label>
+                <input
+                    name="price"
+                    type="number"
+                    className="bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4"
+                />
+
+                <label
+                    htmlFor="title"
+                    className="text-base font-bold text-black mb-4"
+                >
+                    عنوان آگهی
+                </label>
+                <input
+                    name="title"
+                    type="text"
+                    className="bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4"
+                />
+
+                <label
+                    htmlFor="info"
+                    className="text-base font-bold text-black mb-4"
+                >
+                    توضیحات آگهی
+                </label>
+                <textarea
+                    name="info"
+                    rows={5}
+                    className="bg-transparent textarea text-black border-gray-400 focus:border-red-800 mb-4"
+                />
+
                 <div className="flex justify-end gap-x-2 my-5">
                     <Link
                         href="/"

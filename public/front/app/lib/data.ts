@@ -107,7 +107,7 @@ export const listAdverts = async (params: {
       },
     };
 
-    let url = `${HOST_URL}/advert/list`;
+    let url = `${HOST_URL}/answer/list`;
     if (params.slug) {
       params.slug.forEach((slug) => {
         if (slug) {

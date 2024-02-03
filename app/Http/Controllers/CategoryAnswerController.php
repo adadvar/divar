@@ -96,16 +96,74 @@ class CategoryAnswerController extends Controller
         $form = $r->category->form;
 
         if ($form) {
-            $answers = $r->category->form->answers()->with('category')->paginate($r->per_page ?? 10);
+            $answers = $r->category->form->answers()->with(['category', 'city'])->paginate($r->per_page ?? 10);
             return response(['form' => $form, 'answers' => $answers], 200);
         } else {
             return response(['error' => 'Form not found'], 404);
         }
     }
 
-    public function list(Request $r)
+    public function listUser(Request $r)
     {
         $user = auth()->user();
         return CategoryAnswer::where('user_id', $user->id)->get();
+    }
+
+    public function list(Request $r)
+    {
+        $whereIns = [];
+        $conditions = [];
+        $cityRequest = null;
+        $categoryRequest = null;
+
+        if ($r->param1 && $r->param2) {
+            $cityRequest = City::whereSlug($r->param1)->first();
+            $categoryRequest = Category::whereSlug($r->param2)->first();
+        }
+        if ($r->param1 && !$r->param2) {
+            $cityRequest = City::whereSlug($r->param1)->first();
+            $categoryRequest = Category::whereSlug($r->param1)->first();
+        }
+
+        $iran = City::whereSlug('iran')->first();
+
+        if ($cityRequest) {
+            $city = $cityRequest->load('child');
+            if ($city->id != $iran->id) {
+                $ids = City::extractChildrenIds($city);
+                $whereIns['city_id'] = $ids;
+            }
+        }
+
+        if ($r->price) {
+            $prices = explode('-', $r->price);
+            if ($prices[0]) $conditions[] = ['price', '>=', $prices[0]];
+            if ($prices[1]) $conditions[] = ['price', '<=', $prices[1]];
+        }
+
+        $conditions['state'] = 'accepted';
+
+        if ($categoryRequest) {
+            $ids = (Category::extractChildrenIds($categoryRequest));
+            $whereIns['category_id'] = $ids;
+        }
+
+        $query = CategoryAnswer::query();
+
+        $query->where($conditions);
+        foreach ($whereIns as $column => $values) {
+            $query->whereIn($column, $values);
+        }
+
+        $query->with(['user', 'category']);
+
+        if ($r->o == 'n' || $r->o == null) $query->orderBy('id', 'desc');
+        if ($r->o == 'pa') $query->orderBy('price', 'asc');
+        if ($r->o == 'pd') $query->orderBy('price', 'desc');
+
+        $perPage = $r->per_page ?? 10;
+        $answers = $query->paginate($perPage);
+
+        return response($answers);
     }
 }

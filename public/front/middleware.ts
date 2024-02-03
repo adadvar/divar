@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from 'next/headers'
+import { me } from "./app/lib/data";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
 
-  const isAuthenticated = request.cookies.has('token')
+  let isAuthenticated = false;
+
+  try {
+    await me();
+    isAuthenticated = true;
+  } catch (error) {
+    isAuthenticated = false;
+
+  }
+  console.log('authenticate', isAuthenticated)
   const { pathname } = request.nextUrl;
 
   if (isAuthenticated && pathname.startsWith('/admin/login')) {

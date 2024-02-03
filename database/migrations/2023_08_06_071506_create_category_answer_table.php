@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('slug', 10)->nullable();
             $table->string('slug_url', 100)->nullable();
             $table->text('images')->nullable();
-            $table->float('price')->nullable();
+            $table->decimal('price', 15, 2)->nullable();
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
             $table->text('info')->nullable();

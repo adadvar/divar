@@ -1,11 +1,7 @@
 import { listAdminAnswers } from "@/app/lib/data";
-import { ReactNode } from "react";
-import {
-    ElementsType,
-    FormElementInstance,
-} from "@/app/ui/admin/dashboard/formBuilder/formElements";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
+import { format } from "date-fns-jalali";
 
 type Row = { [key: string]: string } & { createdAt: Date };
 
@@ -46,7 +42,12 @@ const AnswersPage = async ({
                     {answers.map((ans: any) => (
                         <tr key={ans.id} className="hover:bg-bg">
                             <td className="p-6 ">{ans.title}</td>
-                            <td className="p-6 ">{ans.title}</td>
+                            <td className="p-6 ">{ans.category?.title}</td>
+                            <td className="p-6 ">{ans.city?.name}</td>
+                            <td className="p-6 ">{ans.state}</td>
+                            <td className="p-6 ">
+                                {format(new Date(ans.created_at), "yyyy-MM-dd")}
+                            </td>
                         </tr>
                     ))}
                 </tbody>

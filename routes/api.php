@@ -149,14 +149,19 @@ Route::group(['prefix' => 'category'], function ($router) {
 });
 
 Route::group(['prefix' => 'answer'], function ($router) {
+    $router->get('/list', [
+        CategoryAnswerController::class, 'list'
+    ])->name('answer.list');
+
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
         $router->get('/admin/{category}', [
             CategoryAnswerController::class, 'listAdmin'
         ])->name('answer.admin.list');
 
         $router->get('/user', [
-            CategoryAnswerController::class, 'list'
+            CategoryAnswerController::class, 'listUser'
         ])->name('answer.user.list');
+
 
         $router->post('/{category}', [
             CategoryAnswerController::class, 'create'
