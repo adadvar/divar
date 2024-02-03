@@ -1,11 +1,11 @@
-import "../globals.css";
+import "../../globals.css";
 
 import type { Metadata } from "next";
-import Overlay from "../ui/Overlay";
+import Overlay from "../../ui/Overlay";
 import Navbar from "@/app/ui/navbar/Index";
 import ButtomNavbar from "@/app/ui/navbar/IndexBottom";
-import StoreInitializer from "../ui/StoreInitializer";
-import Hydrations from "../ui/Hydration";
+import StoreInitializer from "../../ui/StoreInitializer";
+import Hydrations from "../../ui/Hydration";
 
 export const metadata: Metadata = {
     title: "Create Next App",

@@ -149,9 +149,21 @@ Route::group(['prefix' => 'category'], function ($router) {
 });
 
 Route::group(['prefix' => 'answer'], function ($router) {
-    $router->get('/list', [
+    $router->get('/list/{param1?}/{param2?}', [
         CategoryAnswerController::class, 'list'
     ])->name('answer.list');
+
+    $router->get('/show/{id_slug}', [
+        CategoryAnswerController::class, 'show'
+    ])->name('answer.show');
+
+    $router->match(['get', 'post'], '/{categoryAnswer}/like', [
+        CategoryAnswerController::class, 'like'
+    ])->name('answer.like');
+
+    $router->match(['get', 'post'], '/{categoryAnswer}/unlike', [
+        CategoryAnswerController::class, 'unlike'
+    ])->name('answer.unlike');
 
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
         $router->get('/admin/{category}', [
@@ -170,6 +182,34 @@ Route::group(['prefix' => 'answer'], function ($router) {
         $router->post('/update/{categoryAnswer}', [
             CategoryAnswerController::class, 'update'
         ])->name('answer.update');
+
+        $router->put('/{categoryAnswer}/state', [
+            CategoryAnswerController::class, 'changeState'
+        ])->name('answer.change.state');
+
+        $router->delete('/{categoryAnswer}', [
+            CategoryAnswerController::class, 'delete'
+        ])->name('answer.delete');
+
+        $router->get('/favourites', [
+            CategoryAnswerController::class, 'favourites'
+        ])->name('answer.favourites');
+
+        $router->delete('/{categoryAnswer}/delete-favourite', [
+            CategoryAnswerController::class, 'deleteFavourite'
+        ])->name('answer.deleteFavourite');
+
+        $router->get('/recents', [
+            CategoryAnswerController::class, 'recents'
+        ])->name('answer.recents');
+
+        $router->delete('/{categoryAnswer}/delete-recent', [
+            CategoryAnswerController::class, 'deleteRecent'
+        ])->name('answer.deleteRecent');
+
+        $router->get('/my', [
+            CategoryAnswerController::class, 'my'
+        ])->name('answer.my');
     });
 });
 

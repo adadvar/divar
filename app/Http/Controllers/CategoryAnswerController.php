@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VisitAdvert;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerChangeStateRequest;
 use App\Http\Requests\CategoryAnswer\CategoryAnswerCreateRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerDeleteFavouriteRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerDeleteRecentRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerDeleteRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerFavouriteRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerLikeRequest;
+use App\Http\Requests\CategoryAnswer\CategoryAnswerUnlikeRequest;
 use App\Http\Requests\CategoryAnswer\CategoryAnswerUpdateRequest;
 use App\Http\Requests\CategoryAnswer\CategoryListAdminAnswerRequest;
+use App\Models\AdvertFavourite;
+use App\Models\AdvertRecent;
 use App\Models\Category;
 use App\Models\CategoryAnswer;
 use App\Models\City;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -165,5 +176,116 @@ class CategoryAnswerController extends Controller
         $answers = $query->paginate($perPage);
 
         return response($answers);
+    }
+
+    public function show(Request $r)
+    {
+        $answer = CategoryAnswer::where('slug_url', $r->id_slug)
+            ->orWhere('id', $r->id_slug)
+            ->where('state', 'accepted')
+            ->firstOrFail();
+        event(new VisitAdvert($answer));
+        $answer = $answer->load('user', 'category');
+        return $answer;
+    }
+
+    public static function changeState(CategoryAnswerChangeStateRequest $r)
+    {
+        $advert = $r->advert;
+        $advert->state = $r->state;
+        // $advert->publish_at = $r->state == 'accepted'? Carbon::now(): '';
+        $advert->save();
+
+        return response($advert);
+    }
+
+    public function delete(CategoryAnswerDeleteRequest $r)
+    {
+        try {
+            DB::beginTransaction();
+            $r->advert->delete();
+            DB::commit();
+            return response(['message' => 'با موفقیت حذف شد!'], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است !'], 500);
+        }
+    }
+
+    public static function like(CategoryAnswerLikeRequest $r)
+    {
+        //ابتدا باید وضعیت advert به accepted تغییر کند
+        AdvertFavourite::create([
+            'user_id' => auth()->id(),
+            'user_ip' => client_ip(),
+            'advert_id' => $r->advert->id,
+        ]);
+
+        return response(['message' => 'با موفقیت ثبت شد'], 200);
+    }
+
+    public static function unlike(CategoryAnswerUnlikeRequest $r)
+    {
+        $user = auth()->user();
+        $conditions = [
+            'advert_id' => $r->advert->id,
+            'user_id' => $user ? $user->id : null
+        ];
+
+        if (empty($user)) {
+            $conditions['user_ip'] = client_ip();
+        }
+
+        AdvertFavourite::where($conditions)->delete();
+        return response(['message' => 'با موفقیت ثبت شد'], 200);
+    }
+
+    public static function favourites(CategoryAnswerFavouriteRequest $r)
+    {
+        $user = auth()->user();
+        return response($user->favouriteAdverts);
+    }
+
+    public static function deleteFavourite(CategoryAnswerDeleteFavouriteRequest $r)
+    {
+        try {
+            DB::beginTransaction();
+            $user = auth()->user();
+            AdvertFavourite::where(['user_id' => $user->id, 'advert_id' => $r->advert->id])->forceDelete();
+            DB::commit();
+            return response(['message' => 'با موفقیت حذف شد!'], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است !'], 500);
+        }
+    }
+
+    public static function recents(Request $r)
+    {
+        $user = auth()->user();
+        return response($user->recentAdverts);
+    }
+
+    public static function deleteRecent(CategoryAnswerDeleteRecentRequest $r)
+    {
+        try {
+            DB::beginTransaction();
+            $user = auth()->user();
+            AdvertRecent::where(['user_id' => $user->id, 'advert_id' => $r->advert->id])->forceDelete();
+            DB::commit();
+            return response(['message' => 'با موفقیت حذف شد!'], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return response(['message' => 'خطایی رخ داده است !'], 500);
+        }
+    }
+
+    public static function my(Request $r)
+    {
+        $user = auth()->user();
+        return response($user->adverts);
     }
 }
