@@ -6,7 +6,7 @@ import Chart from "@/app/ui/admin/dashboard/chart";
 const Dashboard = () => {
     return (
         <div className="flex gap-5 mt-5">
-            <div className="flex flex-col gap-5 w-2/3">
+            <div className="flex flex-col gap-5 w-full">
                 <div className="flex gap-5 justify-between">
                     <Card />
                     <Card />
@@ -15,9 +15,9 @@ const Dashboard = () => {
                 <Transactions />
                 <Chart />
             </div>
-            <div className="w-1/3">
+            {/* <div className="w-1/3">
                 <Rightbar />
-            </div>
+            </div> */}
         </div>
     );
 };

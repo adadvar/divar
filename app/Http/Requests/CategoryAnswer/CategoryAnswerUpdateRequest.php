@@ -27,6 +27,7 @@ class CategoryAnswerUpdateRequest extends FormRequest
     {
         return [
             'city_id' => 'nullable|exists:cities,id',
+            'category_id' => 'nullable|exists:categories,id',
             'title' => 'nullable|string|max:100',
             'slug' => 'nullable|string|unique:category_answers,slug|max:10',
             'slug_url' => 'nullable|string|unique:category_answers,slug_url|max:100',

@@ -26,7 +26,7 @@ const FormCategory = ({
     const subCities: any =
         parentCityId && cities.filter((c: any) => c.id === parentCityId)[0];
     const [images, setImages] = useState<File[]>([]);
-    let fileSelectRef = null;
+    const fileSelectRef = useRef<any>(null);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
@@ -163,7 +163,7 @@ const FormCategory = ({
                         className="flex justify-center items-center w-[100px] h-[100px] border border-gray-400 border-dashed bordered"
                         onClick={(e) => {
                             e.preventDefault();
-                            fileSelectRef?.click();
+                            fileSelectRef.current?.click();
                         }}
                     >
                         <ImageIcon />
@@ -173,7 +173,7 @@ const FormCategory = ({
                         onChange={handleImageChange}
                         hidden
                         multiple
-                        ref={(el) => (fileSelectRef = el)}
+                        ref={fileSelectRef}
                     />
                     {images.map((file, index) => (
                         <div className="flex relative" key={index}>

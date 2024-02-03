@@ -17,7 +17,7 @@ class CategoryAnswer extends Model
 
 
     protected $table = 'category_answers';
-    protected $fillable = ['user_id', 'category_form_id', 'content', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price', 'images', 'publish_at', 'state'];
+    protected $fillable = ['user_id', 'category_id', 'category_form_id', 'content', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price', 'images', 'publish_at', 'state'];
 
     protected $casts = [
         'content' => 'array',
@@ -35,12 +35,12 @@ class CategoryAnswer extends Model
 
     public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function form()
     {
-        return $this->belongsToMany(CategoryForm::class, 'category_form_id', 'id');
+        return $this->belongsTo(CategoryForm::class, 'category_form_id');
     }
 
     public function viewers()

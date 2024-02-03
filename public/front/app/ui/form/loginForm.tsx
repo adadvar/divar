@@ -1,11 +1,15 @@
 "use client";
 
+import { useFormStatus } from "react-dom";
 import { login } from "@/app/lib/actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { ImSpinner2 } from "react-icons/im";
+import LoginButton from "../buttons/login-button";
 
 const LoginForm = () => {
     const { replace, refresh } = useRouter();
+    const { pending } = useFormStatus();
     const onLogin = async (formData: FormData) => {
         const result = await login(formData);
         if (result?.message) {
@@ -34,9 +38,7 @@ const LoginForm = () => {
                 placeholder="password"
                 className="w-full p-5 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
             />
-            <button className="w-full p-5 text-text border-none rounded-md bg-teal-500 ">
-                Login
-            </button>
+            <LoginButton />
         </form>
     );
 };

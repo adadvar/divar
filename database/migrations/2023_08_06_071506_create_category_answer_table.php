@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('category_answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('category_form_id');
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('title', 100)->nullable();
@@ -36,6 +37,12 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

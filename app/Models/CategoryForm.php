@@ -34,6 +34,6 @@ class CategoryForm extends Model
 
     public function answers()
     {
-        return $this->hasMany(CategoryAnswer::class, 'category_form_id', 'id');
+        return $this->hasMany(CategoryAnswer::class, 'category_form_id');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryAnswer\CategoryAnswerCreateRequest;
 use App\Http\Requests\CategoryAnswer\CategoryAnswerUpdateRequest;
 use App\Http\Requests\CategoryAnswer\CategoryListAdminAnswerRequest;
+use App\Models\Category;
 use App\Models\CategoryAnswer;
 use App\Models\City;
 use Exception;
@@ -20,6 +21,8 @@ class CategoryAnswerController extends Controller
             $user = auth()->user();
             $data = $r->validated();
             $data['user_id'] = $user->id;
+            $category = $r->category;
+            $data['category_id'] = $category->id;
             $imageArr = [];
             if (!empty($r->file('images'))) {
                 foreach ($r->file('images') as $file) {
@@ -30,14 +33,13 @@ class CategoryAnswerController extends Controller
                 }
             }
             $data['images'] = ($imageArr);
-            $cat_title = $r->category->title;
-            $city = isset($r->city) ? $r->city : '';
-            $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
+            $cat_title = $category->title;
+            $city = City::find($r->city_id);
+            $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city->name . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
             $slug = bin2hex(random_bytes(5));
             $data['slug'] = $slug;
             $data['slug_url'] = $slug_url;
-
-            $form = $r->category->form()->where('published', true)->first();
+            $form = $category->form()->where('published', true)->first();
             if ($form) {
                 $answer = $form->answers()->create($data);
                 return response($answer, 200);
@@ -56,9 +58,10 @@ class CategoryAnswerController extends Controller
         try {
             $user = auth()->user();
             $answer = $r->categoryAnswer;
+            $category = $answer->category;
             $data = $r->validated();
             $data['user_id'] = $user->id;
-
+            $data['category_id'] = $category->id;
             $imageArr = [];
             if (!empty($r->file('images'))) {
                 foreach ($r->file('images') as $file) {
@@ -69,11 +72,10 @@ class CategoryAnswerController extends Controller
                 }
             }
             $data['images'] = ($imageArr);
-
             if (isset($r->title) && isset($r->city_id)) {
-                $cat_title = $r->category->title;
+                $cat_title = $category->title;
                 $city = City::find($r->city_id);
-                $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
+                $slug_url = str_replace(' ', '-', env('APP_NAME') . ' ' . $city->name . ' ' . $r->title . ' ' . $cat_title . ' ' . bin2hex(random_bytes(4)));
                 $slug = bin2hex(random_bytes(5));
                 $data['slug'] = $slug;
                 $data['slug_url'] = $slug_url;
@@ -92,9 +94,12 @@ class CategoryAnswerController extends Controller
     {
         $user = auth()->user();
         $form = $r->category->form;
+
         if ($form) {
-            $answers = $r->category->form->answers()->paginate($r->per_page ?? 10);
-            return  response(['form' => $form, 'answers' => $answers], 200);
+            $answers = $r->category->form->answers()->with('category')->paginate($r->per_page ?? 10);
+            return response(['form' => $form, 'answers' => $answers], 200);
+        } else {
+            return response(['error' => 'Form not found'], 404);
         }
     }
 
