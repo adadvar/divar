@@ -7,6 +7,7 @@ use App\Models\AdvertRecent;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class AddVisitedAdvertLogToAdvertRecentsTable
@@ -24,10 +25,10 @@ class AddVisitedAdvertLogToAdvertRecentsTable
      */
     public function handle(VisitAdvert $event): void
     {
-        if (auth()->check()) {
+        if (auth('api')->check()) {
             try {
                 $advert = $event->getAdvert();
-                $userId = auth()->user()->id;
+                $userId = auth('api')->user()->id;
                 $conditions = [
                     'user_id' => $userId,
                     'advert_id' => $advert->id,

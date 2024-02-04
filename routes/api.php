@@ -248,19 +248,15 @@ Route::group(['prefix' => 'advert'], function ($router) {
 
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
-        $router->get('/admin/show/{id_slug}', [
-            AdvertController::class, 'showAdmin'
-        ])->name('advert.admin.show');
+        $router->get('/admin/{category}', [
+            AdvertController::class, 'listAdmin'
+        ])->name('advert.admin.list');
 
-        $router->post('/upload-photo', [
-            AdvertController::class, 'uploadPhoto'
-        ])->name('advert.uploadPhoto');
-
-        $router->post('/', [
+        $router->post('/{category}', [
             AdvertController::class, 'create'
         ])->name('advert.create');
 
-        $router->put('/{advert}', [
+        $router->post('/update/{advert}', [
             AdvertController::class, 'update'
         ])->name('advert.update');
 

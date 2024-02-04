@@ -25,9 +25,9 @@ class AdvertCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
             'city_id' => 'nullable|exists:cities,id',
-            'title' => 'required|string|max:100',
+            'title' => 'nullable|string|max:100',
             'slug' => 'nullable|string|unique:adverts,slug|max:10',
             'slug_url' => 'nullable|string|unique:adverts,slug_url|max:100',
             'info' => 'nullable|string',
@@ -36,6 +36,7 @@ class AdvertCreateRequest extends FormRequest
             'price' => 'nullable|numeric|gt:0',
             'images' => 'nullable|array|max:1024',
             'publish_at' => 'nullable|date_format:Y-m-d H:i:s|after:now',
+            'content' => 'nullable|array'
         ];
     }
 }

@@ -107,55 +107,6 @@ export const listAdverts = async (params: {
       },
     };
 
-    let url = `${HOST_URL}/answer/list`;
-    if (params.slug) {
-      params.slug.forEach((slug) => {
-        if (slug) {
-          url += `/${slug}`;
-        }
-      });
-    }
-    const queryParams: string[] = [];
-
-    for (const key in params) {
-      if (key !== "slug" && params[key]) {
-        if (Array.isArray(params[key])) {
-          queryParams.push(`${key}=${(params[key] as string[]).join(",")}`);
-        } else {
-          queryParams.push(`${key}=${params[key]}`);
-        }
-      }
-    }
-
-    if (queryParams.length > 0) {
-      url += "?" + queryParams.join("&");
-    }
-    const response = await fetch(url, config);
-    const data = await response.json();
-
-    return data;
-  } catch (err) {
-    console.log(err)
-    throw new Error("Failed to fetch adverts!")
-  }
-};
-
-export const listAdminAdverts = async (params: {
-  page?: number;
-  slug?: string[];
-  [key: string]: string | string[] | number | undefined;
-}) => {
-  try {
-    const config: any = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      next: {
-        revalidate: 20,
-      },
-    };
-
     let url = `${HOST_URL}/advert/list`;
     if (params.slug) {
       params.slug.forEach((slug) => {
@@ -189,6 +140,7 @@ export const listAdminAdverts = async (params: {
   }
 };
 
+
 //////////////////////////////////////form//////////////////////////////////////////
 
 export const getForm = async (slug: string) => {
@@ -214,7 +166,7 @@ export const getForm = async (slug: string) => {
   }
 };
 
-export const listAnswers = async () => {
+export const listUserAdverts = async () => {
   const cookie: any = cookies()?.get("token");
   const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
@@ -227,7 +179,7 @@ export const listAnswers = async () => {
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/answer/user`, config);
+    const response = await fetch(`${HOST_URL}/advert/user`, config);
     const data = await response.json();
 
     return data;
@@ -237,7 +189,7 @@ export const listAnswers = async () => {
   }
 };
 
-export const listAdminAnswers = async ({ slug, page }: { slug: string, page?: string }) => {
+export const listAdminAdverts = async ({ slug, page }: { slug: string, page?: string }) => {
   const cookie: any = cookies()?.get("token");
   const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
@@ -250,7 +202,7 @@ export const listAdminAnswers = async ({ slug, page }: { slug: string, page?: st
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/answer/admin/${slug}?page=${page}`, config);
+    const response = await fetch(`${HOST_URL}/advert/admin/${slug}?page=${page}`, config);
     const data = await response.json();
 
     return data;

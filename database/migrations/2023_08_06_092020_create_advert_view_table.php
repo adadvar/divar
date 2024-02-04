@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('advert_id');
-            $table->string ('user_ip', 100)->nullable();
+            $table->string('user_ip', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

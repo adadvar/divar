@@ -38,11 +38,6 @@ class Category extends Model
         return $this->hasOne(CategoryForm::class);
     }
 
-    public function answers()
-    {
-        return $this->hasMany(CategoryAnswer::class);
-    }
-
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

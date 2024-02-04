@@ -15,7 +15,7 @@ class AdvertLikeRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::forUser(auth()->user())
+        return Gate::forUser(auth('api')->user())
             ->allows('like', $this->advert);
     }
 

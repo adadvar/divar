@@ -21,15 +21,21 @@ class AdvertPolicy
         //
     }
 
+    public function update(User $user, Advert $advert = null)
+    {
+        return ($user->isAdmin() || ($user->id == $advert->user_id));
+    }
+
+    public function listAdmin(User $user, Advert $advert = null)
+    {
+        return $user->isAdmin();
+    }
+
     public function changeState(User $user, Advert $advert)
     {
         return $user->isAdmin();
     }
 
-    public function showAdmin(User $user, Advert $advert)
-    {
-        return $user->isAdmin();
-    }
 
     public function delete(User $user, Advert $advert = null)
     {
@@ -40,7 +46,7 @@ class AdvertPolicy
     {
         if ($advert && $advert->isAccepted()) {
             $conditions = [
-                'Advert_id' => $advert->id,
+                'advert_id' => $advert->id,
                 'user_id' => $user ? $user->id : null
             ];
 

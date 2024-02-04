@@ -14,19 +14,21 @@ return new class extends Migration
     {
         Schema::create('adverts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_form_id');
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('title', 100)->nullable();
             $table->string('slug', 10)->nullable();
             $table->string('slug_url', 100)->nullable();
-            $table->text('info')->nullable();
+            $table->text('images')->nullable();
+            $table->decimal('price', 15, 2)->nullable();
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
-            $table->float('price')->nullable();
-            $table->text('images')->nullable();
+            $table->text('info')->nullable();
+            $table->json('content')->nullable();
             $table->timestamp('publish_at')->nullable();
-            $table->enum('state', Advert::STATE)->default(Advert::STATE_ACCEPTED);
+            $table->enum('state', Advert::STATE)->default(Advert::STATE_PENDING);
             // $table->foreignId('city_id')->nullable()->references('id')->on('cities')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
@@ -47,6 +49,12 @@ return new class extends Migration
             $table->foreign('city_id')
                 ->references('id')
                 ->on('cities')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('category_form_id')
+                ->references('id')
+                ->on('category_forms')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

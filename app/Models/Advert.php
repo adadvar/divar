@@ -17,10 +17,12 @@ class Advert extends Model
     const STATE = [self::STATE_PENDING, self::STATE_ACCEPTED, self::STATE_BLOCKED];
 
     protected $table = 'adverts';
-    protected $fillable = ['category_id', 'user_id', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price', 'images', 'publish_at', 'state'];
+    protected $fillable = ['user_id', 'category_id', 'category_form_id', 'content', 'city_id', 'title', 'slug', 'slug_url', 'info', 'lat', 'long', 'price', 'images', 'publish_at', 'state'];
+
     protected $appends = ['age'];
 
     protected $casts = [
+        'content' => 'array',
         'images' => 'array',
     ];
 
@@ -37,6 +39,11 @@ class Advert extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function form()
+    {
+        return $this->belongsTo(CategoryForm::class, 'category_form_id');
     }
 
     public function viewers()

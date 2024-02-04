@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdvertFavourite extends Pivot
 {
-    use SoftDeletes;
 
     protected $table = 'advert_favourites';
-    protected $fillable = ['user_id','advert_id', 'user_ip'];
+    protected $fillable = ['user_id', 'advert_id', 'user_ip'];
 }

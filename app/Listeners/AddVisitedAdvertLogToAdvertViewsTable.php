@@ -7,6 +7,7 @@ use App\Models\AdvertView;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class AddVisitedAdvertLogToAdvertViewsTable
@@ -27,19 +28,19 @@ class AddVisitedAdvertLogToAdvertViewsTable
         try {
             $advert = $event->getAdvert();
             $conditions = [
-                'user_id' => auth()->id(),
+                'user_id' => auth('api')->id(),
                 'advert_id' => $advert->id,
                 ['created_at', '>', now()->subDays(1)]
             ];
             $clientIp = client_ip();
 
-            if (!auth()->check()) {
+            if (!auth('api')->check()) {
                 $conditions['user_ip'] = $clientIp;
             }
 
             if (!AdvertView::where($conditions)->count()) {
                 AdvertView::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => auth('api')->id(),
                     'advert_id' => $advert->id,
                     'user_ip' => $clientIp
                 ]);

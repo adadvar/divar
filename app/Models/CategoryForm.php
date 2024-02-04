@@ -22,18 +22,13 @@ class CategoryForm extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function advert()
-    {
-        return $this->belongsToMany(Advert::class);
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function answers()
+    public function adverts()
     {
-        return $this->hasMany(CategoryAnswer::class, 'category_form_id');
+        return $this->hasMany(Advert::class, 'category_form_id');
     }
 }
