@@ -52,11 +52,15 @@ export const getCities = async () => {
 
 
 export const showAdvert = async (params: any) => {
+  const cookie: any = cookies()?.get("token");
+  const token = cookie && cookie.value && JSON.parse(cookie.value);
+
   try {
     const config = {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     };
     const response = await fetch(`${HOST_URL}/advert/show/${params.slug_url}`, config);
@@ -65,7 +69,7 @@ export const showAdvert = async (params: any) => {
     return data;
   } catch (err) {
     console.log(err)
-    throw new Error("Failed to fetch cities!")
+    throw new Error("Failed to fetch adver!")
   }
 };
 

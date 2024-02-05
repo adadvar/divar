@@ -1,6 +1,7 @@
 "use client";
 
 import { createAnswer } from "@/app/lib/actions";
+import { removeEntriesWithFourDigitKeys } from "@/app/lib/utils";
 import { useGlobal } from "@/app/store/global-store";
 import {
     FormElementInstance,
@@ -62,16 +63,17 @@ const FormCategory = ({
             toast.error("please check the form for errors");
             return;
         }
+
         for (const image of images) {
             formData.append("images[]", image);
         }
-        // console.log(formData.getAll("images[]"));
+
         for (let [key, value] of Object.entries(formValues.current)) {
             formData.append(`content[${key}]`, value);
             console.log(key, value);
         }
 
-        // removeEntriesWithFourDigitKeys(formData);
+        removeEntriesWithFourDigitKeys(formData);
 
         const result = await createAnswer({
             slug,
@@ -82,16 +84,6 @@ const FormCategory = ({
         } else {
             toast.success("با موفقیت ذخیره شد");
         }
-    };
-
-    const removeEntriesWithFourDigitKeys = (formData: any) => {
-        const keysToDelete = [];
-        for (const key of formData.keys()) {
-            if (/\b\d{4}\b/.test(key)) {
-                keysToDelete.push(key);
-            }
-        }
-        keysToDelete.forEach((key) => formData.delete(key));
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,14 +109,10 @@ const FormCategory = ({
                 // encType="multipart/form-data"
                 className="flex flex-col w-full my-8"
             >
-                <label
-                    htmlFor="city"
-                    className="text-base font-bold text-black mb-4"
-                >
+                <label className="text-base font-bold text-black mb-4">
                     استان
                 </label>
                 <select
-                    name="city"
                     className="bg-transparent input text-black border-gray-400 focus:border-red-800 mb-4"
                     onChange={(e) => setParentCityId(Number(e.target.value))}
                 >

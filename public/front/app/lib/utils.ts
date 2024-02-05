@@ -127,3 +127,13 @@ export function appendQueryParams(url = window.location.href, queryParams: { [ke
 export function idGenerator(): string {
     return Math.floor(Math.random() * 10001).toString()
 }
+
+export const removeEntriesWithFourDigitKeys = (formData: any) => {
+    const keysToDelete = [];
+    for (const key of formData.keys()) {
+        if (/\b\d{4}\b/.test(key) && !/\[\d{4}\]/.test(key)) {
+            keysToDelete.push(key);
+        }
+    }
+    keysToDelete.forEach((key) => formData.delete(key));
+};

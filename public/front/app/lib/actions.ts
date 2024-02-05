@@ -123,7 +123,7 @@ export const createAnswer = async (params: any) => {
       body: formData
     };
     // @ts-ignore
-    const response = await fetch(`${HOST_URL}/answer/${slug}`, config);
+    const response = await fetch(`${HOST_URL}/advert/${slug}`, config);
     const data = await response.json();
     return data
   } catch (err) {
