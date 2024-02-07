@@ -62,7 +62,7 @@ export interface advert {
   // slug: string | null;
   slug_url: string;
   title: string;
-  // info: string | null;
+  info: string | null;
   // lat: number | null;
   // long: number | null;
   // price: number;

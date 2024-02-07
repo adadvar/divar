@@ -26,7 +26,6 @@ export default function RootLayout({
                 <main className="max-w-screen-xl mx-auto py-20 px-2">
                     <Overlay />
                     {children}
-                    <ButtomNavbar />
                 </main>
             </body>
         </html>

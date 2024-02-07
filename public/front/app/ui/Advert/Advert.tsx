@@ -1,6 +1,6 @@
-import { findCategoryPath } from "@/app/lib/utils";
+import { findCategoryPath, getAge } from "@/app/lib/utils";
 import CategoryPathItem from "./CategoryPathItem";
-import AdvertNavbar from "../navbar/AdvertNavbar";
+import AdvertNavbar from "./AdvertNavbar";
 import Slider from "../Slider";
 import RegularList from "../RegularList";
 import { advert, category } from "@/public/interfaces";
@@ -18,19 +18,31 @@ const Advert = async ({ slug_url }: { slug_url: string }) => {
 
     return (
         <>
-            <AdvertNavbar />
-            <Slider image_url={image_url} images={advert.images} />
-            {foundPath && (
-                <div className="flex items-center text-center text-gray-500 text-xs font-bold my-7">
-                    <RegularList
-                        items={foundPath}
-                        resourceName="category"
-                        ItemComponent={CategoryPathItem}
-                    />
-                    <p className="text-gray-400 px-2">{advert.title}</p>
+            <div className="w-full lg:w-1/2">
+                <Slider image_url={image_url} images={advert.images} />
+            </div>
+            <div className="flex flex-col w-full lg:w-1/2">
+                {foundPath && (
+                    <div className="flex items-center text-center text-gray-500 text-xs font-bold my-7">
+                        <RegularList
+                            items={foundPath}
+                            resourceName="category"
+                            ItemComponent={CategoryPathItem}
+                        />
+                        <p className="text-gray-400 px-2">{advert.title}</p>
+                    </div>
+                )}
+                <div className="text-xl text-gray-800  font-bold">
+                    {advert.title}
                 </div>
-            )}
-            <div className="text-gray-800 ms-2 font-bold">{advert.title}</div>
+                <p className="text-sm text-gray-400  my-5">
+                    {getAge(advert.age)}
+                </p>
+                <p className="text-lg text-gray-700 mb-3">توضیحات</p>
+                <div className="text-base text-gray-800 leading-10 text-justify">
+                    {advert.info}
+                </div>
+            </div>
         </>
     );
 };
