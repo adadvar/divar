@@ -18,7 +18,7 @@ const CatItem = ({ category }: Props) => {
             onClick={() => {}}
         >
             <div className="text-2xl text-gray-400">
-                {category.icon && <IconComponent />}
+                {/* {category.icon && <IconComponent />} */}
             </div>
             <p className="">{category.title}</p>
             <div className="text-2xl text-gray-400">

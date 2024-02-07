@@ -28,7 +28,7 @@ const MobCatItem = ({ category }: { category: category }) => {
                 href={`/s/iran/${category.slug}`}
             >
                 <div className="text-2xl text-red-700 bg-gray-100 p-1 rounded">
-                    {category.icon && <IconComponent />}
+                    {/* {category.icon && <IconComponent />} */}
                 </div>
                 <p className="text-xs text-gray-700 my-1">{category.title}</p>
             </Link>

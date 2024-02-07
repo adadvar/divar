@@ -29,7 +29,7 @@ const SideCat = ({
                 } text-gray-400 hover:text-gray-600 my-2`}
             >
                 <div className="text-2xl p-1 rounded">
-                    {category.icon && <IconComponent />}
+                    {/* {category.icon && <IconComponent />} */}
                 </div>
 
                 <p className={`text-sm my-1 font-bold ${marginStart}`}>

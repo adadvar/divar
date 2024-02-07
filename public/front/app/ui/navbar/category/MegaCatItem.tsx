@@ -34,7 +34,7 @@ const MegaCatItem = ({ category }: { category: category }) => {
         >
             <div className="flex">
                 <div className="text-xl p-1">
-                    {category.icon && <IconComponent />}
+                    {/* {category.icon && <IconComponent />} */}
                 </div>
 
                 <p className={`text-xs my-1 font-bold`}>{category.title}</p>
