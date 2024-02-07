@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
 
     private function createUser($num = 1)
     {
-        $user = User::factory()->create([
+        $user = User::create([
             'name' => 'کاربر ' . $num,
             'email' => 'user' . $num . '@divar.me',
             'mobile' => '+989' . str_repeat($num, 9),
