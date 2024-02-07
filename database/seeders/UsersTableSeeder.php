@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
 
     private function createAdminUser()
     {
-        $user = User::factory()->create([
+        $user = User::create([
             'type' => User::TYPE_ADMIN,
             'name' => 'مدیر اصلی',
             'email' => 'admin@divar.me',
@@ -49,6 +49,5 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user->save();
-
     }
 }
