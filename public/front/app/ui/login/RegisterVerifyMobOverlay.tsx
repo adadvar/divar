@@ -21,8 +21,10 @@ const RegisterVerifyMobOverlay = () => {
                       username: data1.mobile,
                       password: data1.mobile.replace("+98", "0"),
                   };
-
-            const data2 = await login(params);
+            const fd = new FormData();
+            fd.append("username", params.username);
+            fd.append("password", params.password);
+            const data2 = await login(fd);
             setAuth(data2);
             setTypeDialog("");
         } else {
