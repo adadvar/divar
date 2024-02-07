@@ -1,4 +1,3 @@
-import { listAdminAnswers } from "@/app/lib/data";
 import { ReactNode } from "react";
 import {
     ElementsType,
@@ -6,6 +5,7 @@ import {
 } from "@/app/ui/admin/dashboard/formBuilder/formElements";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
+import { listAdminAdverts } from "@/app/lib/data";
 
 type Row = { [key: string]: string } & { createdAt: Date };
 
@@ -19,7 +19,7 @@ const SingleAnswerPage = async ({
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
     const slug = params.id;
-    const result = await listAdminAnswers({ slug, page });
+    const result = await listAdminAdverts({ slug, page });
     const formElements = result.form.content as FormElementInstance[];
     const columns: {
         id: string;

@@ -1,4 +1,4 @@
-import { listAdminAnswers } from "@/app/lib/data";
+import { listAdminAdverts } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import { format } from "date-fns-jalali";
@@ -15,7 +15,7 @@ const AnswersPage = async ({
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
     const slug = params.id;
-    const result = await listAdminAnswers({ slug, page });
+    const result = await listAdminAdverts({ slug, page });
 
     const answers: any = result.answers.data;
     const count = result.answers.total;

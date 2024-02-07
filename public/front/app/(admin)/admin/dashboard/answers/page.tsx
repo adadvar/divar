@@ -1,4 +1,4 @@
-import { listAdminAnswers, listAnswers } from "@/app/lib/data";
+import { listAdminAdverts } from "@/app/lib/data";
 import AddCategoryDialogBtn from "@/app/ui/admin/dashboard/addCategoryDialogBtn";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
@@ -10,7 +10,7 @@ const AnswersPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
     const slug = searchParams?.slug || "";
-    const answers = await listAdminAnswers(slug);
+    const answers = await listAdminAdverts(slug);
     console.log(answers);
     const count = answers.total;
     const per_page = answers.per_page;

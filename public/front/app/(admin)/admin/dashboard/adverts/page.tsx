@@ -8,7 +8,7 @@ import { MdPerson } from "react-icons/md";
 const AdvertsPage = async ({ searchParams }: { searchParams: any }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
-    const adverts: any = await listAdminAdverts({ q, page });
+    const adverts: any = await listAdminAdverts({ slug: "", page });
     const count = adverts.total;
     const per_page = adverts.per_page;
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
