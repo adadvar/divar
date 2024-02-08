@@ -1,0 +1,8 @@
+{
+  "disks": [
+    {
+      "name": "divar-disk",
+      "mountTo": "public/adverts"
+    }
+  ]
+}
