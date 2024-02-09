@@ -271,6 +271,9 @@ export const listUsers = async ({ q = '', page = '1' }: { q?: string, page?: str
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
+      next: {
+        revalidate: 20,
+      },
     };
     const response = await fetch(`${HOST_URL}/user/list?q=${regex}&page=${page}`, config);
     const data = await response.json();
