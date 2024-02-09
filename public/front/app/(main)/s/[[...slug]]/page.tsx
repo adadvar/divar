@@ -4,6 +4,13 @@ import HomeContent from "@/app/ui/home-content";
 import { category, city } from "@/public/interfaces";
 import { cookies } from "next/headers";
 
+export async function generateStaticParams() {
+    const categories: category[] = await listCategories({});
+    return categories.map((category) => ({
+        slug: ["iran", category.slug],
+    }));
+}
+
 export default async function Home({
     searchParams,
     params,
