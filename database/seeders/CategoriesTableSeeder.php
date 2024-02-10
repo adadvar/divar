@@ -39,11 +39,12 @@ class CategoriesTableSeeder extends Seeder
         ];
 
 
-        foreach ($categories as $Category) {
+        foreach ($categories as $i => $Category) {
             Category::create([
                 'title' => $Category,
                 'parent_id' => null,
                 'slug' => Str::slug($Category, '-'),
+                'icon' => $icons[$i]
             ]);
         }
         foreach ($subcategories as $k => $subcategories2) {
