@@ -1,7 +1,13 @@
 import { category } from "@/public/interfaces";
 import Link from "next/link";
-import * as Icons from "react-icons/bi";
-import RegularList from "../RegularList";
+import { BiBuildingHouse, BiCar, BiStore, BiHome } from "react-icons/bi";
+
+const iconComponents: { [key: string]: any } = {
+    BiBuildingHouse: BiBuildingHouse,
+    BiCar: BiCar,
+    BiStore: BiStore,
+    BiHome: BiHome,
+};
 
 const SideCat = ({
     category,
@@ -14,8 +20,7 @@ const SideCat = ({
     searchParams: { [key: string]: string | string[] | undefined };
     marginStart?: string;
 }) => {
-    const IconComponent =
-        category.icon && Icons[category.icon as keyof typeof Icons];
+    const Icon = category.icon && iconComponents[category.icon];
 
     const city = slug.length && slug[0] ? slug[0] : "iran";
     return (
@@ -29,9 +34,8 @@ const SideCat = ({
                 } text-gray-400 hover:text-gray-600 my-2`}
             >
                 <div className="text-2xl p-1 rounded">
-                    {/* {category.icon && <IconComponent />} */}
+                    {category.icon && <Icon />}
                 </div>
-
                 <p className={`text-sm my-1 font-bold ${marginStart}`}>
                     {category.title}
                 </p>
