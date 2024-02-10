@@ -18,7 +18,7 @@ jobs:
         run: |
           npm i -g @liara/cli@5
           liara deploy --app="laravel-divar" --api-token="$LIARA_TOKEN" --no-app-logs
-      - name: deploy-front
+      - name: update-liara
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
