@@ -22,4 +22,5 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
+          npm i -g @liara/cli@5
           liara deploy --app="next-divar" --api-token="$LIARA_TOKEN" --no-app-logs --path="public/front"
