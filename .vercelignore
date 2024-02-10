@@ -1,9 +1,7 @@
 /.phpunit.cache
 /node_modules
 /public/adverts
-/public/front/node_modules
-/public/front/.next
-/public/front/.env.local
+/public/front
 /public/build
 /public/hot
 /public/storage
@@ -21,4 +19,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-.vercel
