@@ -6,6 +6,7 @@ import { DIALOG_TYPE_LOGIN } from "@/app/lib/utils";
 const RegisterAdvertButton = () => {
     const cookie: any = cookies().get("token");
     const token = cookie && JSON.parse(cookie.value);
+
     return (
         <div className="btn btn-ghost btn-hover text-white bg-red-700 hover:bg-red-600">
             {!!token ? (
