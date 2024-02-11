@@ -7,13 +7,12 @@ export async function middleware(request: NextRequest) {
   let isAuthenticated = false;
 
   try {
-    await me();
-    isAuthenticated = true;
+    const data = await me();
+    isAuthenticated = data.type == 'admin'
   } catch (error) {
     isAuthenticated = false;
 
   }
-  console.log('authenticate', isAuthenticated)
   const { pathname } = request.nextUrl;
 
   if (isAuthenticated && pathname.startsWith('/admin/login')) {

@@ -193,7 +193,7 @@ export const listUserAdverts = async () => {
   }
 };
 
-export const listAdminAdverts = async ({ slug, page }: { slug: string, page?: string }) => {
+export const listAdminAdverts = async ({ q = '', slug, page }: { q: string, slug: string, page?: string }) => {
   const cookie: any = cookies()?.get("token");
   const token = cookie && cookie.value && JSON.parse(cookie.value);
   try {
@@ -206,7 +206,7 @@ export const listAdminAdverts = async ({ slug, page }: { slug: string, page?: st
       cache: 'no-cache',
     };
     //@ts-ignore
-    const response = await fetch(`${HOST_URL}/advert/admin/${slug}?page=${page}`, config);
+    const response = await fetch(`${HOST_URL}/advert/admin/${slug}?page=${page}&q=${q}`, config);
     const data = await response.json();
 
     return data;

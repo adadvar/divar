@@ -3,6 +3,7 @@ import { findCategory } from "@/app/lib/utils";
 import AddCategoryDialogBtn from "@/app/ui/admin/dashboard/addCategoryDialogBtn";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
+import { format } from "date-fns-jalali";
 import Image from "next/image";
 import Link from "next/link";
 import { MdPerson } from "react-icons/md";
@@ -28,7 +29,6 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
             <table className="w-full">
                 <thead>
                     <tr>
-                        <td className="p-3">Photo</td>
                         <td className="p-3">Title</td>
                         <td className="p-3">Created At</td>
                     </tr>
@@ -36,33 +36,15 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                 <tbody>
                     {categories.data.map((category: any) => (
                         <tr key={category.id}>
-                            <td className="p-3">
-                                <div className="flex items-center gap-3">
-                                    {category.icon ? (
-                                        <Image
-                                            src={
-                                                image_url +
-                                                category.user_id +
-                                                "/" +
-                                                category.icon
-                                            }
-                                            alt=""
-                                            width={40}
-                                            height={40}
-                                            className="object-cover rounded-full"
-                                            unoptimized={true}
-                                        />
-                                    ) : (
-                                        <MdPerson size={50} />
-                                    )}
-                                </div>
-                            </td>
                             <td className="p-3">{category.title}</td>
                             <td className="p-3">
-                                {category.created_at?.toString().slice(0, 10)}
+                                {format(
+                                    new Date(category.created_at),
+                                    "yyyy-MM-dd"
+                                )}
                             </td>
                             <td className="p-3">
-                                <div className="flex gap-3">
+                                <div className="flex justify-end gap-3">
                                     {category.child.length > 0 ? (
                                         <Link
                                             href={`/admin/dashboard/categories?slug=${category.slug}`}
@@ -81,10 +63,10 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                                                 </button>
                                             </Link>
                                             <Link
-                                                href={`/admin/dashboard/answers/${category.slug}`}
+                                                href={`/admin/dashboard/advert/${category.slug}`}
                                             >
                                                 <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
-                                                    View Answers
+                                                    View Adverts
                                                 </button>
                                             </Link>
                                         </>

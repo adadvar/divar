@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Advert;
 
+use App\Models\Advert;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +15,7 @@ class AdvertListAdminRequest extends FormRequest
      */
     public function authorize()
     {
-        $advert = $this->category->form->adverts()->first();
+        $advert = Advert::first();
         return Gate::allows('list-admin', $advert);
     }
 

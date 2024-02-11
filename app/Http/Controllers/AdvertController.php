@@ -108,7 +108,11 @@ class AdvertController extends Controller
         $form = $r->category->form;
 
         if ($form) {
-            $adverts = $r->category->form->adverts()->with(['category', 'city'])->paginate($r->per_page ?? 10);
+            $adverts = $r->category->form->adverts();
+            if ($r->q) {
+                $adverts->where('title', 'LIKE', '%' . $r->q . '%');
+            }
+            $adverts = $adverts->with(['category', 'city'])->paginate($r->per_page ?? 10);
             return response(['form' => $form, 'adverts' => $adverts], 200);
         } else {
             return response(['error' => 'Form not found'], 404);
