@@ -63,7 +63,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
                                                 </button>
                                             </Link>
                                             <Link
-                                                href={`/admin/dashboard/advert/${category.slug}`}
+                                                href={`/admin/dashboard/categories/advert/${category.slug}`}
                                             >
                                                 <button className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600">
                                                     View Adverts

@@ -248,7 +248,7 @@ Route::group(['prefix' => 'advert'], function ($router) {
 
     Route::group(['middleware' => ['auth:sanctum']], function ($router) {
 
-        $router->get('/admin/{category}', [
+        $router->get('/admin/{category?}', [
             AdvertController::class, 'listAdmin'
         ])->name('advert.admin.list');
 

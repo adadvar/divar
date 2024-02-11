@@ -49,17 +49,17 @@ const menuItems = [
         list: [
             {
                 title: "Revenue",
-                path: "/admin/dashboard/revenue",
+                path: "/admin/dashboard/",
                 icon: <MdWork />,
             },
             {
                 title: "Reports",
-                path: "/admin/dashboard/reports",
+                path: "/admin/dashboard/",
                 icon: <MdAnalytics />,
             },
             {
                 title: "Teams",
-                path: "/admin/dashboard/teams",
+                path: "/admin/dashboard/",
                 icon: <MdPeople />,
             },
         ],
@@ -69,12 +69,12 @@ const menuItems = [
         list: [
             {
                 title: "Settings",
-                path: "/admin/dashboard/settings",
+                path: "/admin/dashboard/",
                 icon: <MdOutlineSettings />,
             },
             {
                 title: "Help",
-                path: "/admin/dashboard/help",
+                path: "/admin/dashboard/",
                 icon: <MdHelpCenter />,
             },
         ],

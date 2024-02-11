@@ -206,6 +206,7 @@ export const listAdminAdverts = async ({ q = '', slug, page }: { q: string, slug
       },
       cache: 'no-cache',
     };
+    console.log('url', `${HOST_URL}/advert/admin/${slug}?page=${page}&q=${q}`)
     //@ts-ignore
     const response = await fetch(`${HOST_URL}/advert/admin/${slug}?page=${page}&q=${q}`, config);
     const data = await response.json();

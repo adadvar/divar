@@ -105,19 +105,21 @@ class AdvertController extends Controller
 
     public function listAdmin(AdvertListAdminRequest $r)
     {
-        $user = auth()->user();
-        $form = $r->category->form;
-
-        if ($form) {
+        $form = null;
+        $adverts = null;
+        if ($r->category) {
+            $form = $r->category->form;
+            if (!$form) return response(['form' => [], 'adverts' => ['data' => []]], 200);
             $adverts = $r->category->form->adverts();
-            if ($r->q) {
-                $adverts->where('title', 'LIKE', '%' . $r->q . '%');
-            }
-            $adverts = $adverts->with(['category', 'city'])->paginate($r->per_page ?? 10);
-            return response(['form' => $form, 'adverts' => $adverts], 200);
         } else {
-            return response(['error' => 'Form not found'], 404);
+            $adverts = Advert::query();
         }
+
+        if ($r->q) {
+            $adverts->where('title', 'LIKE', '%' . $r->q . '%');
+        }
+        $adverts = $adverts->with(['category', 'city'])->paginate($r->per_page ?? 10);
+        return response(['form' => $form, 'adverts' => $adverts], 200);
     }
 
     public function list(Request $r)
