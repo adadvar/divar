@@ -2,7 +2,7 @@ import Image from "next/image";
 import { MdPerson } from "react-icons/md";
 const transactions = () => {
     return (
-        <div className="bg-bgSoft p-5 rounded-lg">
+        <div className="bg-bgSoft p-5 rounded-lg overflow-x-scroll">
             <h2 className="mb-5 font-extralight text-textSoft">
                 Latest Transactions
             </h2>

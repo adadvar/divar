@@ -16,9 +16,9 @@ class AdvertsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        if (Advert::count()) {
-            Advert::truncate();
-        }
+        // if (Advert::count()) {
+        //     Advert::truncate();
+        // }
 
         $userIds = User::pluck('id')->toArray();
         // $cityIds = City::whereDoesntHave('child')->pluck('id')->toArray();

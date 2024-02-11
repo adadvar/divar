@@ -10,6 +10,7 @@ import {
     MdOutlineSettings,
     MdHelpCenter,
     MdLogout,
+    MdClose,
 } from "react-icons/md";
 import RegularList from "../../RegularList";
 import menuLink from "./menuLink";
@@ -82,17 +83,17 @@ const menuItems = [
     },
 ];
 
-const sidebar = async () => {
-    const data = await me();
-
+const sidebar = ({ setSideClose }: { setSideClose: () => void }) => {
     return (
-        <div className="sticky top-10">
+        <div className="fixed bg-bg inset-0 scrollbar-none overflow-y-auto z-50 p-5">
+            <button
+                className="absolute top-5 end-5"
+                onClick={() => setSideClose()}
+            >
+                <MdClose size={20} />
+            </button>
             <div className="flex items-center gap-5 mt-5">
                 <MdPerson size={50} />
-                <div className="flex flex-col">
-                    <span className="font-medium">{data.name}</span>
-                    <span className="text-xs text-textSoft">{data.type}</span>
-                </div>
             </div>
             {menuItems.map((cat) => (
                 <div className="" key={cat.title}>
@@ -108,9 +109,7 @@ const sidebar = async () => {
             ))}
             <form
                 action={async () => {
-                    "use server";
                     await logout();
-                    // revalidatePath("/admin/dashboard");
                     redirect("/admin/login");
                 }}
             >

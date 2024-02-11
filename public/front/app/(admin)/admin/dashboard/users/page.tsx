@@ -15,7 +15,7 @@ const UsersPage = async ({ searchParams }: { searchParams: any }) => {
     const count = users.total;
     const per_page = users.per_page;
     return (
-        <div className="bg-bgSoft p-5 rounded-lg mt-5">
+        <div className="bg-bgSoft p-5 rounded-lg overflow-x-scroll mt-5">
             <div className="flex items-center justify-between">
                 <Search placeholder="Search for a user..." />
                 <Link href="/admin/dashboard/users/add">

@@ -21,7 +21,7 @@ const CategoriesPage = async ({ searchParams }: { searchParams: any }) => {
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
     const image_url = BASE_URL + "categories/";
     return (
-        <div className="bg-bgSoft p-5 rounded-lg mt-5">
+        <div className="bg-bgSoft p-5 rounded-lg overflow-x-scroll mt-5">
             <div className="flex items-center justify-between">
                 <Search placeholder="Search for a category..." />
                 <AddCategoryDialogBtn />
