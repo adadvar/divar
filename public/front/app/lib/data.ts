@@ -76,12 +76,13 @@ export const showAdvert = async (params: any) => {
 export const showAdminAdvert = async (params: any) => {
   const cookie: any = cookies()?.get("token");
   const token = cookie && cookie.value && JSON.parse(cookie.value);
+
   try {
     const config = {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${params.token}`,
+        'Authorization': `Bearer ${token}`,
 
       },
     };

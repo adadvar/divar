@@ -26,6 +26,11 @@ class AdvertPolicy
         return ($user->isAdmin() || ($user->id == $advert->user_id));
     }
 
+    public function showAdmin(User $user, Advert $advert = null)
+    {
+        return $user->isAdmin();
+    }
+
     public function listAdmin(User $user, Advert $advert = null)
     {
         return $user->isAdmin();

@@ -2,6 +2,7 @@ import { listAdminAdverts } from "@/app/lib/data";
 import Pagination from "@/app/ui/admin/dashboard/pagination";
 import Search from "@/app/ui/admin/dashboard/search";
 import { format } from "date-fns-jalali";
+import Link from "next/link";
 
 const AdvertsPage = async ({
     params,
@@ -45,6 +46,14 @@ const AdvertsPage = async ({
                             <td className="p-6">{adv.state}</td>
                             <td className="p-6">
                                 {format(new Date(adv.created_at), "yyyy-MM-dd")}
+                            </td>
+                            <td className="p-6">
+                                <Link
+                                    href={`/admin/dashboard/adverts/${adv.slug_url}`}
+                                    className="py-1 px-2 rounded-md text-text border-none cursor-pointer bg-teal-600"
+                                >
+                                    View
+                                </Link>
                             </td>
                         </tr>
                     ))}

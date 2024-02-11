@@ -1,6 +1,6 @@
 "use client";
 
-import { createAnswer } from "@/app/lib/actions";
+import { createAdvert } from "@/app/lib/actions";
 import { removeEntriesWithFourDigitKeys } from "@/app/lib/utils";
 import { useGlobal } from "@/app/store/global-store";
 import {
@@ -75,7 +75,7 @@ const FormCategory = ({
 
         removeEntriesWithFourDigitKeys(formData);
 
-        const result = await createAnswer({
+        const result = await createAdvert({
             slug,
             formData,
         });

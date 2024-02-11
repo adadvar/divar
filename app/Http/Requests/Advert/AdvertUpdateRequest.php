@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Advert;
 
+use App\Rules\CanChangeAdvertState;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdvertUpdateRequest extends FormRequest
@@ -35,6 +36,7 @@ class AdvertUpdateRequest extends FormRequest
             'price' => 'nullable|numeric|gt:0',
             'images' => 'nullable|array|max:1024',
             'publish_at' => 'nullable|date_format:Y-m-d H:i:s|after:now',
+            'state' => ['nullable', new CanChangeAdvertState($this->advert)],
             'content' => 'nullable|array'
         ];
     }

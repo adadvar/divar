@@ -252,6 +252,11 @@ Route::group(['prefix' => 'advert'], function ($router) {
             AdvertController::class, 'listAdmin'
         ])->name('advert.admin.list');
 
+        $router->get('/admin/show/{id_slug}', [
+            AdvertController::class, 'showAdmin'
+        ])->name('advert.admin.show');
+
+
         $router->post('/{category}', [
             AdvertController::class, 'create'
         ])->name('advert.create');

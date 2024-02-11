@@ -106,32 +106,7 @@ export const createForm = async (params: any) => {
   }
 };
 
-export const createAnswer = async (params: any) => {
-  const cookie: any = cookies().get("token");
-  const token = cookie && JSON.parse(cookie.value);
-  const { slug, formData } = params;
-  console.log(formData)
-  try {
-    const config = {
-      method: "POST",
-      headers: {
-        // 'Accept': 'application/json',
-        // 'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${token}`,
-      },
-      cache: 'no-cache',
-      body: formData
-    };
-    // @ts-ignore
-    const response = await fetch(`${HOST_URL}/advert/${slug}`, config);
-    const data = await response.json();
-    return data
-  } catch (err) {
-    console.log(err)
-    // throw new Error("Failed to login!")
-    return err;
-  }
-};
+
 ////////////////////////////////////////////auth/////////////////////////////////////////////////
 
 //Login user with google
@@ -328,5 +303,58 @@ export const changeEmailSubmit = async (params: object) => {
   } catch (err) {
     console.log(err)
     throw new Error("Failed to fetch cities!")
+  }
+};
+
+/////////////////////////////////////////////advert//////////////////////////////////
+export const createAdvert = async (params: any) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  const { slug, formData } = params;
+  console.log(formData)
+  try {
+    const config = {
+      method: "POST",
+      headers: {
+        // 'Accept': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+      body: formData
+    };
+    // @ts-ignore
+    const response = await fetch(`${HOST_URL}/advert/${slug}`, config);
+    const data = await response.json();
+    return data
+  } catch (err) {
+    console.log(err)
+    // throw new Error("Failed to login!")
+    return err;
+  }
+};
+
+
+export const updateAdvert = async (formData: any) => {
+  const cookie: any = cookies().get("token");
+  const token = cookie && JSON.parse(cookie.value);
+  const id = formData.get('id');
+  try {
+    const config = {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      cache: 'no-cache',
+      body: formData
+    };
+    // @ts-ignore
+    const response = await fetch(`${HOST_URL}/advert/update/${id}`, config);
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log(err)
+    throw new Error("Failed to udpate advert!")
   }
 };

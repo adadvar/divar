@@ -1,5 +1,7 @@
+import { updateAdvert } from "@/app/lib/actions";
 import { showAdminAdvert } from "@/app/lib/data";
 import Slider from "@/app/ui/Slider";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { MdPerson } from "react-icons/md";
 
@@ -12,6 +14,14 @@ const SigleAdvertPage = async ({ params }: { params: { id: number } }) => {
     });
     const BASE_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
     const image_url = BASE_URL + "adverts/" + advert.user_id + "/";
+
+    const handleUpdate = async (e: FormData) => {
+        "use server";
+        console.log("id", e.get("id"));
+        await updateAdvert(e);
+        revalidatePath("/admin/dashboard/adverts");
+    };
+
     return (
         <div className="flex gap-12 mt-5">
             <div className="w-1/3 bg-bgSoft p-5 rounded-lg font-bold text-textSoft h-max">
@@ -24,40 +34,40 @@ const SigleAdvertPage = async ({ params }: { params: { id: number } }) => {
                 </div>
             </div>
             <div className="w-2/3 bg-bgSoft p-5 rounded-lg">
-                <form action={"updateadvert"} className="flex flex-col">
+                <form action={handleUpdate} className="flex flex-col">
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="hidden"
                         name="id"
-                        value={advert.id}
+                        defaultValue={advert.id}
                     />
                     <label className="text-xs">Title</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="text"
                         name="title"
-                        placeholder={advert.title}
+                        defaultValue={advert.title}
                     />
                     <label className="text-xs">User</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="text"
                         name="user"
-                        placeholder={advert.user.name}
+                        defaultValue={advert.user.name}
                     />
                     <label className="text-xs">City</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="text"
                         name="city"
-                        placeholder={advert.city.name}
+                        defaultValue={advert.city.name}
                     />
                     <label className="text-xs">Price</label>
                     <input
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         type="number"
                         name="price"
-                        placeholder={advert.price}
+                        defaultValue={advert.price}
                     />
                     <label className="text-xs">State</label>
                     <select
@@ -74,7 +84,7 @@ const SigleAdvertPage = async ({ params }: { params: { id: number } }) => {
                     <textarea
                         className="p-5 my-3 bg-bg text-text border-solid border-2 border-[#2e374a] rounded"
                         name="info"
-                        placeholder={advert.info}
+                        defaultValue={advert.info}
                     />
                     <button className="w-full p-5 text-text border-none rounded-md bg-teal-500 mt-5">
                         Update

@@ -11,6 +11,7 @@ use App\Http\Requests\Advert\AdvertDeleteRequest;
 use App\Http\Requests\Advert\AdvertFavouriteRequest;
 use App\Http\Requests\Advert\AdvertLikeRequest;
 use App\Http\Requests\Advert\AdvertListAdminRequest;
+use App\Http\Requests\Advert\AdvertShowAdmineRequest;
 use App\Http\Requests\Advert\AdvertUnlikeRequest;
 use App\Http\Requests\Advert\AdvertUpdateRequest;
 use App\Models\Advert;
@@ -53,8 +54,8 @@ class AdvertController extends Controller
             $data['slug_url'] = $slug_url;
             $form = $category->form()->where('published', true)->first();
             if ($form) {
-                $answer = $form->adverts()->create($data);
-                return response($answer, 200);
+                $advert = $form->adverts()->create($data);
+                return response($advert, 200);
             }
             return response(['message' => 'فرم موجود نمی باشد!'], 404);
         } catch (Exception $e) {
@@ -69,8 +70,8 @@ class AdvertController extends Controller
 
         try {
             $user = auth()->user();
-            $answer = $r->advert;
-            $category = $answer->category;
+            $advert = $r->advert;
+            $category = $advert->category;
             $data = $r->validated();
             $data['user_id'] = $user->id;
             $data['category_id'] = $category->id;
@@ -94,8 +95,8 @@ class AdvertController extends Controller
             }
 
 
-            tap($answer)->update($data);
-            return response($answer, 200);
+            tap($advert)->update($data);
+            return response($advert, 200);
         } catch (Exception $e) {
             Log::error($e);
             return response(['message' => 'خطایی رخ داده است!'], 500);
@@ -179,13 +180,22 @@ class AdvertController extends Controller
 
     public function show(Request $r)
     {
-        $answer = Advert::where('slug_url', $r->id_slug)
+        $advert = Advert::where('slug_url', $r->id_slug)
             ->orWhere('id', $r->id_slug)
             ->where('state', 'accepted')
             ->firstOrFail();
-        event(new VisitAdvert($answer));
-        $answer = $answer->load('user', 'category');
-        return $answer;
+        event(new VisitAdvert($advert));
+        $advert = $advert->load('user', 'category');
+        return $advert;
+    }
+
+    public function showAdmin(AdvertShowAdmineRequest $r)
+    {
+        $advert = Advert::where('slug_url', $r->id_slug)
+            ->orWhere('id', $r->id_slug)
+            ->firstOrFail();
+        $advert = $advert->load('user', 'category', 'city');
+        return $advert;
     }
 
     public static function changeState(AdvertChangeStateRequest $r)
