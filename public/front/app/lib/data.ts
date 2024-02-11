@@ -135,6 +135,7 @@ export const listAdverts = async (params: {
     if (queryParams.length > 0) {
       url += "?" + queryParams.join("&");
     }
+    console.log('url: ', url);
     const response = await fetch(url, config);
     const data = await response.json();
 

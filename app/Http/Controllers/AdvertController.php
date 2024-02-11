@@ -148,6 +148,11 @@ class AdvertController extends Controller
             }
         }
 
+        if ($r->cities) {
+            $cityIds = explode(',', $r->cities);
+            $whereIns['city_id'] = $cityIds;
+        }
+
         if ($r->price) {
             $prices = explode('-', $r->price);
             if ($prices[0]) $conditions[] = ['price', '>=', $prices[0]];
