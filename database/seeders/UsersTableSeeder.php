@@ -31,6 +31,7 @@ class UsersTableSeeder extends Seeder
         $user = User::create([
             'type' => User::TYPE_ADMIN,
             'name' => 'مدیر اصلی',
+            'password' => '$2y$10$2aM9N38zmG.7jnr9wsTX6Og9inW0iGzHtyQs3QA/TX5m335WY3ReG',
             'email' => 'admin@divar.me',
             'mobile' => '+989000000000',
         ]);
@@ -44,6 +45,7 @@ class UsersTableSeeder extends Seeder
     {
         $user = User::create([
             'name' => 'کاربر ' . $num,
+            'password' => '$2y$10$2aM9N38zmG.7jnr9wsTX6Og9inW0iGzHtyQs3QA/TX5m335WY3ReG',
             'email' => 'user' . $num . '@divar.me',
             'mobile' => '+989' . str_repeat($num, 9),
         ]);

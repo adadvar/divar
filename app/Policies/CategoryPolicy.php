@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\Category;
-use App\Models\CategoryAnswer;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -27,10 +26,6 @@ class CategoryPolicy
     }
 
     public function createForm(User $user, Category $category)
-    {
-        return $user->isAdmin();
-    }
-    public function listAdminAnswer(User $user, Category $category)
     {
         return $user->isAdmin();
     }

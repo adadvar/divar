@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
             $table->text('info')->nullable();
-            $table->json('content')->nullable();
+            $table->text('content')->nullable();
             $table->timestamp('publish_at')->nullable();
             $table->enum('state', Advert::STATE)->default(Advert::STATE_PENDING);
             // $table->foreignId('city_id')->nullable()->references('id')->on('cities')->cascadeOnUpdate()->cascadeOnDelete();

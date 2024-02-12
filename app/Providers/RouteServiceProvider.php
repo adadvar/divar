@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use App\Models\Advert;
 use App\Models\Category;
-use App\Models\CategoryAnswer;
-use App\Models\City;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -59,6 +57,5 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('user', User::class);
         Route::model('category', Category::class);
         Route::model('advert', Advert::class);
-        Route::model('categoryAnswer', CategoryAnswer::class);
     }
 }

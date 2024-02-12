@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
-        // $this->call(AdvertsTableSeeder::class);
+        $this->call(CategoryFormsTableSeeder::class);
+        $this->call(AdvertsTableSeeder::class);
         Schema::enableForeignKeyConstraints();
 
 

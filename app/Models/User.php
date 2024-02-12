@@ -86,11 +86,6 @@ class User extends Authenticatable
         return $this->hasMany(CategoryForm::class);
     }
 
-    public function answers()
-    {
-        return $this->hasMany(CategoryAnswer::class);
-    }
-
     public function categories()
     {
         return $this->hasMany(Category::class);

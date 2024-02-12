@@ -6,10 +6,8 @@ namespace App\Providers;
 
 use App\Models\Advert;
 use App\Models\Category;
-use App\Models\CategoryAnswer;
 use App\Models\User;
 use App\Policies\AdvertPolicy;
-use App\Policies\CategoryAnswerPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -25,7 +23,6 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Advert::class => AdvertPolicy::class,
         Category::class => CategoryPolicy::class,
-        CategoryAnswer::class => CategoryAnswerPolicy::class,
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
