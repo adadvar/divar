@@ -41,7 +41,7 @@ class AdvertController extends Controller
                 foreach ($r->file('images') as $file) {
                     $image = $file;
                     $imageName = time() . bin2hex(random_bytes(5)) . '-image';
-                    Storage::disk('')->put('/' . $user->id . '/' . $imageName, $image->get());
+                    Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
                     $imageArr[] = $imageName;
                 }
             }

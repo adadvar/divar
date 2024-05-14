@@ -44,3 +44,6 @@ shell-n:
 
 shell-as-root:
 	docker compose -f $(COMPOSE_FILES) exec  --user=root app ash
+
+kill:
+	docker stop $$(docker ps -a -q)
