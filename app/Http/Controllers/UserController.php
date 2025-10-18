@@ -84,7 +84,7 @@ class UserController extends Controller
         return response(['message' => 'رمز وارد شده مطابقت ندارد'], 400);
       }
 
-      $user->password = bcrypt(($request->new_password));
+      $user->password = bcrypt(($request->password));
       $user->save();
 
       return response([

@@ -79,7 +79,7 @@ class AdvertController extends Controller
             if (!empty($r->file('images'))) {
                 foreach ($r->file('images') as $file) {
                     $image = $file;
-                    $imageName = time() . bin2hex(random_bytes(5)) . '-image';
+                    $imageName = time() . bin2hex(random_bytes(5)) . '-image' . $image->getClientOriginalExtension();;
                     Storage::disk('adverts')->put('/' . $user->id . '/' . $imageName, $image->get());
                     $imageArr[] = $imageName;
                 }
